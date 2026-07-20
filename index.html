@@ -6,6 +6,16 @@
   <title>Conozcamos La Biblia — Conexión de IDN El Cruze</title>
   <meta name="description" content="Conozcamos La Biblia — un sitio para aprender un poco más de la Biblia. Estudios, recursos y comunidad. Conexión de IDN El Cruze." />
 
+  <!-- Favicons & social preview (place images in /images/) -->
+  <link rel="icon" href="/images/favicon.ico" sizes="any">
+  <link rel="icon" href="/images/favicon-32.png" type="image/png">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <meta property="og:title" content="Conozcamos La Biblia — Conexión IDN El Cruze">
+  <meta property="og:description" content="Un sitio para aprender un poco más de la Biblia: estudios, recursos y comunidad.">
+  <meta property="og:image" content="/images/og-image.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
@@ -93,6 +103,16 @@
       color:var(--primary-3);
       box-shadow:0 10px 30px rgba(36,36,36,0.06);
       overflow:hidden;
+      position:relative;
+    }
+
+    /* subtle overlay to improve text contrast on hero image */
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(250,198,98,0.06), rgba(255,255,255,0.02));
+      pointer-events:none;
     }
 
     /* If hero image not provided, fallback gradient */
@@ -102,6 +122,19 @@
 
     .hero-inner{
       max-width:760px;
+      position:relative; /* above overlay */
+      z-index:1;
+    }
+
+    .welcome-pill{
+      display:inline-block;
+      padding:6px 10px;
+      background:rgba(36,36,36,0.06);
+      border-radius:999px;
+      font-weight:700;
+      color:var(--accent-3);
+      font-size:13px;
+      margin-bottom:12px;
     }
 
     h1{
@@ -187,9 +220,14 @@
       align-items:center;
       justify-content:center;
       box-shadow:inset 0 0 0 1px rgba(255,255,255,0.06);
+      position:relative;
+      z-index:1;
     }
 
     .muted-note{font-size:13px;color:rgba(36,36,36,0.55)}
+
+    /* simple focus outline for accessibility */
+    a:focus{outline:3px solid rgba(88,72,250,0.16);outline-offset:3px}
 
   </style>
 </head>
@@ -214,19 +252,20 @@
     <main>
       <section class="hero" aria-label="Sección principal">
         <div class="hero-inner">
+          <div class="welcome-pill" aria-hidden="true">Bienvenido a Conexión IDN El Cruze</div>
           <h1>Conozcamos La Biblia</h1>
-          <p class="subtitle">Un sitio para aprender un poco más de la Biblia — recursos, estudios y comunidad de Conexión IDN El Cruze. Iré agregando materiales de forma progresiva.</p>
+          <p class="subtitle">Un sitio para aprender un poco más de la Biblia — recursos, estudios y comunidad. Iré agregando materiales de forma progresiva.</p>
 
           <div class="cta-row">
-            <a class="btn btn-primary" href="#estudios">Ver estudios</a>
-            <a class="btn btn-muted" href="#recursos">Explorar recursos</a>
+            <a class="btn btn-primary" href="#estudios">Comenzar</a>
+            <a class="btn btn-muted" href="#contacto">Contacto</a>
           </div>
 
           <div style="margin-top:14px" class="muted-note">Paleta principal: <strong>#fac662</strong>, <strong>#ffffff</strong>, <strong>#242424</strong>. Paleta secundaria disponible para acentos.</div>
         </div>
 
         <div class="hero-illustration" aria-hidden="true">
-          <!-- If you add an image at /images/hero.jpg it will appear as hero background. -->
+          <!-- If you add an image at /images/hero.jpg it will appear as hero background. If you prefer a specific hero image, upload it as images/hero.jpg (recommended 1600x900 or 1920x1080). -->
           <div style="text-align:center;padding:12px;">
             <div style="font-weight:700;color:var(--accent-3);">Únete a nuestras sesiones</div>
             <div style="margin-top:8px;color:rgba(36,36,36,0.6);max-width:240px">Deja que la Palabra ilumine tus pasos. Pronto más estudios y guías prácticas.</div>
@@ -290,7 +329,7 @@
 
           <div class="card">
             <h3>Contacto</h3>
-            <p id="contacto">¿Tienes sugerencias o recursos? Escríbenos a: <strong>contacto@elcruze.example</strong></p>
+            <p id="contacto">¿Tienes sugerencias o recursos? Escríbenos a: <strong><a id="contact-link" href="#">Enlace de contacto (reemplazar)</a></strong></p>
           </div>
         </div>
       </section>
@@ -303,6 +342,7 @@
     </footer>
   </div>
 
-  <!-- Notes: place a hero image at /images/hero.jpg (recommended size ~1600x900) or remove the URL to rely on gradient only. -->
+  <!-- Notes: place a hero image at /images/hero.jpg (recommended size ~1600x900 or 1920x1080),
+       favicon at /images/favicon.ico, favicon-32.png, apple-touch-icon.png, and an og-image at /images/og-image.jpg -->
 </body>
 </html>
