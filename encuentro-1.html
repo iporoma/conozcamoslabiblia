@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conozcamos la Biblia | Conexión del IDN El Cruze</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS -->
+    <style>
+        :root {
+            --color-bg: #ffffff;
+            --color-text: #242424;
+            --color-primary: #fac662;
+            --color-dark-bg: #0c2532;
+            --color-indigo: #3d32ad;
+            --color-blue: #5848fa;
+            --color-mint: #7afab6;
+            --color-sky: #61a5fa;
+            --color-magenta: #b948fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--color-dark-bg);
+            color: var(--color-bg);
+            text-align: center;
+            padding: 3rem 1.5rem;
+            border-bottom: 6px solid var(--color-primary);
+        }
+
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--color-primary);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            font-weight: 400;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Intro Box */
+        .intro-box {
+            background-color: #f4f7ff;
+            border-left: 5px solid var(--color-blue);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Section Titles */
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--color-indigo);
+            font-size: 2rem;
+            margin: 2.5rem 0 1.5rem;
+            text-align: center;
+        }
+
+        /* Accordion Styles */
+        details {
+            background-color: #fff;
+            border: 2px solid #eef2ff;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        details:hover {
+            border-color: var(--color-blue);
+        }
+
+        details[open] {
+            border-color: var(--color-blue);
+            box-shadow: 0 4px 15px rgba(88, 72, 250, 0.15);
+        }
+
+        summary {
+            padding: 1.2rem 1.5rem;
+            font-weight: 700;
+            font-size: 1.15rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none;
+            color: var(--color-dark-bg);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '➕';
+            font-size: 1.2rem;
+            color: var(--color-blue);
+            transition: transform 0.3s ease;
+        }
+
+        details[open] summary::after {
+            content: '➖';
+            transform: rotate(180deg);
+        }
+
+        details[open] summary {
+            color: var(--color-blue);
+            background-color: #f8faff;
+            border-bottom: 1px solid #eef2ff;
+        }
+
+        .content {
+            padding: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .content p {
+            margin-bottom: 1rem;
+        }
+
+        .content ul {
+            list-style: none;
+            padding-left: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .content ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .content ul li::before {
+            content: '•';
+            color: var(--color-blue);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Book Chips */
+        .books-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1rem;
+        }
+
+        .book-chip {
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* OT Colors */
+        .ot-accordion details[open] summary { color: var(--color-indigo); border-bottom-color: #e0f7ee; }
+        .ot-accordion details[open] { border-color: var(--color-indigo); box-shadow: 0 4px 15px rgba(61, 50, 173, 0.1); }
+        .ot-accordion summary::after { color: var(--color-indigo); }
+        .ot-accordion .book-chip {
+            background-color: #e8fff5;
+            color: #0c2532;
+            border: 1px solid var(--color-mint);
+        }
+
+        /* NT Colors */
+        .nt-accordion details[open] summary { color: var(--color-sky); border-bottom-color: #e8f2ff; }
+        .nt-accordion details[open] { border-color: var(--color-sky); box-shadow: 0 4px 15px rgba(97, 165, 250, 0.15); }
+        .nt-accordion summary::after { color: var(--color-sky); }
+        .nt-accordion .book-chip {
+            background-color: #e8f2ff;
+            color: #0c2532;
+            border: 1px solid var(--color-sky);
+        }
+        
+        .note {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+            background-color: #f9f9f9;
+            padding: 0.8rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+
+        /* Infographic */
+        .infographic {
+            background-color: var(--color-dark-bg);
+            padding: 3rem 1.5rem;
+            border-radius: 16px;
+            margin-top: 3rem;
+            text-align: center;
+            color: white;
+        }
+
+        .infographic h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--color-primary);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .math-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .math-box {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            min-width: 120px;
+            border: 2px solid transparent;
+        }
+
+        .math-box.ot { border-color: var(--color-mint); }
+        .math-box.nt { border-color: var(--color-sky); }
+        .math-box.total { border-color: var(--color-primary); background: rgba(250, 198, 98, 0.1); }
+
+        .math-box h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .math-box .number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
+        .math-box.ot .number { color: var(--color-mint); }
+        .math-box.nt .number { color: var(--color-sky); }
+        .math-box.total .number { color: var(--color-primary); }
+
+        .math-symbol {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Summary Table */
+        .summary-tables {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .summary-tables {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+
+        .table-card header {
+            padding: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .table-card.ot header { background-color: var(--color-indigo); color: white; border-bottom: none; padding: 1rem; }
+        .table-card.nt header { background-color: var(--color-sky); color: white; border-bottom: none; padding: 1rem; }
+
+        .table-card ul {
+            list-style: none;
+            padding: 1rem;
+        }
+
+        .table-card li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .table-card li:last-child {
+            border-bottom: none;
+            font-weight: 800;
+            color: var(--color-dark-bg);
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #f4f4f4;
+            color: #666;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Conozcamos la Biblia</h1>
+        <p>Parte de Conexión del IDN El Cruze</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="intro-box">
+            ¡Hola! Bienvenido a <strong>Conozcamos la Biblia</strong>. Si alguna vez te has preguntado por qué hay diferentes Biblias o cómo se organizan sus libros, estás en el lugar correcto. Vamos a explorarlo paso a paso, de forma sencilla y clara. Toca cada pregunta o sección para descubrir la respuesta.
+        </div>
+
+        <h2>Preguntas Frecuentes</h2>
+        
+        <details>
+            <summary>¿Qué es el Canon Bíblico?</summary>
+            <div class="content">
+                <p>La palabra <strong>canon</strong> viene del griego <em>kanón</em>, que significa regla, medida o norma.</p>
+                <p>Cuando hablamos del Canon Bíblico, nos referimos al conjunto de libros que fueron reconocidos como la Palabra de Dios y que forman la Biblia. En palabras sencillas, el canon responde a una pregunta muy simple: <strong>¿Qué libros pertenecen realmente a la Biblia?</strong></p>
+            </div>
+        </details>
+
+        <details>
+            <summary>¿Qué Biblia usan las iglesias evangélicas?</summary>
+            <div class="content">
+                <p>Las iglesias evangélicas utilizan el canon protestante, formado por <strong>66 libros</strong>:</p>
+                <ul>
+                    <li>39 libros del Antiguo Testamento.</li>
+                    <li>27 libros del Nuevo Testamento.</li>
+                </ul>
+                <p>Esta es la colección de libros que las iglesias evangélicas consideran inspirados por Dios y, por lo tanto, la autoridad para la fe y la vida cristiana.</p>
+                <p>Aunque hablamos de un solo Canon, está dividido en dos grandes partes: el Antiguo Testamento (que narra la creación, la historia de Israel, la Ley y los profetas) y el Nuevo Testamento (que nos habla de la vida de Jesús, el nacimiento de la Iglesia y las enseñanzas de los apóstoles).</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>¿De dónde surge el canon evangélico?</summary>
+            <div class="content">
+                <p>Una pregunta muy común es si las iglesias evangélicas crearon un canon propio. La respuesta es <strong>no</strong>. El canon evangélico se basa en dos tradiciones históricas:</p>
+                <ul>
+                    <li><strong>Para el Antiguo Testamento:</strong> Adopta el canon hebreo (el Tanaj), reconocido por el pueblo judío. El Tanaj tiene 24 libros, pero son exactamente los mismos escritos que nuestros 39 libros. La diferencia está en cómo se agrupan (por ejemplo, 1 y 2 Samuel forman un solo libro allí). El contenido es el mismo.</li>
+                    <li><strong>Para el Nuevo Testamento:</strong> Mantiene el canon reconocido por la Iglesia cristiana desde los primeros siglos (27 libros). Durante la Reforma Protestante en el siglo XVI, el Nuevo Testamento no fue modificado.</li>
+                </ul>
+            </div>
+        </details>
+
+        <details>
+            <summary>¿Por qué hay Biblias con distinta cantidad de libros?</summary>
+            <div class="content">
+                <p>La diferencia está únicamente en el Antiguo Testamento.</p>
+                <p>Las iglesias evangélicas siguen el canon hebreo, mientras que la Iglesia católica también reconoce como inspirados algunos libros escritos en el período entre el Antiguo y el Nuevo Testamento. Estos libros son conocidos por los católicos como <em>deuterocanónicos</em> y por los protestantes como <em>apócrifos</em>.</p>
+                <p>Entre ellos se encuentran: Tobías, Judit, Sabiduría, Eclesiástico (Sirácida), Baruc, 1 Macabeos y 2 Macabeos. Además, la Biblia católica incluye algunas secciones adicionales en los libros de Ester y Daniel.</p>
+                <p>Por esta razón:</p>
+                <ul>
+                    <li>La Biblia evangélica tiene <strong>66 libros</strong>.</li>
+                    <li>La Biblia católica tiene <strong>73 libros</strong>.</li>
+                </ul>
+            </div>
+        </details>
+
+
+        <h2>Antiguo Testamento (39 libros)</h2>
+        <div class="ot-accordion">
+            <details>
+                <summary>Pentateuco o Ley (5 libros)</summary>
+                <div class="content">
+                    <p>Relata los comienzos de la humanidad, el llamado de Abraham, la formación del pueblo de Israel y la Ley dada por Dios a través de Moisés.</p>
+                    <div class="books-container">
+                        <span class="book-chip">Génesis</span>
+                        <span class="book-chip">Éxodo</span>
+                        <span class="book-chip">Levítico</span>
+                        <span class="book-chip">Números</span>
+                        <span class="book-chip">Deuteronomio</span>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>Libros Históricos (12 libros)</summary>
+                <div class="content">
+                    <p>Narran la historia del pueblo de Israel desde la conquista de la tierra prometida hasta el regreso del exilio en Babilonia.</p>
+                    <div class="books-container">
+                        <span class="book-chip">Josué</span>
+                        <span class="book-chip">Jueces</span>
+                        <span class="book-chip">Rut</span>
+                        <span class="book-chip">1 Samuel</span>
+                        <span class="book-chip">2 Samuel</span>
+                        <span class="book-chip">1 Reyes</span>
+                        <span class="book-chip">2 Reyes</span>
+                        <span class="book-chip">1 Crónicas</span>
+                        <span class="book-chip">2 Crónicas</span>
+                        <span class="book-chip">Esdras</span>
+                        <span class="book-chip">Nehemías</span>
+                        <span class="book-chip">Ester</span>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>Libros Poéticos y Sapienciales (5 libros)</summary>
+                <div class="content">
+                    <p>Contienen oraciones, cantos, proverbios y enseñanzas sobre la vida, la sabiduría, el sufrimiento y la relación con Dios.</p>
+                    <div class="books-container">
+                        <span class="book-chip">Job</span>
+                        <span class="book-chip">Salmos</span>
+                        <span class="book-chip">Proverbios</span>
+                        <span class="book-chip">Eclesiastés</span>
+                        <span class="book-chip">Cantar de los Cantares</span>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>Profetas Mayores (5 libros)</summary>
+                <div class="content">
+                    <p>Reciben este nombre porque sus escritos son más extensos, no porque sean más importantes.</p>
+                    <div class="books-container">
+                        <span class="book-chip">Isaías</span>
+                        <span class="book-chip">Jeremías</span>
+                        <span class="book-chip">Lamentaciones</span>
+                        <span class="book-chip">Ezequiel</span>
+                        <span class="book-chip">Daniel</span>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>Profetas Menores (12 libros)</summary>
+                <div class="content">
+                    <p>Se llaman "menores" porque sus libros son más breves.</p>
+                    <div class="books-container">
+                        <span class="book-chip">Oseas</span>
+                        <span class="book-chip">Joel</span>
+                        <span class="book-chip">Amós</span>
+                        <span class="book-chip">Abdías</span>
+                        <span class="book-chip">Jonás</span>
+                        <span class="book-chip">Miqueas</span>
+                        <span class="book-chip">Nahúm</span>
+                        <span class="book-chip">Habacuc</span>
+                        <span class="book-chip">Sofonías</span>
+                        <span class="book-chip">Hageo</span>
+                        <span class="book-chip">Zacarías</span>
+                        <span class="book-chip">Malaquías</span>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <h2>Nuevo Testamento (27 libros)</h2>
+        <div class="nt-accordion">
+            <details>
+                <summary>Evangelios (4 libros)</summary>
+                <div class="content">
+                    <p>Relatan la vida, el ministerio, la muerte y la resurrección de Jesucristo.</p>
+                    <div class="books-container">
+                        <span class="book-chip">Mateo</span>
+                        <span class="book-chip">Marcos</span>
+                        <span class="book-chip">Lucas</span>
+                        <span class="book-chip">Juan</span>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>Libro Histórico (1 libro)</summary>
+                <div class="content">
+                    <p>Cuenta cómo nació la Iglesia y cómo el mensaje de Jesús comenzó a expandirse por el mundo.</p>
+                    <div class="books-container">
+                        <span class="book-chip">Hechos de los Apóstoles</span>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>Cartas de Pablo (13 libros)</summary>
+                <div class="content">
+                    <p>Son cartas escritas por el apóstol Pablo para enseñar, animar y corregir a las primeras iglesias y a distintos creyentes.</p>
+                    <div class="books-container">
+                        <span class="book-chip">Romanos</span>
+                        <span class="book-chip">1 Corintios</span>
+                        <span class="book-chip">2 Corintios</span>
+                        <span class="book-chip">Gálatas</span>
+                        <span class="book-chip">Efesios</span>
+                        <span class="book-chip">Filipenses</span>
+                        <span class="book-chip">Colosenses</span>
+                        <span class="book-chip">1 Tesalonicenses</span>
+                        <span class="book-chip">2 Tesalonicenses</span>
+                        <span class="book-chip">1 Timoteo</span>
+                        <span class="book-chip">2 Timoteo</span>
+                        <span class="book-chip">Tito</span>
+                        <span class="book-chip">Filemón</span>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>Cartas Generales (8 libros)</summary>
+                <div class="content">
+                    <p>Son cartas escritas por otros apóstoles y líderes a una audiencia más amplia (la Iglesia en general).</p>
+                    <div class="books-container">
+                        <span class="book-chip">Hebreos</span>
+                        <span class="book-chip">Santiago</span>
+                        <span class="book-chip">1 Pedro</span>
+                        <span class="book-chip">2 Pedro</span>
+                        <span class="book-chip">1 Juan</span>
+                        <span class="book-chip">2 Juan</span>
+                        <span class="book-chip">3 Juan</span>
+                        <span class="book-chip">Judas</span>
+                    </div>
+                    <div class="note">Nota: En algunas clasificaciones tradicionales, Hebreos aparece junto con las cartas de Pablo. Hoy, muchos estudiosos la ubican entre las Cartas Generales porque su autor no se identifica dentro del propio libro. En cualquier caso, esto no cambia el canon ni la cantidad de libros del Nuevo Testamento.</div>
+                </div>
+            </details>
+
+            <details>
+                <summary>Libro Profético (1 libro)</summary>
+                <div class="content">
+                    <p>Presenta, mediante visiones y un lenguaje simbólico, el triunfo definitivo de Jesucristo y el cumplimiento del plan de Dios para la humanidad.</p>
+                    <div class="books-container">
+                        <span class="book-chip">Apocalipsis</span>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <h2>Resumen Final</h2>
+        
+        <div class="infographic">
+            <h3>El Canon Completo: 66 Libros</h3>
+            
+            <div class="math-container">
+                <div class="math-box ot">
+                    <h4>Antiguo Testamento</h4>
+                    <div class="number">39</div>
+                </div>
+                <div class="math-symbol">+</div>
+                <div class="math-box nt">
+                    <h4>Nuevo Testamento</h4>
+                    <div class="number">27</div>
+                </div>
+                <div class="math-symbol">=</div>
+                <div class="math-box total">
+                    <h4>Biblia Completa</h4>
+                    <div class="number">66</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-tables">
+            <div class="table-card ot">
+                <header>Antiguo Testamento</header>
+                <ul>
+                    <li><span>Pentateuco</span> <span>5</span></li>
+                    <li><span>Históricos</span> <span>12</span></li>
+                    <li><span>Poéticos y Sapienciales</span> <span>5</span></li>
+                    <li><span>Profetas Mayores</span> <span>5</span></li>
+                    <li><span>Profetas Menores</span> <span>12</span></li>
+                    <li><span><strong>Total</strong></span> <span><strong>39</strong></span></li>
+                </ul>
+            </div>
+            
+            <div class="table-card nt">
+                <header>Nuevo Testamento</header>
+                <ul>
+                    <li><span>Evangelios</span> <span>4</span></li>
+                    <li><span>Hechos</span> <span>1</span></li>
+                    <li><span>Cartas de Pablo</span> <span>13</span></li>
+                    <li><span>Cartas Generales</span> <span>8</span></li>
+                    <li><span>Apocalipsis</span> <span>1</span></li>
+                    <li><span><strong>Total</strong></span> <span><strong>27</strong></span></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; <span id="year"></span> Conexión del IDN El Cruze - Conozcamos la Biblia</p>
+    </footer>
+
+    <script>
+        // Script simple para actualizar el año en el footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
