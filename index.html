@@ -1,51 +1,308 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conozcamos la Biblia</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conozcamos La Biblia — Conexión de IDN El Cruze</title>
+  <meta name="description" content="Conozcamos La Biblia — un sitio para aprender un poco más de la Biblia. Estudios, recursos y comunidad. Conexión de IDN El Cruze." />
 
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            background:#f4f4f4;
-            color:#333;
-            text-align:center;
-            padding:60px;
-        }
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-        h1{
-            color:#1f4e79;
-        }
+  <style>
+    /* Color palette (primarios + secundarios como variables) */
+    :root{
+      --primary-1: #fac662; /* amarillo cálido */
+      --primary-2: #ffffff; /* blanco */
+      --primary-3: #242424; /* oscuro */
 
-        .card{
-            max-width:700px;
-            margin:auto;
-            background:white;
-            padding:30px;
-            border-radius:12px;
-            box-shadow:0 0 15px rgba(0,0,0,.15);
-        }
-    </style>
+      --accent-1: #0c2532;
+      --accent-2: #3d32ad;
+      --accent-3: #5848fa;
+      --accent-4: #7afab6;
+      --accent-5: #61a5fa;
+      --accent-6: #b948fa;
+
+      --max-width: 1100px;
+    }
+
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background:linear-gradient(180deg,var(--primary-2), #fbf6ef 60%);
+      color:var(--primary-3);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+
+    .container{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:28px;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      color:var(--primary-3);
+    }
+
+    .logo{
+      width:56px;
+      height:56px;
+      border-radius:10px;
+      background:linear-gradient(135deg,var(--accent-3),var(--accent-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:700;
+      box-shadow:0 6px 18px rgba(77,57,255,0.12);
+      flex-shrink:0;
+    }
+
+    nav a{
+      color:var(--primary-3);
+      text-decoration:none;
+      margin-left:16px;
+      font-weight:600;
+    }
+
+    /* Hero */
+    .hero{
+      background:linear-gradient(160deg, rgba(250,198,98,0.1) 0%, rgba(88,72,250,0.03) 40%), url('images/hero.jpg');
+      background-size:cover;
+      background-position:center;
+      border-radius:18px;
+      padding:48px 28px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:20px;
+      align-items:center;
+      color:var(--primary-3);
+      box-shadow:0 10px 30px rgba(36,36,36,0.06);
+      overflow:hidden;
+    }
+
+    /* If hero image not provided, fallback gradient */
+    .hero:empty{
+      background:linear-gradient(135deg,var(--primary-1),var(--accent-3));
+    }
+
+    .hero-inner{
+      max-width:760px;
+    }
+
+    h1{
+      margin:0 0 8px 0;
+      font-size:clamp(26px,4vw,40px);
+      color:var(--primary-3);
+    }
+
+    .subtitle{
+      margin:0 0 18px 0;
+      color:rgba(36,36,36,0.85);
+      font-size:clamp(15px,2.2vw,18px);
+    }
+
+    .cta-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 16px;
+      border-radius:10px;
+      cursor:pointer;
+      border:0;
+      font-weight:700;
+      text-decoration:none;
+    }
+
+    .btn-primary{
+      background:linear-gradient(90deg,var(--accent-3),var(--accent-2));
+      color:white;
+      box-shadow:0 8px 20px rgba(61,50,173,0.18);
+    }
+
+    .btn-muted{
+      background:transparent;
+      border:1px solid rgba(36,36,36,0.08);
+      color:var(--primary-3);
+    }
+
+    /* Cards */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:18px;
+      margin-top:22px;
+    }
+
+    .card{
+      background:var(--primary-2);
+      padding:18px;
+      border-radius:12px;
+      box-shadow:0 6px 18px rgba(36,36,36,0.04);
+      text-align:left;
+    }
+
+    .card h3{margin:0 0 8px 0}
+    .card p{margin:0;color:rgba(36,36,36,0.7)}
+
+    footer{
+      margin-top:30px;
+      padding:20px 0;
+      text-align:center;
+      color:rgba(36,36,36,0.6);
+      font-size:14px;
+    }
+
+    /* small screens */
+    @media (min-width:880px){
+      .hero{grid-template-columns:1fr 420px; padding:48px;}
+    }
+
+    .hero-illustration{
+      border-radius:12px;
+      min-height:220px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+
+    .muted-note{font-size:13px;color:rgba(36,36,36,0.55)}
+
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <header>
+      <a class="brand" href="/">
+        <div class="logo">CB</div>
+        <div>
+          <div style="font-weight:800">Conozcamos La Biblia</div>
+          <div style="font-size:12px;color:rgba(36,36,36,0.6)">Conexión — IDN El Cruze</div>
+        </div>
+      </a>
+      <nav aria-label="Menú principal">
+        <a href="#estudios">Estudios</a>
+        <a href="#recursos">Recursos</a>
+        <a href="#comunidad">Comunidad</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </header>
 
-<div class="card">
+    <main>
+      <section class="hero" aria-label="Sección principal">
+        <div class="hero-inner">
+          <h1>Conozcamos La Biblia</h1>
+          <p class="subtitle">Un sitio para aprender un poco más de la Biblia — recursos, estudios y comunidad de Conexión IDN El Cruze. Iré agregando materiales de forma progresiva.</p>
 
-<h1>¡Bienvenido!</h1>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#estudios">Ver estudios</a>
+            <a class="btn btn-muted" href="#recursos">Explorar recursos</a>
+          </div>
 
-<h2>Conozcamos la Biblia</h2>
+          <div style="margin-top:14px" class="muted-note">Paleta principal: <strong>#fac662</strong>, <strong>#ffffff</strong>, <strong>#242424</strong>. Paleta secundaria disponible para acentos.</div>
+        </div>
 
-<p>
-Este es mi primer sitio web publicado para CONEXIÓN de IDN EL CRUZE.
-</p>
+        <div class="hero-illustration" aria-hidden="true">
+          <!-- If you add an image at /images/hero.jpg it will appear as hero background. -->
+          <div style="text-align:center;padding:12px;">
+            <div style="font-weight:700;color:var(--accent-3);">Únete a nuestras sesiones</div>
+            <div style="margin-top:8px;color:rgba(36,36,36,0.6);max-width:240px">Deja que la Palabra ilumine tus pasos. Pronto más estudios y guías prácticas.</div>
+          </div>
+        </div>
+      </section>
 
-<p>
-Muy pronto compartiré estudios bíblicos, recursos y mucho más.
-</p>
+      <section id="estudios" style="margin-top:26px">
+        <h2 style="margin:8px 0 12px 0">Estudios recientes</h2>
 
-</div>
+        <div class="grid">
+          <article class="card">
+            <h3>Introducción a la Biblia</h3>
+            <p>Una guía básica para comprender la estructura y los libros más importantes.</p>
+          </article>
 
+          <article class="card">
+            <h3>Lectio Divina — Práctica</h3>
+            <p>Cómo leer la Biblia con oración, reflexión y aplicación.</p>
+          </article>
+
+          <article class="card">
+            <h3>Personajes bíblicos</h3>
+            <p>Perfiles breves que muestran la fe y la vida de personajes clave.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="recursos" style="margin-top:28px">
+        <h2 style="margin:8px 0 12px 0">Recursos</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Guías descargables</h3>
+            <p>Material en PDF con esquemas de estudio (próximamente).</p>
+          </div>
+
+          <div class="card">
+            <h3>Videos y audios</h3>
+            <p>Charlas y sermones en audio y video — añadiremos contenido pronto.</p>
+          </div>
+
+          <div class="card">
+            <h3>Enlaces útiles</h3>
+            <p>Biblias online, comentaristas y recursos de estudio seleccionados.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="comunidad" style="margin-top:28px">
+        <h2 style="margin:8px 0 12px 0">Comunidad</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Sesiones en vivo</h3>
+            <p>Fecha y hora de las próximas reuniones — se anunciará aquí.</p>
+          </div>
+
+          <div class="card">
+            <h3>Grupo de estudio</h3>
+            <p>Formaremos grupos para discusión y apoyo mutuo.</p>
+          </div>
+
+          <div class="card">
+            <h3>Contacto</h3>
+            <p id="contacto">¿Tienes sugerencias o recursos? Escríbenos a: <strong>contacto@elcruze.example</strong></p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div>© Conozcamos La Biblia — Conexión IDN El Cruze</div>
+      <div style="margin-top:6px;color:rgba(36,36,36,0.5)">Diseño simple, accesible y fácil de extender — puedes añadir más secciones progresivamente.</div>
+    </footer>
+  </div>
+
+  <!-- Notes: place a hero image at /images/hero.jpg (recommended size ~1600x900) or remove the URL to rely on gradient only. -->
 </body>
 </html>
