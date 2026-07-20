@@ -391,7 +391,7 @@ button { font-family: inherit; }
   line-height: 1.65;
   color: rgba(255,255,255,0.82);
   max-width: 640px;
-  margin: 0 auto 1rem;
+  margin: 0 auto 3.5rem;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 1000ms var(--ease-quiet) 1200ms, transform 1000ms var(--ease-quiet) 1200ms;
@@ -405,24 +405,6 @@ button { font-family: inherit; }
   color: var(--gold);
   font-size: 1.1em;
 }
-
-.hero__attribution {
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
-  margin-bottom: 3.5rem;
-  opacity: 0;
-  transition: opacity 1000ms var(--ease-quiet) 1300ms;
-}
-.hero.is-in .hero__attribution { opacity: 1; }
-
-.hero__attribution a {
-  color: var(--gold);
-  border-bottom: 1px solid rgba(250, 198, 98, 0.4);
-  transition: border-color 300ms;
-}
-.hero__attribution a:hover { border-bottom-color: var(--gold); }
 
 .hero__cta-group {
   display: flex;
@@ -486,44 +468,6 @@ button { font-family: inherit; }
   transform: translateY(-50%) rotate(45deg);
 }
 .btn:hover .btn__arrow { width: 26px; }
-
-/* Scattered leaves */
-.leaves {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.leaf {
-  position: absolute;
-  pointer-events: none;
-  opacity: 0;
-  transition: transform 1300ms cubic-bezier(.34,1.56,.64,1), opacity 1300ms var(--ease-quiet);
-}
-
-.leaf.in { opacity: 0.8; }
-
-.leaf svg {
-  width: 100%; height: 100%;
-  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
-}
-
-.leaf.sway svg {
-  animation: leaf-sway 4.5s ease-in-out infinite;
-  transform-origin: 50% 5%;
-}
-
-@keyframes leaf-sway {
-  0%, 100% { transform: rotate(-3deg); }
-  50%      { transform: rotate(3deg); }
-}
-
-.leaf--1 { top: 8%;  left: 5%;  width: 90px;  height: 200px; }
-.leaf--2 { top: 12%; right: 7%; width: 70px;  height: 155px; }
-.leaf--3 { bottom: 12%; left: 8%;  width: 80px;  height: 175px; }
-.leaf--4 { bottom: 18%; right: 5%; width: 105px; height: 230px; }
-.leaf--5 { top: 45%; right: 16%; width: 50px;  height: 110px; opacity: 0.5; }
 
 /* Scroll cue */
 .scroll-cue {
@@ -1525,11 +1469,6 @@ section {
 @media (max-width: 600px) {
   .hero__cta-group { flex-direction: column; align-items: stretch; }
   .btn { justify-content: center; }
-  .leaf--5 { display: none; }
-  .leaf--1 { width: 60px; height: 130px; }
-  .leaf--2 { width: 50px; height: 110px; }
-  .leaf--3 { width: 55px; height: 120px; }
-  .leaf--4 { width: 70px; height: 150px; }
   
   .about__images { grid-template-columns: 1fr; }
   .about__img--right { margin-top: 0; }
@@ -1546,13 +1485,7 @@ section {
     transition-duration: 0.01ms !important;
   }
   .hero__bg img { animation: none; }
-  .leaf.sway svg { animation: none; }
   .about__img img { animation: none; }
-}
-
-/* Touch fallback */
-@media (pointer: coarse) {
-  .leaf { transition: opacity 1300ms var(--ease-quiet); }
 }
 </style>
 </head>
@@ -1632,42 +1565,6 @@ section {
   </div>
   <div class="hero__overlay"></div>
   
-  <!-- Scattered leaves -->
-  <div class="leaves" id="leaves">
-    <div class="leaf leaf--1 sway" data-base-rot="-8">
-      <svg viewBox="0 0 60 140" xmlns="http://www.w3.org/2000/svg">
-        <path d="M30,5 C18,25 14,55 18,90 C22,115 27,132 30,138 C33,132 38,115 42,90 C46,55 42,25 30,5 Z" fill="#fac662" opacity="0.75"/>
-        <line x1="30" y1="12" x2="30" y2="134" stroke="#c89642" stroke-width="0.5" opacity="0.6"/>
-        <path d="M30,30 Q22,32 19,40 M30,50 Q22,52 18,62 M30,70 Q22,72 17,82 M30,90 Q22,92 19,102 M30,110 Q23,112 21,120" stroke="#c89642" stroke-width="0.4" fill="none" opacity="0.5"/>
-      </svg>
-    </div>
-    <div class="leaf leaf--2 sway" data-base-rot="12">
-      <svg viewBox="0 0 60 140" xmlns="http://www.w3.org/2000/svg">
-        <path d="M30,5 C18,25 14,55 18,90 C22,115 27,132 30,138 C33,132 38,115 42,90 C46,55 42,25 30,5 Z" fill="#fac662" opacity="0.7"/>
-        <line x1="30" y1="12" x2="30" y2="134" stroke="#c89642" stroke-width="0.5" opacity="0.6"/>
-      </svg>
-    </div>
-    <div class="leaf leaf--3 sway" data-base-rot="-15">
-      <svg viewBox="0 0 60 140" xmlns="http://www.w3.org/2000/svg">
-        <path d="M30,5 C18,25 14,55 18,90 C22,115 27,132 30,138 C33,132 38,115 42,90 C46,55 42,25 30,5 Z" fill="#fac662" opacity="0.7"/>
-        <line x1="30" y1="12" x2="30" y2="134" stroke="#c89642" stroke-width="0.5" opacity="0.6"/>
-      </svg>
-    </div>
-    <div class="leaf leaf--4 sway" data-base-rot="18">
-      <svg viewBox="0 0 60 140" xmlns="http://www.w3.org/2000/svg">
-        <path d="M30,5 C18,25 14,55 18,90 C22,115 27,132 30,138 C33,132 38,115 42,90 C46,55 42,25 30,5 Z" fill="#fac662" opacity="0.8"/>
-        <line x1="30" y1="12" x2="30" y2="134" stroke="#c89642" stroke-width="0.5" opacity="0.6"/>
-        <path d="M30,30 Q22,32 19,40 M30,50 Q22,52 18,62 M30,70 Q22,72 17,82 M30,90 Q22,92 19,102" stroke="#c89642" stroke-width="0.4" fill="none" opacity="0.5"/>
-      </svg>
-    </div>
-    <div class="leaf leaf--5 sway" data-base-rot="-5">
-      <svg viewBox="0 0 60 140" xmlns="http://www.w3.org/2000/svg">
-        <path d="M30,5 C18,25 14,55 18,90 C22,115 27,132 30,138 C33,132 38,115 42,90 C46,55 42,25 30,5 Z" fill="#fac662" opacity="0.6"/>
-        <line x1="30" y1="12" x2="30" y2="134" stroke="#c89642" stroke-width="0.5" opacity="0.6"/>
-      </svg>
-    </div>
-  </div>
-  
   <div class="hero__inner">
     <div class="hero__eyebrow">Conexión IDN El Cruce</div>
     
@@ -1677,12 +1574,8 @@ section {
     </h1>
     
     <p class="hero__subtitle">
-      Un espacio para conocer un poco más acerca de la <em>Palabra de Dios</em>. Parte de Conexión de IDN El Cruce.
+      Un espacio para conocer un poco más acerca de la <em>Palabra de Dios</em>
     </p>
-    
-    <div class="hero__attribution">
-      Encuentros semanales &nbsp;·&nbsp; <a href="https://idnelcruze.com/" target="_blank" rel="noopener noreferrer">idnelcruze.com</a>
-    </div>
     
     <div class="hero__cta-group">
       <a href="#encuentros" class="btn btn--primary">
@@ -1751,7 +1644,7 @@ section {
         <div class="about__signature-mark">✎</div>
         <div class="about__signature-text">
           Conexión de IDN El Cruce
-          <small>Sábado · 18:00 hs</small>
+          <small>Miércoles · 17:00 hs</small>
         </div>
       </div>
     </div>
@@ -1960,7 +1853,7 @@ section {
         </span>
         <div class="contact__details-content">
           <div class="contact__details-label">Encuentro semanal</div>
-          <div class="contact__details-value">Sábado · 18:00 hs</div>
+          <div class="contact__details-value">Miércoles · 17:00 hs</div>
           <div class="contact__details-note">El Cruce, Argentina</div>
         </div>
       </li>
@@ -2100,44 +1993,6 @@ section {
     setTimeout(() => hero.classList.add('is-in'), 100);
   });
   
-  // === Scattered leaves entrance ===
-  const leaves = document.querySelectorAll('.leaf');
-  leaves.forEach((leaf, idx) => {
-    const rot = parseFloat(leaf.dataset.baseRot || '0');
-    leaf.style.transform = `scale(0.8) rotate(${rot - 8}deg)`;
-    setTimeout(() => {
-      leaf.classList.add('in');
-      leaf.style.transform = `scale(1) rotate(${rot}deg)`;
-    }, 600 + idx * 130);
-  });
-  
-  // === Mouse parallax for leaves (desktop only) ===
-  const isCoarse = window.matchMedia('(pointer: coarse)').matches;
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  
-  if (!isCoarse && !reducedMotion) {
-    let mx = 0, my = 0, lx = 0, ly = 0;
-    let parallaxActive = false;
-    
-    window.addEventListener('mousemove', (e) => {
-      mx = (e.clientX - window.innerWidth / 2) * 0.018;
-      my = (e.clientY - window.innerHeight / 2) * 0.018;
-    });
-    
-    const tick = () => {
-      lx += (mx - lx) * 0.06;
-      ly += (my - ly) * 0.06;
-      leaves.forEach((leaf) => {
-        if (!leaf.classList.contains('in')) return;
-        const rot = parseFloat(leaf.dataset.baseRot || '0');
-        const depth = 1 + (parseInt(leaf.className.match(/leaf--(\d)/)[1]) || 1) * 0.15;
-        leaf.style.transform = `translate(${lx * depth}px, ${ly * depth}px) rotate(${rot}deg)`;
-      });
-      requestAnimationFrame(tick);
-    };
-    setTimeout(() => { parallaxActive = true; tick(); }, 1800);
-  }
-  
   // === IntersectionObserver for sections ===
   const revealEls = document.querySelectorAll('[data-reveal]');
   const io = new IntersectionObserver((entries) => {
@@ -2166,6 +2021,7 @@ section {
   }
   
   // === Dropdown toggle (desktop hover, mobile click) ===
+  const isCoarse = window.matchMedia('(pointer: coarse)').matches;
   const encuentrosNavItem = document.getElementById('encuentrosNavItem');
   const encuentrosToggle = document.getElementById('encuentrosToggle');
   
