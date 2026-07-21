@@ -14,6 +14,6 @@
 
 <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 
-{% if page.css %}
-<link rel="stylesheet" href="{{ '/assets/css/' | append: page.css | append: '.css' | relative_url }}">
+{% if page.css == "encuentros" %}
+<link rel="stylesheet" href="{{ '/assets/css/encuentros.css' | relative_url }}">
 {% endif %}
