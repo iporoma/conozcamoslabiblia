@@ -1,3 +1,140 @@
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
+(function() {
+  'use strict';
+  
+  // === Year ===
+  document.getElementById('year').textContent = new Date().getFullYear();
+  
+  // === Set --i index for line-mask-rise ===
+  document.querySelectorAll('.hero__title .inner').forEach((el, i) => el.style.setProperty('--i', i));
+  document.querySelectorAll('.section__title .inner').forEach((el, i) => el.style.setProperty('--i', i));
+  document.querySelectorAll('.manifesto__text .inner').forEach((el, i) => el.style.setProperty('--i', i));
+  document.querySelectorAll('.scripture__verse .inner').forEach((el, i) => el.style.setProperty('--i', i));
+  
+  // === Nav scroll state ===
+  const nav = document.getElementById('nav');
+  let scrollY = 0;
+  const onScroll = () => {
+    scrollY = window.pageYOffset;
+    if (scrollY > 60) nav.classList.add('is-scrolled');
+    else nav.classList.remove('is-scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  
+  // === Hero reveal on load ===
+  const hero = document.querySelector('.hero');
+  requestAnimationFrame(() => {
+    setTimeout(() => hero.classList.add('is-in'), 100);
+  });
+  
+  // === IntersectionObserver for sections ===
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+  
+  revealEls.forEach((el) => io.observe(el));
+  
+  // === Encuentros grid reveal (with stagger) ===
+  const grid = document.querySelector('[data-reveal-grid]');
+  if (grid) {
+    const gridIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          gridIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+    gridIO.observe(grid);
+  }
+  
+  // === Dropdown toggle (desktop hover, mobile click) ===
+  const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+  const encuentrosNavItem = document.getElementById('encuentrosNavItem');
+  const encuentrosToggle = document.getElementById('encuentrosToggle');
+  
+  // Desktop hover
+  if (!isCoarse) {
+    encuentrosNavItem.addEventListener('mouseenter', () => {
+      encuentrosNavItem.classList.add('is-open');
+      encuentrosToggle.setAttribute('aria-expanded', 'true');
+    });
+    encuentrosNavItem.addEventListener('mouseleave', () => {
+      encuentrosNavItem.classList.remove('is-open');
+      encuentrosToggle.setAttribute('aria-expanded', 'false');
+    });
+  }
+  
+  // Click toggle (works on both)
+  encuentrosToggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const isOpen = encuentrosNavItem.classList.toggle('is-open');
+    encuentrosToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!encuentrosNavItem.contains(e.target)) {
+      encuentrosNavItem.classList.remove('is-open');
+      encuentrosToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+  
+  // === Mobile menu toggle ===
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  
+  navToggle.addEventListener('click', () => {
+    const isOpen = navMenu.classList.toggle('is-open');
+    navToggle.classList.toggle('is-open', isOpen);
+    navToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+  });
+  
+  // Close mobile menu when a link is clicked (except dropdown toggle)
+  navMenu.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 900) {
+        navMenu.classList.remove('is-open');
+        navToggle.classList.remove('is-open');
+        navToggle.setAttribute('aria-label', 'Abrir menú');
+        encuentrosNavItem.classList.remove('is-open');
+      }
+    });
+  });
+  
+  // Close mobile menu on resize to desktop
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (window.innerWidth > 900) {
+        navMenu.classList.remove('is-open');
+        navToggle.classList.remove('is-open');
+      }
+    }, 150);
+  });
+  
+  // === Smooth anchor scroll offset for fixed nav ===
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href === '#' || href.length < 2) return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.pageYOffset - 20;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+  
+})();
 </script>
