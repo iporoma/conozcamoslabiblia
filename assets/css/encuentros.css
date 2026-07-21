@@ -1,382 +1,427 @@
 /* ==========================================================
-   ENCUENTROS
+   CONOZCAMOS LA BIBLIA
+   DISEÑO DE ENCUENTROS
    ========================================================== */
 
-.container {
-    width: min(1100px, calc(100% - 3rem));
-    margin-inline: auto;
-    padding-block: 4rem;
+:root{
+    --lesson-bg:#f6f3ed;
+    --lesson-surface:#ffffff;
+    --lesson-border:#e8e2d8;
+
+    --lesson-text:#2d3138;
+    --lesson-muted:#6d7278;
+
+    --lesson-primary:#1b5e75;
+    --lesson-primary-light:#3b8eb2;
+
+    --lesson-gold:#d6a44a;
+
+    --lesson-shadow:
+        0 10px 35px rgba(20,20,20,.08);
+
+    --lesson-shadow-hover:
+        0 20px 45px rgba(20,20,20,.12);
+
+    --lesson-radius:24px;
 }
 
-.container h2{
-    margin:4rem 0 1.5rem;
-    font-size:clamp(1.8rem,3vw,2.4rem);
-    color:var(--text);
-    position:relative;
+.page{
+
+    background:var(--lesson-bg);
+
+    color:var(--lesson-text);
+
+    min-height:100vh;
+
 }
 
-.container h2::after{
-    content:"";
-    display:block;
-    width:72px;
-    height:4px;
-    margin-top:.7rem;
-    border-radius:999px;
-    background:linear-gradient(
-        90deg,
-        var(--accent),
-        var(--accent-soft)
-    );
-}
-
-.intro-box{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-left:5px solid var(--accent);
-    border-radius:var(--radius-lg);
-    padding:1.75rem;
-    margin-bottom:3rem;
-    color:var(--text-muted);
-    line-height:1.8;
-    box-shadow:var(--shadow-sm);
-}
-
-details{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:var(--radius-lg);
-    margin-bottom:1rem;
-    overflow:hidden;
-    transition:.25s ease;
-}
-
-details:hover{
-    border-color:var(--accent);
-}
-
-details[open]{
-    border-color:var(--accent);
-    box-shadow:var(--shadow-md);
-}
-
-summary {
-    position: relative;
-    padding: 1.2rem 3.5rem 1.2rem 1.5rem;
-    cursor: pointer;
-    font-weight: 700;
-    list-style: none;
-    user-select: none;
-}
-
-summary::-webkit-details-marker {
-    display: none;
-}
-
-summary::after {
-    content: "";
-    position: absolute;
-    right: 1.5rem;
-    top: 50%;
-
-    width: .7rem;
-    height: .7rem;
-
-    border-right: 2px solid var(--accent);
-    border-bottom: 2px solid var(--accent);
-
-    transform: translateY(-60%) rotate(45deg);
-
-    transition: transform .25s ease;
-}
-
-details[open] summary::after {
-    transform: translateY(-40%) rotate(225deg);
-}
-
-.content{
-    padding:0 1.5rem 1.6rem;
-}
-
-.content p{
-    margin-bottom:1rem;
-    line-height:1.8;
-}
-
-.content ul{
-    margin-left:1.3rem;
-}
-
-.content li{
-    margin-bottom:.5rem;
-}
-
-.books-container{
-    display:flex;
-    flex-wrap:wrap;
-    gap:.7rem;
-    margin-top:1rem;
-}
-
-.book-chip{
-    background:rgba(var(--accent-rgb),.10);
-    color:var(--accent);
-    padding:.45rem .9rem;
-    border-radius:999px;
-    font-size:.9rem;
-    font-weight:600;
-    transition:.2s;
-}
-
-.book-chip:hover{
-    transform:translateY(-2px);
-}
-
-.note{
-    margin-top:1.5rem;
-    padding:1rem 1.2rem;
-    border-left:4px solid var(--accent);
-    background:rgba(var(--accent-rgb),.05);
-    border-radius:var(--radius);
-    font-size:.95rem;
-}
 
 /* ==========================================================
-   RESUMEN FINAL
+   HERO
    ========================================================== */
 
-.infographic{
-    margin:4rem 0;
-    text-align:center;
-}
-
-.infographic h3{
-    margin-bottom:2rem;
-    font-size:clamp(1.6rem,3vw,2.2rem);
-}
-
-.math-container{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:1.5rem;
-    flex-wrap:wrap;
-}
-
-.math-box{
-    min-width:190px;
-
-    background:var(--surface);
-
-    border:1px solid var(--border);
-
-    border-radius:var(--radius-lg);
-
-    padding:2rem 1.5rem;
-
-    box-shadow:var(--shadow-md);
-
-    transition:.25s;
-}
-
-.math-box:hover{
-    transform:translateY(-6px);
-}
-
-.math-box .number{
-    font-size:3.5rem;
-    font-weight:800;
-    margin-top:.75rem;
-    color:var(--accent);
-}
-
-.math-box .number{
-    font-size:3.5rem;
-    font-weight:800;
-    margin-top:.75rem;
-    color:var(--accent);
-}
-
-.summary-tables{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-
-    gap:2rem;
-
-    margin-top:4rem;
-}
-
-.table-card{
-
-    background:var(--surface);
-
-    border:1px solid var(--border);
-
-    border-radius:var(--radius-lg);
-
-    overflow:hidden;
-
-    box-shadow:var(--shadow-sm);
-}
-
-.table-card header{
-
-    padding:1rem 1.5rem;
-
-    background:var(--accent);
-
-    color:white;
-
-    font-weight:700;
-
-    font-size:1.1rem;
-}
-
-.table-card ul{
-
-    list-style:none;
-
-    margin:0;
-
-    padding:0;
-}
-
-.table-card li{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    padding:1rem 1.5rem;
-
-    border-bottom:1px solid var(--border);
-}
-
-.table-card li:last-child{
-
-    border-bottom:none;
-
-    font-weight:700;
-
-    font-size:1.05rem;
-
-    background:rgba(var(--accent-rgb),.06);
-}
-
-@media (max-width:768px){
-
-    .math-container{
-
-        flex-direction:column;
-
-        gap:1rem;
-    }
-
-    .math-symbol{
-
-        transform:rotate(90deg);
-
-        font-size:2rem;
-    }
-
-    .math-box{
-
-        width:100%;
-    }
-
-}
-
-details + details{
-    margin-top:1rem;
-}
-
-.ot-accordion,
-.nt-accordion{
-    margin-top:2rem;
-}
-
-details{
-
-    opacity:0;
-
-    transform:translateY(15px);
-
-    animation:fadeUp .5s ease forwards;
-}
-
-@keyframes fadeUp{
-
-    to{
-
-        opacity:1;
-
-        transform:none;
-    }
-
-}
-
-.content ul{
-
-    list-style:none;
-
-    padding-left:0;
-
-    margin-top:1rem;
-}
-
-.content li{
+.hero--internal{
 
     position:relative;
 
-    padding-left:1.4rem;
+    overflow:hidden;
 
-    margin-bottom:.7rem;
+    padding:7rem 2rem;
+
+    background:
+    radial-gradient(circle at top right,#3b8eb240 0%,transparent 35%),
+    radial-gradient(circle at bottom left,#d6a44a22 0%,transparent 35%),
+    linear-gradient(135deg,#123949,#1d5a70);
+
 }
 
-.content li::before{
+.hero--internal::before{
 
     content:"";
 
     position:absolute;
 
-    left:0;
+    inset:0;
 
-    top:.55rem;
+    background-image:
+        radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);
 
-    width:8px;
+    background-size:22px 22px;
 
-    height:8px;
+    opacity:.35;
 
-    border-radius:50%;
+}
 
+.hero__inner{
+
+    position:relative;
+
+    z-index:2;
+
+    width:min(900px,100%);
+
+    margin:auto;
+
+    text-align:center;
+
+}
+
+.hero__eyebrow{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:.6rem;
+
+    padding:.55rem 1rem;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.10);
+
+    border:1px solid rgba(255,255,255,.18);
+
+    color:#fff;
+
+    letter-spacing:.12em;
+
+    text-transform:uppercase;
+
+    font-size:.82rem;
+
+    font-weight:700;
+
+}
+
+.hero__title{
+
+    margin:2rem 0 1rem;
+
+    color:#fff;
+
+    font-size:clamp(2.8rem,7vw,5rem);
+
+    line-height:.95;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-weight:600;
+
+}
+
+.hero__title em{
+
+    color:#f8d788;
+
+    font-style:italic;
+
+    font-weight:500;
+
+}
+
+.hero__subtitle{
+
+    max-width:720px;
+
+    margin:0 auto;
+
+    font-size:1.25rem;
+
+    color:rgba(255,255,255,.82);
+
+    line-height:1.8;
+
+}
+
+
+/* ==========================================================
+   CONTENEDOR
+   ========================================================== */
+
+.container{
+
+    width:min(1100px,calc(100% - 2rem));
+
+    margin:auto;
+
+    margin-top:-70px;
+
+    position:relative;
+
+    z-index:5;
+
+    padding-bottom:6rem;
+
+}
+
+
+/* ==========================================================
+   TARJETA PRINCIPAL
+   ========================================================== */
+
+.container::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:var(--lesson-surface);
+
+    border-radius:32px;
+
+    box-shadow:var(--lesson-shadow);
+
+    z-index:-1;
+
+}
+
+
+/* espacio interno */
+
+.container{
+
+    padding:4rem;
+
+}
+
+
+/* ==========================================================
+   TITULOS
+   ========================================================== */
+
+.container h2{
+
+    margin:4rem 0 2rem;
+
+    font-size:2.3rem;
+
+    font-family:"Cormorant Garamond",serif;
+
+    color:var(--lesson-primary);
+
+    position:relative;
+
+}
+
+.container h2::after{
+
+    content:"";
+
+    display:block;
+
+    width:80px;
+
+    height:5px;
+
+    margin-top:.8rem;
+
+    border-radius:999px;
+
+    background:linear-gradient(90deg,var(--lesson-gold),var(--lesson-primary));
+
+}
+
+
+/* ==========================================================
+   INTRODUCCION
+   ========================================================== */
+
+.intro-box{
+
+    background:linear-gradient(135deg,#ffffff,#fbfaf8);
+
+    border:1px solid var(--lesson-border);
+
+    border-left:6px solid var(--lesson-gold);
+
+    border-radius:22px;
+
+    padding:2rem;
+
+    font-size:1.08rem;
+
+    line-height:2;
+
+    color:var(--lesson-muted);
+
+    box-shadow:var(--lesson-shadow);
+
+}
+
+.intro-box strong{
+
+    color:var(--lesson-primary);
+
+}
+
+/* ==========================================================
+   HERO DEL ENCUENTRO
+   ========================================================== */
+
+.hero--internal{
+    position:relative;
+    overflow:hidden;
+    padding:7rem 2rem 6rem;
+    text-align:center;
+    background:
+        radial-gradient(circle at top,#d8c19b22 0%,transparent 55%),
+        linear-gradient(180deg,#18140f 0%,#111 100%);
+}
+
+.hero--internal::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        url("../images/noise.png");
+    opacity:.04;
+    pointer-events:none;
+}
+
+.hero__inner{
+    max-width:900px;
+    margin:auto;
+    position:relative;
+    z-index:2;
+}
+
+.hero__eyebrow{
+    display:inline-block;
+    padding:.45rem 1rem;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:999px;
+    color:#d5b47a;
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    font-size:.78rem;
+    margin-bottom:1.5rem;
+    background:rgba(255,255,255,.03);
+}
+
+.hero__title{
+    margin:0;
+    line-height:.95;
+}
+
+.hero__title .line{
+    display:block;
+    overflow:hidden;
+}
+
+.hero__title .inner{
+    display:block;
+    font-size:clamp(3rem,7vw,5.6rem);
+    font-family:"Cormorant Garamond",serif;
+    font-weight:600;
+    color:white;
+}
+
+.hero__title em{
+    color:#d5b47a;
+    font-style:italic;
+}
+
+.hero__subtitle{
+    margin:2rem auto 0;
+    max-width:650px;
+    color:#c8c8c8;
+    font-size:1.15rem;
+    line-height:1.8;
+}
+
+/* ==========================================================
+   FONDO GENERAL
+   ========================================================== */
+
+body{
+    background:
+        radial-gradient(circle at top,#1d1812 0%,#111 45%,#0b0b0b 100%);
+}
+
+.page{
+    position:relative;
+}
+
+.page::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(212,178,108,.04),transparent 35%),
+        radial-gradient(circle at 80% 60%,rgba(212,178,108,.03),transparent 40%);
+    pointer-events:none;
+}
+
+.container{
+    position:relative;
+    z-index:2;
+}
+
+/* ==========================================================
+   TARJETAS
+   ========================================================== */
+
+details{
+    backdrop-filter:blur(12px);
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.08);
+}
+
+details:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 40px rgba(0,0,0,.35);
+}
+
+.intro-box{
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,.05),
+        rgba(255,255,255,.02)
+    );
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.table-card,
+.math-box{
+    background:linear-gradient(
+        180deg,
+        rgba(255,255,255,.05),
+        rgba(255,255,255,.025)
+    );
+    backdrop-filter:blur(14px);
+}
+
+.book-chip{
+    border:1px solid rgba(var(--accent-rgb),.25);
+}
+
+.book-chip:hover{
     background:var(--accent);
+    color:white;
+    box-shadow:0 10px 25px rgba(var(--accent-rgb),.35);
 }
 
-.math-box.ot,
-.table-card.ot{
-    border-top:4px solid #4f8df7;
-}
-
-.math-box.nt,
-.table-card.nt{
-    border-top:4px solid #43c58b;
-}
-
-.math-box.total{
-    border-top:4px solid var(--accent);
-}
-
-.math-box.ot,
-.table-card.ot{
-    border-top:4px solid #4f8df7;
-}
-
-.math-box.nt,
-.table-card.nt{
-    border-top:4px solid #43c58b;
-}
-
-.math-box.total{
-    border-top:4px solid var(--accent);
-}
