@@ -59,33 +59,38 @@ details[open]{
     box-shadow:var(--shadow-md);
 }
 
-summary{
-    cursor:pointer;
-    padding:1.2rem 1.5rem;
-    font-weight:700;
-    font-size:1.05rem;
-    list-style:none;
-    user-select:none;
-    position:relative;
+summary {
+    position: relative;
+    padding: 1.2rem 3.5rem 1.2rem 1.5rem;
+    cursor: pointer;
+    font-weight: 700;
+    list-style: none;
+    user-select: none;
 }
 
-summary::-webkit-details-marker{
-    display:none;
+summary::-webkit-details-marker {
+    display: none;
 }
 
-summary::after{
-    content:"+";
-    position:absolute;
-    right:1.5rem;
-    top:50%;
-    transform:translateY(-50%);
-    font-size:1.4rem;
-    color:var(--accent);
-    transition:.2s;
+summary::after {
+    content: "";
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+
+    width: .7rem;
+    height: .7rem;
+
+    border-right: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+
+    transform: translateY(-60%) rotate(45deg);
+
+    transition: transform .25s ease;
 }
 
-details[open] summary::after{
-    transform:translateY(-50%) rotate(45deg);
+details[open] summary::after {
+    transform: translateY(-40%) rotate(225deg);
 }
 
 .content{
@@ -280,4 +285,98 @@ details[open] summary::after{
         width:100%;
     }
 
+}
+
+details + details{
+    margin-top:1rem;
+}
+
+.ot-accordion,
+.nt-accordion{
+    margin-top:2rem;
+}
+
+details{
+
+    opacity:0;
+
+    transform:translateY(15px);
+
+    animation:fadeUp .5s ease forwards;
+}
+
+@keyframes fadeUp{
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+    }
+
+}
+
+.content ul{
+
+    list-style:none;
+
+    padding-left:0;
+
+    margin-top:1rem;
+}
+
+.content li{
+
+    position:relative;
+
+    padding-left:1.4rem;
+
+    margin-bottom:.7rem;
+}
+
+.content li::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:.55rem;
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:var(--accent);
+}
+
+.math-box.ot,
+.table-card.ot{
+    border-top:4px solid #4f8df7;
+}
+
+.math-box.nt,
+.table-card.nt{
+    border-top:4px solid #43c58b;
+}
+
+.math-box.total{
+    border-top:4px solid var(--accent);
+}
+
+.math-box.ot,
+.table-card.ot{
+    border-top:4px solid #4f8df7;
+}
+
+.math-box.nt,
+.table-card.nt{
+    border-top:4px solid #43c58b;
+}
+
+.math-box.total{
+    border-top:4px solid var(--accent);
 }
