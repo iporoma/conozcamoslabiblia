@@ -1,4 +1,45 @@
-<header>
-    <h1>Conozcamos la Biblia</h1>
-    <p>Parte de Conexión del IDN El Cruze</p>
-</header>
+<!-- ============ NAVIGATION ============ -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav__brand">
+    <span class="nav__brand-mark">C</span>
+    <span class="nav__brand-text">
+      Conozcamos la Biblia
+      <small>Conexión IDN El Cruze</small>
+    </span>
+  </a>
+  
+  <ul class="nav__menu" id="navMenu">
+    <li class="nav__item" id="encuentrosNavItem">
+      <button class="nav__link" id="encuentrosToggle" aria-haspopup="true" aria-expanded="false">
+        Encuentros Semanales
+        <svg class="nav__dropdown-icon" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+          <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="dropdown" id="encuentrosDropdown">
+        <a href="encuentro-1.html" class="dropdown__item">
+          <span class="dropdown__num">01</span>
+          <span class="dropdown__label">El Principio<small>La Creación</small></span>
+        </a>
+
+        <!-- ...el resto exactamente igual... -->
+
+      </div>
+    </li>
+
+    <li class="nav__item">
+      <a href="#contacto" class="nav__link">Contacto</a>
+    </li>
+
+    <li class="nav__item">
+      <a href="https://idnelcruze.com/" target="_blank" rel="noopener noreferrer" class="nav__cta">
+        IDN El Cruze
+      </a>
+    </li>
+  </ul>
+
+  <button class="nav__toggle" id="navToggle" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+  </button>
+</nav>
