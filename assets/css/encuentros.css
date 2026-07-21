@@ -1,0 +1,136 @@
+/* ==========================================================
+   ENCUENTROS
+   ========================================================== */
+
+.container {
+    width: min(1100px, calc(100% - 3rem));
+    margin-inline: auto;
+    padding-block: 4rem;
+}
+
+.container h2{
+    margin:4rem 0 1.5rem;
+    font-size:clamp(1.8rem,3vw,2.4rem);
+    color:var(--text);
+    position:relative;
+}
+
+.container h2::after{
+    content:"";
+    display:block;
+    width:72px;
+    height:4px;
+    margin-top:.7rem;
+    border-radius:999px;
+    background:linear-gradient(
+        90deg,
+        var(--accent),
+        var(--accent-soft)
+    );
+}
+
+.intro-box{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-left:5px solid var(--accent);
+    border-radius:var(--radius-lg);
+    padding:1.75rem;
+    margin-bottom:3rem;
+    color:var(--text-muted);
+    line-height:1.8;
+    box-shadow:var(--shadow-sm);
+}
+
+details{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    margin-bottom:1rem;
+    overflow:hidden;
+    transition:.25s ease;
+}
+
+details:hover{
+    border-color:var(--accent);
+}
+
+details[open]{
+    border-color:var(--accent);
+    box-shadow:var(--shadow-md);
+}
+
+summary{
+    cursor:pointer;
+    padding:1.2rem 1.5rem;
+    font-weight:700;
+    font-size:1.05rem;
+    list-style:none;
+    user-select:none;
+    position:relative;
+}
+
+summary::-webkit-details-marker{
+    display:none;
+}
+
+summary::after{
+    content:"+";
+    position:absolute;
+    right:1.5rem;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:1.4rem;
+    color:var(--accent);
+    transition:.2s;
+}
+
+details[open] summary::after{
+    transform:translateY(-50%) rotate(45deg);
+}
+
+.content{
+    padding:0 1.5rem 1.6rem;
+}
+
+.content p{
+    margin-bottom:1rem;
+    line-height:1.8;
+}
+
+.content ul{
+    margin-left:1.3rem;
+}
+
+.content li{
+    margin-bottom:.5rem;
+}
+
+.books-container{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.7rem;
+    margin-top:1rem;
+}
+
+.book-chip{
+    background:rgba(var(--accent-rgb),.10);
+    color:var(--accent);
+    padding:.45rem .9rem;
+    border-radius:999px;
+    font-size:.9rem;
+    font-weight:600;
+    transition:.2s;
+}
+
+.book-chip:hover{
+    transform:translateY(-2px);
+}
+
+.note{
+    margin-top:1.5rem;
+    padding:1rem 1.2rem;
+    border-left:4px solid var(--accent);
+    background:rgba(var(--accent-rgb),.05);
+    border-radius:var(--radius);
+    font-size:.95rem;
+}
