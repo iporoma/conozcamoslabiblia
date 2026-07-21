@@ -20,25 +20,29 @@ css: encuentros
     </div>
 </section>
 
-<section class="container"> 
+<section class="container encounter-page">
+<section class="intro-section">
         <div class="intro-box">
             ¡Hola! Bienvenido al primer encuentro de <strong>Conozcamos la Biblia</strong>.
             <br>Si alguna vez te has preguntado por qué hay diferentes Biblias o cómo se organizan sus libros, estás en el lugar correcto. Vamos a explorarlo paso a paso, de forma sencilla y clara. Toca cada pregunta o sección para descubrir la respuesta.
         </div>
+</section>
+
+        <section class="faq-section">
 
         <h2>Preguntas Frecuentes</h2>
-        
-        <details>
-            <summary>¿Qué es el Canon Bíblico?</summary>
-            <div class="content">
+
+        <details class="faq-card">
+            <summary class="accordion-title">¿Qué es el Canon Bíblico?</summary>
+            <div class="accordion-content">
                 <p>La palabra <strong>canon</strong> viene del griego <em>kanón</em>, que significa regla, medida o norma.</p>
                 <p>Cuando hablamos del Canon Bíblico, nos referimos al conjunto de libros que fueron reconocidos como la Palabra de Dios y que forman la Biblia. En palabras sencillas, el canon responde a una pregunta muy simple: <strong>¿Qué libros pertenecen realmente a la Biblia?</strong></p>
             </div>
         </details>
 
-        <details>
-            <summary>¿Qué Biblia usan las iglesias evangélicas?</summary>
-            <div class="content">
+        <details class="accordion-card">
+            <summary class="accordion-title">¿Qué Biblia usan las iglesias evangélicas?</summary>
+            <div class="accordion-content">
                 <p>Las iglesias evangélicas utilizan el canon protestante, formado por <strong>66 libros</strong>:</p>
                 <ul>
                     <li>39 libros del Antiguo Testamento.</li>
@@ -49,9 +53,9 @@ css: encuentros
             </div>
         </details>
 
-        <details>
-            <summary>¿De dónde surge el canon evangélico?</summary>
-            <div class="content">
+        <details class="accordion-card">
+            <summary class="accordion-title">¿De dónde surge el canon evangélico?</summary>
+            <div class="accordion-content">
                 <p>Una pregunta muy común es si las iglesias evangélicas crearon un canon propio. La respuesta es <strong>no</strong>. El canon evangélico se basa en dos tradiciones históricas:</p>
                 <ul>
                     <li><strong>Para el Antiguo Testamento:</strong> Adopta el canon hebreo (el Tanaj), reconocido por el pueblo judío. El Tanaj tiene 24 libros, pero son exactamente los mismos escritos que nuestros 39 libros. La diferencia está en cómo se agrupan (por ejemplo, 1 y 2 Samuel forman un solo libro allí). El contenido es el mismo.</li>
@@ -60,9 +64,9 @@ css: encuentros
             </div>
         </details>
 
-        <details>
-            <summary>¿Por qué hay Biblias con distinta cantidad de libros?</summary>
-            <div class="content">
+        <details class="accordion-card">
+            <summary class="accordion-title">¿Por qué hay Biblias con distinta cantidad de libros?</summary>
+            <div class="accordion-content">
                 <p>La diferencia está únicamente en el Antiguo Testamento.</p>
                 <p>Las iglesias evangélicas siguen el canon hebreo, mientras que la Iglesia católica también reconoce como inspirados algunos libros escritos en el período entre el Antiguo y el Nuevo Testamento. Estos libros son conocidos por los católicos como <em>deuterocanónicos</em> y por los protestantes como <em>apócrifos</em>.</p>
                 <p>Entre ellos se encuentran: Tobías, Judit, Sabiduría, Eclesiástico (Sirácida), Baruc, 1 Macabeos y 2 Macabeos. Además, la Biblia católica incluye algunas secciones adicionales en los libros de Ester y Daniel.</p>
@@ -75,13 +79,20 @@ css: encuentros
         </details>
 
 
-        <h2>Antiguo Testamento (39 libros)</h2>
-        <div class="ot-accordion">
-            <details>
-                <summary>Pentateuco o Ley (5 libros)</summary>
-                <div class="content">
+        <section class="books-section old-testament">
+
+            <h2>Antiguo Testamento</h2>
+
+                <p class="section-description">
+                    39 libros organizados en cinco grandes grupos.
+                </p>
+
+            <div class="ot-accordion">
+            <details class="accordion-card">
+                <summary class="accordion-title">Pentateuco o Ley (5 libros)</summary>
+                <div class="accordion-content">
                     <p>Relata los comienzos de la humanidad, el llamado de Abraham, la formación del pueblo de Israel y la Ley dada por Dios a través de Moisés.</p>
-                    <div class="books-container">
+                    <div class="books-grid">
                         <span class="book-chip">Génesis</span>
                         <span class="book-chip">Éxodo</span>
                         <span class="book-chip">Levítico</span>
@@ -91,11 +102,11 @@ css: encuentros
                 </div>
             </details>
 
-            <details>
-                <summary>Libros Históricos (12 libros)</summary>
-                <div class="content">
+            <details class="accordion-card">
+                <summary class="accordion-title">Libros Históricos (12 libros)</summary>
+                <div class="accordion-content">
                     <p>Narran la historia del pueblo de Israel desde la conquista de la tierra prometida hasta el regreso del exilio en Babilonia.</p>
-                    <div class="books-container">
+                    <div class="books-grid">
                         <span class="book-chip">Josué</span>
                         <span class="book-chip">Jueces</span>
                         <span class="book-chip">Rut</span>
@@ -112,11 +123,11 @@ css: encuentros
                 </div>
             </details>
 
-            <details>
-                <summary>Libros Poéticos y Sapienciales (5 libros)</summary>
-                <div class="content">
+            <details class="accordion-card">
+                <summary class="accordion-title">Libros Poéticos y Sapienciales (5 libros)</summary>
+                <div class="accordion-content">
                     <p>Contienen oraciones, cantos, proverbios y enseñanzas sobre la vida, la sabiduría, el sufrimiento y la relación con Dios.</p>
-                    <div class="books-container">
+                    <div class="books-grid">
                         <span class="book-chip">Job</span>
                         <span class="book-chip">Salmos</span>
                         <span class="book-chip">Proverbios</span>
@@ -126,11 +137,11 @@ css: encuentros
                 </div>
             </details>
 
-            <details>
-                <summary>Profetas Mayores (5 libros)</summary>
-                <div class="content">
+            <details class="accordion-card">
+                <summary class="accordion-title">Profetas Mayores (5 libros)</summary>
+                <div class="accordion-content">
                     <p>Reciben este nombre porque sus escritos son más extensos, no porque sean más importantes.</p>
-                    <div class="books-container">
+                    <div class="books-grid">
                         <span class="book-chip">Isaías</span>
                         <span class="book-chip">Jeremías</span>
                         <span class="book-chip">Lamentaciones</span>
@@ -140,11 +151,11 @@ css: encuentros
                 </div>
             </details>
 
-            <details>
-                <summary>Profetas Menores (12 libros)</summary>
-                <div class="content">
+            <details class="accordion-card">
+                <summary class="accordion-title">Profetas Menores (12 libros)</summary>
+                <div class="accordion-content">
                     <p>Se llaman "menores" porque sus libros son más breves.</p>
-                    <div class="books-container">
+                    <div class="books-grid">
                         <span class="book-chip">Oseas</span>
                         <span class="book-chip">Joel</span>
                         <span class="book-chip">Amós</span>
@@ -161,14 +172,17 @@ css: encuentros
                 </div>
             </details>
         </div>
+    </div>
 
+    </section>
+    <section class="books-section new-testament">
         <h2>Nuevo Testamento (27 libros)</h2>
         <div class="nt-accordion">
-            <details>
-                <summary>Evangelios (4 libros)</summary>
-                <div class="content">
+            <details class="accordion-card">
+                <summary class="accordion-title">Evangelios (4 libros)</summary>
+                <div class="accordion-content">
                     <p>Relatan la vida, el ministerio, la muerte y la resurrección de Jesucristo.</p>
-                    <div class="books-container">
+                    <div class="books-grid">
                         <span class="book-chip">Mateo</span>
                         <span class="book-chip">Marcos</span>
                         <span class="book-chip">Lucas</span>
@@ -177,21 +191,21 @@ css: encuentros
                 </div>
             </details>
 
-            <details>
-                <summary>Libro Histórico (1 libro)</summary>
-                <div class="content">
+            <details class="accordion-card">
+                <summary class="accordion-title">Libro Histórico (1 libro)</summary>
+                <div class="accordion-content">
                     <p>Cuenta cómo nació la Iglesia y cómo el mensaje de Jesús comenzó a expandirse por el mundo.</p>
-                    <div class="books-container">
+                    <div class="books-grid">
                         <span class="book-chip">Hechos de los Apóstoles</span>
                     </div>
                 </div>
             </details>
 
-            <details>
-                <summary>Cartas de Pablo (13 libros)</summary>
-                <div class="content">
+            <details class="accordion-card">
+                <summary class="accordion-title">Cartas de Pablo (13 libros)</summary>
+                <div class="accordion-content">
                     <p>Son cartas escritas por el apóstol Pablo para enseñar, animar y corregir a las primeras iglesias y a distintos creyentes.</p>
-                    <div class="books-container">
+                    <div class="books-grid">
                         <span class="book-chip">Romanos</span>
                         <span class="book-chip">1 Corintios</span>
                         <span class="book-chip">2 Corintios</span>
@@ -209,11 +223,11 @@ css: encuentros
                 </div>
             </details>
 
-            <details>
-                <summary>Cartas Generales (8 libros)</summary>
-                <div class="content">
+            <details class="accordion-card">
+                <summary class="accordion-title">Cartas Generales (8 libros)</summary>
+                <div class="accordion-content">
                     <p>Son cartas escritas por otros apóstoles y líderes a una audiencia más amplia (la Iglesia en general).</p>
-                    <div class="books-container">
+                    <div class="books-grid">
                         <span class="book-chip">Hebreos</span>
                         <span class="book-chip">Santiago</span>
                         <span class="book-chip">1 Pedro</span>
@@ -227,18 +241,21 @@ css: encuentros
                 </div>
             </details>
 
-            <details>
-                <summary>Libro Profético (1 libro)</summary>
-                <div class="content">
+            <details class="accordion-card">
+                <summary class="accordion-title">Libro Profético (1 libro)</summary>
+                <div class="accordion-content">
                     <p>Presenta, mediante visiones y un lenguaje simbólico, el triunfo definitivo de Jesucristo y el cumplimiento del plan de Dios para la humanidad.</p>
-                    <div class="books-container">
+                    <div class="books-grid">
                         <span class="book-chip">Apocalipsis</span>
                     </div>
                 </div>
             </details>
+    </section>
         </div>
+</section>
+        <section class="summary-section">
 
-        <h2>Resumen Final</h2>
+            <h2>Resumen Final</h2>
         
         <div class="infographic">
             <h3>El Canon Completo: 66 Libros</h3>
@@ -260,7 +277,7 @@ css: encuentros
                 </div>
             </div>
         </div>
-
+    </section>
         <div class="summary-tables">
             <div class="table-card ot">
                 <header>Antiguo Testamento</header>
