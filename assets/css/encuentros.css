@@ -472,26 +472,59 @@ details{
         border-color .3s;
 }
 
-summary{
+.accordion-title{
 
     font-size:1.08rem;
 
     transition:.25s;
 }
 
-details:hover summary{
+.accordion-title::-webkit-details-marker{
+    display:none;
+}
+
+.accordion-title::after{
+    content:"⌄";
+    margin-left:auto;
+    transition:.3s;
+}
+
+.accordion-card[open] .accordion-title::after{
+    transform:rotate(180deg);
+}
+
+.accordion-card:hover .accordion-title{
 
     padding-left:1.8rem;
 }
 
-details[open] summary{
+.accordion-card[open] .accordion-title{
 
     background:rgba(255,255,255,.03);
 }
 
-.content{
-
+.accordion-content{
     animation:fadeContent .45s ease;
+    padding:1.5rem 1.75rem 1.75rem;
+    line-height:1.9;
+    color:var(--lesson-muted);
+}
+
+.accordion-content p{
+    margin:0 0 1rem;
+}
+
+.accordion-content p:last-child{
+    margin-bottom:0;
+}
+
+.accordion-content ul{
+    margin:1rem 0;
+    padding-left:1.5rem;
+}
+
+.accordion-content li{
+    margin-bottom:.6rem;
 }
 
 @keyframes fadeContent{
