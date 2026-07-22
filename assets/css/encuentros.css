@@ -214,7 +214,7 @@
 
 .container h2{
 
-    margin:4rem 0 2rem;
+    margin:1rem 0 2rem;
 
     font-size:2.3rem;
 
@@ -236,7 +236,7 @@
 
     height:5px;
 
-    margin-top:.8rem;
+    margin-top:.2rem;
 
     border-radius:999px;
 
@@ -431,7 +431,7 @@ details:hover{
 
 .container h2{
     position:relative;
-    margin:5rem 0 2rem;
+    margin:1rem 0 2rem;
     padding-bottom:1rem;
     font-family:"Cormorant Garamond",serif;
     font-size:clamp(2.2rem,4vw,3rem);
@@ -624,7 +624,7 @@ details[open] summary{
 
     position:relative;
 
-    margin-bottom:5rem;
+    margin-bottom:2rem;
 }
 
 .ot-accordion::after,
@@ -638,7 +638,7 @@ details[open] summary{
 
     height:1px;
 
-    margin:4rem auto 0;
+    margin:2rem auto 0;
 
     background:linear-gradient(
         90deg,
