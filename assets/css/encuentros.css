@@ -46,7 +46,7 @@
 
     overflow:hidden;
 
-    padding:4rem 2rem;
+    padding:3rem 2rem;
 
     background:
     radial-gradient(circle at top right,#3b8eb240 0%,transparent 35%),
@@ -284,7 +284,7 @@
 .hero--internal{
     position:relative;
     overflow:hidden;
-    padding:3rem 2rem 6rem;
+    padding:2rem 1rem 2rem;
     text-align:center;
     background:
         radial-gradient(circle at top,#d8c19b22 0%,transparent 55%),
