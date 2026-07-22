@@ -563,7 +563,7 @@ section {
   background: var(--jungle-deep);
   border-top: 1px solid rgba(250, 198, 98, 0.1);
   text-align: center;
-  padding: 9rem 2rem;
+  padding: 2rem 2rem;
 }
 
 .manifesto__mark {
@@ -1450,7 +1450,7 @@ section {
   
   section { padding: 5rem 1.5rem; }
   .scripture { padding: 6rem 1.5rem; }
-  .manifesto { padding: 6rem 1.5rem; }
+  .manifesto { padding: 2rem 1.5rem; }
 }
 
 @media (max-width: 600px) {
