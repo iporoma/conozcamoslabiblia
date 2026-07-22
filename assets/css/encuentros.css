@@ -659,3 +659,38 @@ html{
 
     color:#111;
 }
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width:768px){
+
+    .container{
+        width:calc(100% - 1.5rem);
+        margin-top:-40px;
+        padding:1.5rem;
+        border-radius:22px;
+    }
+
+    .hero--internal{
+        padding:5rem 1.25rem 4rem;
+    }
+
+    .hero__title .inner{
+        font-size:2.8rem;
+    }
+
+    .hero__subtitle{
+        font-size:1rem;
+    }
+
+    .container h2{
+        font-size:2rem;
+    }
+
+    .container h2::before{
+        display:none;
+    }
+
+}
