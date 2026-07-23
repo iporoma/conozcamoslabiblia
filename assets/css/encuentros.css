@@ -35,126 +35,6 @@
 
 }
 
-
-/* ==========================================================
-   HERO
-   ========================================================== */
-
-.hero--internal{
-
-    position:relative;
-
-    overflow:hidden;
-
-    padding:3rem 2rem;
-
-    background:
-    radial-gradient(circle at top right,#3b8eb240 0%,transparent 35%),
-    radial-gradient(circle at bottom left,#d6a44a22 0%,transparent 35%),
-    linear-gradient(135deg,#123949,#1d5a70);
-
-}
-
-.hero--internal::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background-image:
-        radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);
-
-    background-size:22px 22px;
-
-    opacity:.35;
-
-}
-
-.hero__inner{
-
-    position:relative;
-
-    z-index:2;
-
-    width:min(900px,100%);
-
-    margin:auto;
-
-    text-align:center;
-
-}
-
-.hero__eyebrow{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    gap:.6rem;
-
-    padding:.55rem 1rem;
-
-    border-radius:999px;
-
-    background:rgba(255,255,255,.10);
-
-    border:1px solid rgba(255,255,255,.18);
-
-    color:#fff;
-
-    letter-spacing:.12em;
-
-    text-transform:uppercase;
-
-    font-size:.82rem;
-
-    font-weight:700;
-
-}
-
-.hero__title{
-
-    margin:2rem 0 1rem;
-
-    color:#fff;
-
-    font-size:clamp(2.8rem,7vw,5rem);
-
-    line-height:.95;
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-weight:600;
-
-}
-
-.hero__title em{
-
-    color:#f8d788;
-
-    font-style:italic;
-
-    font-weight:500;
-
-}
-
-.hero__subtitle{
-
-    max-width:720px;
-
-    margin:0 auto;
-
-    font-size:1.25rem;
-
-    color:rgba(255,255,255,.82);
-
-    line-height:1.8;
-
-}
-
-
 /* ==========================================================
    CONTENEDOR
    ========================================================== */
@@ -213,62 +93,47 @@
    ========================================================== */
 
 .container h2{
-
-    margin:1rem 0 2rem;
-
     font-size:2.3rem;
-
-    font-family:"Cormorant Garamond",serif;
-
     color:var(--lesson-primary);
-
     position:relative;
-
+    margin:1rem 0 2rem;
+    padding-bottom:1rem;
+    font-family:"Cormorant Garamond",serif;
+    font-size:clamp(2.2rem,4vw,3rem);
+    font-weight:600;
+    letter-spacing:.02em;
 }
 
 .container h2::after{
-
     content:"";
-
     display:block;
-
     width:80px;
-
     height:5px;
-
     margin-top:.2rem;
-
     border-radius:999px;
-
-    background:linear-gradient(90deg,var(--lesson-gold),var(--lesson-primary));
-
+    background:linear-gradient(
+        90deg,
+        #d6b67b,
+        transparent
+    );
 }
-
 
 /* ==========================================================
    INTRODUCCION
    ========================================================== */
 
 .intro-box{
-
     background:linear-gradient(135deg,#ffffff,#fbfaf8);
-
     border:1px solid var(--lesson-border);
-
     border-left:6px solid var(--lesson-gold);
-
     border-radius:22px;
-
     padding:1rem;
-
     font-size:1.08rem;
-
     line-height:2;
-
     color:var(--lesson-muted);
-
     box-shadow:var(--lesson-shadow);
-
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,.08);
 }
 
 .intro-box strong{
@@ -361,10 +226,6 @@ body{
         radial-gradient(circle at top,#1d1812 0%,#111 45%,#0b0b0b 100%);
 }
 
-.page{
-    position:relative;
-}
-
 .page::before{
     content:"";
     position:absolute;
@@ -376,7 +237,6 @@ body{
 }
 
 .container{
-    position:relative;
     z-index:2;
 }
 
@@ -388,21 +248,17 @@ details{
     backdrop-filter:blur(12px);
     background:rgba(255,255,255,.03);
     border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    overflow:hidden;
+    transition:
+        transform .3s,
+        box-shadow .3s,
+        border-color .3s;
 }
 
 details:hover{
     transform:translateY(-3px);
     box-shadow:0 18px 40px rgba(0,0,0,.35);
-}
-
-.intro-box{
-    background:linear-gradient(
-        135deg,
-        rgba(255,255,255,.05),
-        rgba(255,255,255,.02)
-    );
-    backdrop-filter:blur(12px);
-    border:1px solid rgba(255,255,255,.08);
 }
 
 .table-card,
@@ -417,6 +273,9 @@ details:hover{
 
 .book-chip{
     border:1px solid rgba(var(--accent-rgb),.25);
+    position:relative;
+    overflow:hidden;
+    transition:.35s;
 }
 
 .book-chip:hover{
@@ -428,28 +287,6 @@ details:hover{
 /* ==========================================================
    TITULOS DE SECCIÓN
    ========================================================== */
-
-.container h2{
-    position:relative;
-    margin:1rem 0 2rem;
-    padding-bottom:1rem;
-    font-family:"Cormorant Garamond",serif;
-    font-size:clamp(2.2rem,4vw,3rem);
-    font-weight:600;
-    letter-spacing:.02em;
-}
-
-.container h2::after{
-    width:90px;
-    height:4px;
-    border-radius:999px;
-    background:linear-gradient(
-        90deg,
-        #d6b67b,
-        transparent
-    );
-}
-
 .container h2::before{
     content:"✦";
     position:absolute;
@@ -458,18 +295,6 @@ details:hover{
     color:#d6b67b;
     opacity:.35;
     font-size:1rem;
-}
-
-details{
-
-    border-radius:18px;
-
-    overflow:hidden;
-
-    transition:
-        transform .3s,
-        box-shadow .3s,
-        border-color .3s;
 }
 
 .accordion-title{
@@ -545,15 +370,6 @@ details{
 
 }
 
-.book-chip{
-
-    position:relative;
-
-    overflow:hidden;
-
-    transition:.35s;
-}
-
 .book-chip::before{
 
     content:"";
@@ -587,7 +403,6 @@ details{
 }
 
 .table-card{
-
     transition:
         transform .35s,
         box-shadow .35s;
