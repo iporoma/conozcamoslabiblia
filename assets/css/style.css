@@ -1398,6 +1398,10 @@ section {
   .nav.is-scrolled { padding: 0.85rem 1.5rem; }
   
   .nav__menu {
+      .nav { padding: 1.25rem 1.5rem; }
+  .nav.is-scrolled { padding: 0.85rem 1.5rem; }
+  
+  .nav__menu {
     position: fixed;
     top: 0; right: 0;
     width: 100%;
@@ -1411,6 +1415,7 @@ section {
     transition: transform 500ms var(--ease-quiet);
     align-items: flex-start;
     overflow-y: auto;
+    overflow-x: hidden;
     border-left: 1px solid rgba(250, 198, 98, 0.15);
   }
   
