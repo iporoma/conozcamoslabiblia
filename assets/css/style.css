@@ -195,7 +195,7 @@ button { font-family: inherit; }
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+  /* transform: translateX(-50%) translateY(0); */
   transition: opacity 400ms var(--ease-quiet), transform 400ms var(--ease-quiet), visibility 0s;
 }
 
@@ -1424,7 +1424,7 @@ section {
   
   .dropdown {
     position: static;
-    /* transform: none; */
+    transform: none;
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
