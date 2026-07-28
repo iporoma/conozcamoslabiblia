@@ -1411,6 +1411,7 @@ section {
     transition: transform 500ms var(--ease-quiet);
     align-items: flex-start;
     overflow-y: auto;
+    overflow-x: hidden;
     border-left: 1px solid rgba(250, 198, 98, 0.15);
   }
   
