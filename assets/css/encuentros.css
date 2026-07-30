@@ -559,6 +559,11 @@ html{
     object-fit:cover;
 }
 
+.image-row.single .image-container{
+    flex:0 0 60%; /* o el porcentaje que prefieras */
+    margin:0 auto;
+}
+
 /* ==========================================
    RESPONSIVE
    ========================================== */
