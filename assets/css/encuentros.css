@@ -537,16 +537,15 @@ html{
 
 .image-row{
     display:flex;
-    gap:1rem; /* espacio entre las imágenes */
+    flex-wrap:wrap;
+    gap:1rem;
     margin:2.5rem 0;
 }
 
 .image-container{
     position:relative;
-    flex:1;
-    width:auto;
+    flex:1 1 calc(50% - 0.5rem); /* máximo 2 por fila en escritorio */
     aspect-ratio:1 / 1;
-    margin:0;
     border-radius:20px;
     overflow:hidden;
     box-shadow:0 20px 45px rgba(0,0,0,.18);
@@ -559,9 +558,24 @@ html{
     object-fit:cover;
 }
 
-.image-row.single .image-container{
-    flex:0 0 60%; /* o el porcentaje que prefieras */
+/* Imagen única: más pequeña y centrada en escritorio */
+.image-row .image-container:only-child{
+    flex:0 0 60%;
     margin:0 auto;
+}
+
+/* MÓVIL: todo se apila, ocupa el 100% del ancho, sin excepciones */
+@media (max-width: 600px){
+    .image-row{
+        flex-direction:column;
+    }
+
+    .image-container,
+    .image-row .image-container:only-child{
+        flex:1 1 100% !important;
+        width:100%;
+        margin:0;
+    }
 }
 
 /* ==========================================
@@ -595,16 +609,6 @@ html{
 
     .container h2::before{
         display:none;
-    }
-    .image-row{
-        flex-direction:column;
-    }
-
-    .image-container,
-    .image-row .image-container:only-child{
-        flex:1 1 100% !important;
-        width:100%;
-        margin:0;
     }
 
 }
