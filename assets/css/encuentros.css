@@ -596,5 +596,15 @@ html{
     .container h2::before{
         display:none;
     }
+    .image-row{
+        flex-direction:column;
+    }
+
+    .image-container,
+    .image-row .image-container:only-child{
+        flex:1 1 100% !important;
+        width:100%;
+        margin:0;
+    }
 
 }
