@@ -508,8 +508,34 @@ html{
     color:#111;
 }
 
+ul {
+  /* Quita los rellenos por defecto */
+  padding-left: 0;
+  margin-left: 0;
+}
+
 li {
-  list-style-position: inside;
+  /* Activamos Flexbox para controlar la alineación */
+  display: flex;
+  align-items: flex-start;
+  
+  /* Quita la viñeta rota del navegador */
+  list-style: none; 
+  
+  /* Espacio entre cada elemento de la lista */
+  margin-bottom: 12px;
+}
+
+/* Creamos nuestro propio punto alineado */
+li::before {
+  /* Código del punto circular */
+  content: "•"; 
+  
+  /* Espacio exacto entre el punto y el texto */
+  margin-right: 8px; 
+  
+  /* Color del punto (opcional, combina con tu texto) */
+  color: #666; 
 }
 
 /* ==========================================
