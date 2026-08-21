@@ -519,7 +519,7 @@ li {
   list-style-position: inside;
   
   /* Ajusta el espacio vertical entre cada rey si lo deseas */
-  margin-bottom: 12px;
+  /* margin-bottom: 12px; */
 }
 
 /* ==========================================
