@@ -509,11 +509,7 @@ html{
 }
 
 li {
-  /* Coloca el punto de la viñeta dentro del flujo del texto */
   list-style-position: inside;
-  
-  /* Ajusta el espacio vertical entre cada rey si lo deseas */
-  /* margin-bottom: 12px; */
 }
 
 /* ==========================================
