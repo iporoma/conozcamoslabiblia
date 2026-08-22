@@ -508,35 +508,35 @@ html{
     color:#111;
 }
 
-ul {
+/* ul { */
   /* Quita los rellenos por defecto */
-  padding-left: 0;
-  margin-left: 0;
-}
+  /* padding-left: 0; */
+  /* margin-left: 0; */
+/* } */
 
-li {
+/* li { */
   /* Activamos Flexbox para controlar la alineación */
-  display: flex;
-  align-items: flex-start;
+  /* display: flex; */
+  /* align-items: flex-start; */
   
   /* Quita la viñeta rota del navegador */
-  list-style: none; 
+  /* list-style: none;  */
   
   /* Espacio entre cada elemento de la lista */
-  margin-bottom: 12px;
-}
+  /* margin-bottom: 12px; */
+/* } */
 
 /* Creamos nuestro propio punto alineado */
-li::before {
+/* li::before { */
   /* Código del punto circular */
-  content: "•"; 
+  /* content: "•";  */
   
   /* Espacio exacto entre el punto y el texto */
-  margin-right: 8px; 
+  /* margin-right: 8px;  */
   
   /* Color del punto (opcional, combina con tu texto) */
-  color: #666; 
-}
+  /* color: #666;  */
+/* } */
 
 /* ==========================================
    VIDEOS DE YOUTUBE
