@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profetas de la Biblia y Contexto Histórico</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #c0392b;
+            --accent-color: #d4af37;
+            --bg-color: #f4f1ea;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: #fff;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-bottom: 5px solid var(--accent-color);
+        }
+
+        header h1 { margin-bottom: 0.5rem; font-size: 2.5rem; }
+        header p { max-width: 800px; margin: 0 auto; font-style: italic; opacity: 0.9; }
+
+        .intro {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-left: 5px solid var(--secondary-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem;
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .controls button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            background-color: #ecf0f1;
+            color: var(--primary-color);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .controls button:hover { background-color: #e0e6e8; }
+
+        .controls button.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        .content-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+
+        .column { flex: 1; min-width: 320px; }
+
+        .column-title {
+            text-align: center;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 5px 5px 0 0;
+            margin-bottom: -1px;
+        }
+
+        .prophets-title { background-color: var(--secondary-color); }
+        .history-title { background-color: var(--primary-color); }
+
+        .cards-wrapper {
+            background: #fff;
+            padding: 1.5rem;
+            border: 1px solid #ddd;
+            min-height: 400px;
+        }
+
+        .card {
+            border: 1px solid #eee;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card-header {
+            background: #f9f9f9;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-info { display: flex; flex-direction: column; gap: 5px; }
+        .card-header h3 { margin: 0; color: var(--primary-color); font-size: 1.2rem; }
+        .card-header h3 small { font-size: 0.8rem; color: #7f8c8d; font-weight: normal; }
+        .card-header span.date { font-size: 0.85rem; color: #7f8c8d; font-weight: bold; text-align: right; }
+
+        .kingdom-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #fff;
+            width: fit-content;
+        }
+
+        .k-north { background-color: #16a085; }
+        .k-south { background-color: #d35400; }
+        .k-exile { background-color: #8e44ad; }
+        .k-post { background-color: #2c3e50; }
+
+        .card-body { padding: 1rem; display: none; }
+        .card.active .card-body { display: block; }
+        .card-body p { margin-bottom: 0.5rem; }
+
+        .timeline-section {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 1rem;
+            background: #fff;
+            border-top: 2px solid var(--accent-color);
+        }
+
+        .timeline-title { text-align: center; color: var(--primary-color); margin-bottom: 1.5rem; }
+
+        .timeline-bar {
+            display: flex;
+            height: 60px;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .timeline-segment {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            font-size: 0.85rem;
+            padding: 5px;
+            transition: transform 0.3s;
+            border-right: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .timeline-segment:last-child { border-right: none; }
+        .timeline-segment:hover { transform: scale(1.05); z-index: 10; box-shadow: 0 0 15px rgba(0,0,0,0.3); }
+        .timeline-segment small { font-weight: normal; opacity: 0.9; }
+
+        .seg-asiria { background-color: #27ae60; }
+        .seg-babilonia { background-color: #2980b9; }
+        .seg-persia { background-color: #8e44ad; }
+        .seg-grecia { background-color: #bdc3c7; color: #333; }
+        .seg-israel-div { background-color: #1abc9c; }
+        .seg-israel-caut { background-color: #16a085; }
+        .seg-israel-asim { background-color: #0e6655; }
+        .seg-judah-div { background-color: #e67e22; }
+        .seg-judah-caut { background-color: #d35400; }
+        .seg-judah-retorno { background-color: #c0392b; }
+
+        /* Estilos para la sección colapsable de Cronología */
+        .extra-info-section {
+            max-width: 1400px;
+            margin: 3rem auto 1rem;
+            padding: 0 1rem;
+        }
+
+        .collapse-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 1.5rem;
+            width: 100%;
+            border: none;
+            text-align: left;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+        }
+
+        .collapse-btn:hover { background-color: #34495e; }
+        .collapse-btn .arrow { transition: transform 0.3s ease; font-size: 1.5rem; }
+        .collapse-btn.active .arrow { transform: rotate(180deg); }
+
+        .collapse-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .collapse-content.active { max-height: 100000px; } /* Altura suficiente para mostrar todo */
+
+        .table-wrapper {
+            overflow-x: auto;
+            padding: 1rem;
+        }
+
+        table.chronology-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        table.chronology-table th, table.chronology-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        table.chronology-table th {
+            background-color: var(--primary-color);
+            color: #fff;
+            font-weight: bold;
+        }
+
+        table.chronology-table tr:nth-child(even) { background-color: #f9f9f9; }
+        table.chronology-table tr:hover { background-color: #f1f1f1; }
+        
+        .table-date { font-weight: bold; color: var(--secondary-color); white-space: nowrap; }
+
+        .notes-section {
+            padding: 1.5rem;
+            background-color: #fdfbfef;
+            border-top: 2px solid var(--accent-color);
+        }
+        .notes-section h3 { color: var(--primary-color); margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; }
+        .notes-section ul { list-style-type: none; padding-left: 0; }
+        .notes-section li { margin-bottom: 1rem; padding-left: 1.2rem; position: relative; }
+        .notes-section li::before { content: "•"; color: var(--secondary-color); font-weight: bold; position: absolute; left: 0; font-size: 1.2rem; line-height: 1.2; }
+        .notes-section li strong { color: var(--primary-color); }
+
+        footer {
+            background-color: var(--primary-color);
+            color: #bdc3c7;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .content-container { flex-direction: column; }
+            .timeline-bar { flex-direction: column; height: auto; }
+            .timeline-segment { border-right: none; border-bottom: 2px solid rgba(255,255,255,0.3); padding: 1rem; }
+            .card-header { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .card-header span.date { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Los Profetas de la Biblia y su Contexto Histórico</h1>
+        <p>Un recorrido paralelo por la historia de Israel y Judá, y los grandes imperios del Medio Oriente.</p>
+    </header>
+
+    <div class="intro">
+        <p>Un profeta en el Antiguo Testamento era alguien que Dios usaba para comunicar Su mensaje al mundo. Eran "videntes" que transmitían el mensaje de Dios correctamente. Su contexto histórico no fue un vacío; surgieron en medio de la competencia entre grandes potencias del antiguo Cercano Oriente: Asiria, Babilonia y Persia.</p>
+    </div>
+
+    <div class="controls">
+        <button class="tab-btn active" onclick="showEra('antes', this)">1. Antes de la Cautividad</button>
+        <button class="tab-btn" onclick="showEra('cerca', this)">2. Cercanos a la Cautividad</button>
+        <button class="tab-btn" onclick="showEra('durante', this)">3. Durante la Cautividad</button>
+        <button class="tab-btn" onclick="showEra('despues', this)">4. Después de la Cautividad</button>
+    </div>
+
+    <div class="content-container">
+        <!-- Columna de Profetas -->
+        <div class="column">
+            <div class="column-title prophets-title">
+                <h2>Participación de los Profetas</h2>
+            </div>
+            <div class="cards-wrapper" id="prophets-column"></div>
+        </div>
+
+        <!-- Columna de Historia -->
+        <div class="column">
+            <div class="column-title history-title">
+                <h2>Historia de la Humanidad (Medio Oriente)</h2>
+            </div>
+            <div class="cards-wrapper" id="history-column"></div>
+        </div>
+    </div>
+
+    <div class="timeline-section">
+        <h2 class="timeline-title">Línea de Tiempo de las Grandes Potencias</h2>
+        <div class="timeline-bar">
+            <div class="timeline-segment seg-asiria">Asiria<br><small>(850 - 612 a.C.)</small></div>
+            <div class="timeline-segment seg-babilonia">Babilonia<br><small>(612 - 539 a.C.)</small></div>
+            <div class="timeline-segment seg-persia">Persia<br><small>(539 - 331 a.C.)</small></div>
+            <div class="timeline-segment seg-grecia">Grecia<br><small>(331 a.C. en adelante)</small></div>
+        </div>
+
+        <h2 class="timeline-title">Reino de Israel (Norte) - Cautividad y Asimilación</h2>
+        <div class="timeline-bar">
+            <div class="timeline-segment seg-israel-div">
+                Reino Dividido y Declive
+                <small>c. 931 - 722 a.C. <br> Advertencias de Oseas y Amós</small>
+            </div>
+            <div class="timeline-segment seg-israel-caut">
+                Caída de Samaria
+                <small>722 a.C. <br> Cautivos por el Imperio Asirio</small>
+            </div>
+            <div class="timeline-segment seg-israel-asim">
+                Asimilación / Dispersión
+                <small>Sin retorno nacional <br> "Las tribus perdidas"</small>
+            </div>
+        </div>
+
+        <h2 class="timeline-title">Reino de Judá (Sur) - Cautividad y Retorno</h2>
+        <div class="timeline-bar">
+            <div class="timeline-segment seg-judah-div">
+                Pre-Cautividad
+                <small>c. 931 - 605 a.C. <br> Reformas, idolatría y advertencias</small>
+            </div>
+            <div class="timeline-segment seg-judah-caut">
+                Cautividad Babilónica
+                <small>605 - 539 a.C. <br> (70 años. Caída de Jerusalén: 586 a.C.)</small>
+            </div>
+            <div class="timeline-segment seg-judah-retorno">
+                Retorno y Restauración
+                <small>538 a.C. en adelante <br> Decreto de Ciro (Persia)</small>
+            </div>
+            <div class="timeline-segment seg-judah-div">
+                Establecimiento en la Tierra
+                <small>c. 515 - 445 a.C. <br> Templo reconstruido, Muros por Nehemías</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN COLAPSABLE DE CRONOLOGÍA DETALLADA -->
+    <div class="extra-info-section">
+        <button class="collapse-btn" onclick="toggleExtraInfo(this)">
+            Para saber más: Cronología de la época
+            <span class="arrow">▼</span>
+        </button>
+        <div class="collapse-content" id="extraInfoContent">
+            <div class="table-wrapper">
+                <table class="chronology-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha aprox.</th>
+                            <th>Reino del Norte — Israel</th>
+                            <th>Reino del Sur — Judá</th>
+                            <th>Contexto del Cercano Oriente / Imperios</th>
+                            <th>Referencias bíblicas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="table-date">931 a.C.</td>
+                            <td>Jeroboam I funda el reino; santuarios en Betel y Dan</td>
+                            <td>Roboam conserva el Templo y la dinastía davídica</td>
+                            <td>Egipto (Dinastía XXII); Sisac invade Judá (~925 a.C.)</td>
+                            <td>1 Reyes 12:1-33; 1 Reyes 14:25-26; 2 Crónicas 10–12</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">900–850 a.C.</td>
+                            <td>Omri funda Samaria (~880 a.C.); Acab y Jezabel promueven a Baal</td>
+                            <td>Josafat, aliado militar de Israel</td>
+                            <td>Asiria expande bajo Asurnasirpal II y Salmanasar III; batalla de Qarqar (853 a.C., no bíblica)</td>
+                            <td>1 Reyes 16:21-28 (Omri); 1 Reyes 16:29–22:40 (Acab); 1 Reyes 22:1-50 (Josafat)</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">841 a.C.</td>
+                            <td>Jehú paga tributo a Asiria (extrabíblico: Obelisco Negro)</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>2 Reyes 9–10 (golpe de Jehú, no menciona el tributo)</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">800–750 a.C.</td>
+                            <td>Jeroboam II: apogeo territorial</td>
+                            <td>Uzías (Azarías): prosperidad similar</td>
+                            <td>Debilidad temporal asiria</td>
+                            <td>2 Reyes 14:23-29; 2 Reyes 15:1-7 y 2 Crónicas 26; Amós 1:1, 6:1-14; Oseas 1:1</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">745 a.C.</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>Tiglat-Pileser III relanza la expansión asiria</td>
+                            <td>2 Reyes 15:19 (mencionado como "Pul")</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">734–732 a.C.</td>
+                            <td>Guerra siro-efraimita contra Judá</td>
+                            <td>Acaz pide ayuda a Asiria; Isaías se opone</td>
+                            <td>Tiglat-Pileser III destruye Damasco y anexa Galilea/Transjordania</td>
+                            <td>2 Reyes 16:1-9; Isaías 7:1-25; 2 Crónicas 28:1-21</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">722 a.C.</td>
+                            <td>Caída de Samaria</td>
+                            <td>Vasallo asirio</td>
+                            <td>Sargón II completa la conquista</td>
+                            <td>2 Reyes 17:1-23</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">705–701 a.C.</td>
+                            <td>(ya no existe)</td>
+                            <td>Ezequías se rebela; asedio de Senaquerib, Jerusalén se salva</td>
+                            <td>Senaquerib, rey de Asiria (confirmado en su Prisma)</td>
+                            <td>2 Reyes 18–19; Isaías 36–37; 2 Crónicas 32:1-23</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">669–627 a.C.</td>
+                            <td>—</td>
+                            <td>Manasés, vasallo asirio</td>
+                            <td>Apogeo de Asiria bajo Asurbanipal</td>
+                            <td>2 Reyes 21:1-18; 2 Crónicas 33:1-20</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">626 a.C.</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>Nabopolasar funda el Imperio neobabilónico (no narrado directamente en la Biblia)</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">622 a.C.</td>
+                            <td>—</td>
+                            <td>Reforma de Josías; hallazgo del libro de la Ley</td>
+                            <td>Vacío de poder tras el declive asirio</td>
+                            <td>2 Reyes 22–23; 2 Crónicas 34–35</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">612 a.C.</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>Caída de Nínive: fin del Imperio asirio</td>
+                            <td>Nahum 1–3; Sofonías 2:13-15</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">609 a.C.</td>
+                            <td>—</td>
+                            <td>Muerte de Josías en Meguido ante Necao II</td>
+                            <td>Egipto intenta apoyar a los restos asirios</td>
+                            <td>2 Reyes 23:29-30; 2 Crónicas 35:20-24</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">605 a.C.</td>
+                            <td>—</td>
+                            <td>Primera deportación (Daniel)</td>
+                            <td>Batalla de Carquemis: Babilonia derrota a Egipto</td>
+                            <td>2 Reyes 24:1; Daniel 1:1-7; Jeremías 46:2</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">597 a.C.</td>
+                            <td>—</td>
+                            <td>Segunda deportación (Joaquín, Ezequiel)</td>
+                            <td>Nabucodonosor II consolida el control</td>
+                            <td>2 Reyes 24:8-17; Ezequiel 1:1-3</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">586 a.C.</td>
+                            <td>—</td>
+                            <td>Caída de Jerusalén, destrucción del Templo</td>
+                            <td>Apogeo neobabilónico bajo Nabucodonosor II</td>
+                            <td>2 Reyes 25:1-21; Jeremías 39:1-10 y 52:1-30; 2 Crónicas 36:11-21</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">586–539 a.C.</td>
+                            <td>—</td>
+                            <td>Exilio en Babilonia</td>
+                            <td>Babilonia domina; luego declina (Nabónido, Belsasar)</td>
+                            <td>Ezequiel (libro completo); Daniel 1–5; Salmo 137</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">539 a.C.</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>Ciro II conquista Babilonia; nace el Imperio persa</td>
+                            <td>Daniel 5:30-31</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">538 a.C.</td>
+                            <td>—</td>
+                            <td>Edicto de Ciro; primer regreso</td>
+                            <td>Persia y su política de repatriación</td>
+                            <td>Esdras 1:1-4; 2 Crónicas 36:22-23; cf. Isaías 44:28, 45:1</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">520–516 a.C.</td>
+                            <td>—</td>
+                            <td>Reconstrucción del Templo</td>
+                            <td>Darío I consolida el Imperio persa</td>
+                            <td>Esdras 3–6; Hageo 1–2; Zacarías 1–8</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">458 a.C.</td>
+                            <td>—</td>
+                            <td>Llegada de Esdras</td>
+                            <td>Reinado de Artajerjes I</td>
+                            <td>Esdras 7–10</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">445 a.C.</td>
+                            <td>—</td>
+                            <td>Nehemías reconstruye las murallas</td>
+                            <td>Artajerjes I autoriza la misión</td>
+                            <td>Nehemías 1–13</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">333–331 a.C.</td>
+                            <td>—</td>
+                            <td>Yehud pasa a manos griegas</td>
+                            <td>Alejandro Magno derrota a Persia</td>
+                            <td>(no narrado en canon hebreo; cf. Daniel 8:5-8, 21 y 11:3-4)</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">323–198 a.C.</td>
+                            <td>—</td>
+                            <td>Dominio de los Ptolomeos</td>
+                            <td>División del imperio de Alejandro entre los diádocos</td>
+                            <td>Daniel 11:5-9 (clave apocalíptica, "rey del sur")</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">198–167 a.C.</td>
+                            <td>—</td>
+                            <td>Dominio seléucida</td>
+                            <td>Antíoco III toma la región de los Ptolomeos</td>
+                            <td>Daniel 11:10-19 ("rey del norte")</td>
+                        </tr>
+                        <tr>
+                            <td class="table-date">167 a.C.</td>
+                            <td>—</td>
+                            <td>Revuelta macabea contra Antíoco IV Epífanes</td>
+                            <td>Profanación del Templo detona la rebelión</td>
+                            <td>Daniel 11:31 (alusión); 1 y 2 Macabeos (deuterocanónicos)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="notes-section">
+                <h3>Notas sobre la tabla</h3>
+                <ul>
+                    <li><strong>Sobre las fuentes bíblicas:</strong> Los libros de 1–2 Reyes y 1–2 Crónicas narran con frecuencia los mismos eventos con distinto énfasis: Reyes tiene un tono más profético y crítico, mientras que Crónicas se centra más en el culto y la dinastía davídica. Por eso ambos aparecen citados en paralelo en varias filas.</li>
+                    <li><strong>Sobre los eventos extrabíblicos:</strong> Algunos acontecimientos (la batalla de Qarqar, la fundación del Imperio neobabilónico por Nabopolasar, las conquistas de Alejandro Magno) no tienen relato directo en el texto bíblico; se incluyen únicamente como contexto histórico, señalando cuando existe alguna alusión profética indirecta.</li>
+                    <li><strong>Sobre el período helenístico (333–167 a.C.):</strong> Esta etapa corresponde a la llamada "brecha intertestimentaria": el canon hebreo y protestante no la narra de forma directa, salvo alusiones proféticas en Daniel. Los libros de los Macabeos, que sí la relatan en detalle, son aceptados como canónicos en las tradiciones católica y ortodoxa, pero no en la judía ni en la protestante.</li>
+                    <li><strong>Diferencia clave entre ambos exilios:</strong> El Reino del Norte cayó en 722 a.C. durante el apogeo del Imperio asirio y nunca tuvo un regreso organizado: sus habitantes fueron dispersados y asimilados (las "tribus perdidas"). El Reino del Sur cayó después, en 586 a.C., bajo Babilonia, un imperio de vida relativamente corta; su caída ante Persia (539 a.C.) abrió la puerta a una política de repatriación que permitió el regreso judío setenta años después de iniciado el exilio, tal como lo habían anunciado los profetas.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Las fechas son aproximadas y pueden variar según propuestas cronológicas. Fuentes: Heilbrunn Timeline of Art History; Society for Old Testament Study.</p>
+    </footer>
+
+    <script>
+        const data = {
+            antes: {
+                prophets: [
+                    { 
+                        name: "Jonás", meaning: "Paloma", date: "c. 753 a.C.", kingdom: "Reino del Norte (Israel)", kdomClass: "k-north",
+                        content: "Libro misionero del A.T. Predicó a una nación extranjera (Nínive, capital de Asiria). Tema: la amplitud de la misericordia de Dios y la universalidad del juicio y la gracia." 
+                    },
+                    { 
+                        name: "Joel", meaning: "Jehová es Dios", date: "c. 835-800 a.C.", kingdom: "Reino del Sur (Judá)", kdomClass: "k-south",
+                        content: "Tema: Juicio y salvación en el 'día de Jehová'. Llama al arrepentimiento ante plagas de langostas y sequías. Anuncia el día cuando Dios librará a su pueblo." 
+                    },
+                    { 
+                        name: "Amós", meaning: "Carga o cargador", date: "c. 760-750 a.C.", kingdom: "Reino del Norte (Israel)", kdomClass: "k-north",
+                        content: "Aunque era de Judá, profetizó en el Reino del Norte durante Uzías (Judá) y Jeroboam II (Israel). Época de prosperidad. Denuncia idolatría, injusticia social y corrupción. Tema favorito: La Justicia de Dios." 
+                    },
+                    { 
+                        name: "Oseas", meaning: "Salvación o liberación", date: "c. 755-725 a.C.", kingdom: "Reino del Norte (Israel)", kdomClass: "k-north",
+                        content: "Profetizó en el Reino del Norte 30 años antes de la cautividad. Tema: El amor inagotable de Dios que produce juicio y restauración. Último llamado de Dios al Norte antes del desastre." 
+                    },
+                    { 
+                        name: "Isaías", meaning: "El Señor es salvación", date: "c. 740-700 a.C.", kingdom: "Reino del Sur (Judá)", kdomClass: "k-south",
+                        content: "Advirtió sobre el juicio por idolatría y alianzas con naciones paganas. Enfatiza la salvación nacional/personal, la gracia y la obra del Mesías. Llamado el 'quinto evangelio'." 
+                    },
+                    { 
+                        name: "Miqueas", meaning: "¿Quién como Jehová?", date: "c. 735-700 a.C.", kingdom: "Reino del Sur (Judá)", kdomClass: "k-south",
+                        content: "Describe el carácter de Jehová como juez justo y pastor amoroso. Denuncia que el pueblo cumplía rituales pero practicaba injusticia social y violencia. Anuncia la venida del Mesías." 
+                    }
+                ],
+                history: [
+                    { title: "c. 850–750 a.C. - Presión de Aram y Asiria", content: "Israel y Judá atraviesan conflictos y prosperidad. Aram-Damasco es potencia regional. Asiria comienza a recuperar su fuerza bajo Tiglat-pileser III." },
+                    { title: "c. 760–700 a.C. - El peligro Asirio", content: "Época de Jonás, Amós, Oseas, Isaías y Miqueas. Asiria se convierte en la gran amenaza. Samaria (capital de Israel) cae ante Asiria en 722/721 a.C. bajo Sargón II." },
+                    { title: "Imperio Neoasirio", content: "Asiria domina el Cercano Oriente. Reyes como Senaquerib amenazan a Judá. Jerusalén sobrevive milagrosamente a su campaña en 701 a.C." }
+                ]
+            },
+            cerca: {
+                prophets: [
+                    { 
+                        name: "Nahúm", meaning: "Consuelo", date: "c. 660-630 a.C.", kingdom: "Reino del Sur (Judá)", kdomClass: "k-south",
+                        content: "Único libro sin juicio para Israel, sino contra Nínive. Consuela a Judá frente a la amenaza de Asiria, recordando la soberanía de Dios y prediciendo la destrucción de Asiria por su crueldad." 
+                    },
+                    { 
+                        name: "Sofonías", meaning: "El Señor protege", date: "c. 640-630 a.C.", kingdom: "Reino del Sur (Judá)", kdomClass: "k-south",
+                        content: "Profetizó durante el reinado de Josías (quien emprendió reformas). Hace un llamado urgente a la nación condenando idolatría y advirtiendo del día de la ira de Dios." 
+                    },
+                    { 
+                        name: "Habacuc", meaning: "Abrazar", date: "c. 612-605 a.C.", kingdom: "Reino del Sur (Judá)", kdomClass: "k-south",
+                        content: "Levita músico. Enfatiza la santidad de Dios al usar a la cruel Babilonia para juzgar a Judá. Resalta que el justo vivirá por fe. Hace preguntas difíciles a Dios pero confía en Él." 
+                    },
+                    { 
+                        name: "Jeremías", meaning: "El Señor nombra o establece", date: "c. 627-586 a.C.", kingdom: "Reino del Sur (Judá)", kdomClass: "k-south",
+                        content: "Profetizó en el tiempo que Judá fue llevado cautivo. Tema: El amor constante de Dios a su pueblo infiel. Advirtió que el cautiverio estaba por cumplirse, pero que los fieles se salvarían y Jerusalén sería reconstruida." 
+                    }
+                ],
+                history: [
+                    { title: "c. 630–586 a.C. - Cambio de Poder", content: "Declive de Asiria. Nínive cae en 612 a.C. ante la coalición de Babilonia y los medos. Babilonia pasa a dominar Mesopotamia." },
+                    { title: "Ascenso de Babilonia", content: "Nabucodonosor II consolida el Imperio Neo-Babilónico. Lleva a cabo campañas que terminan con la caída de Jerusalén y la destrucción del templo en 587/586 a.C." },
+                    { title: "Judá en Peligro", content: "Judá queda atrapada entre Babilonia al norte y Egipto al sur. Sus fallidas alianzas políticas y rebeliones contra Babilonia provocan los sitios finales a Jerusalén." }
+                ]
+            },
+            durante: {
+                prophets: [
+                    { 
+                        name: "Daniel", meaning: "Dios es mi juez", date: "c. 605-540 a.C.", kingdom: "Exilio en Babilonia", kdomClass: "k-exile",
+                        content: "A los 20 años fue gobernador de Babilonia, sirviendo a reyes babilónicos y persas. Tema: La soberanía de Dios sobre todo. Alentó a los cautivos recordándoles el plan de salvación de Dios." 
+                    },
+                    { 
+                        name: "Ezequiel", meaning: "Dios Fortalece", date: "c. 593-570 a.C.", kingdom: "Exilio en Babilonia", kdomClass: "k-exile",
+                        content: "Llevado cautivo con el rey Joaquín en 597 a.C. Su casa se convirtió en lugar de reunión (surgen las sinagogas). Promovió el arrepentimiento y la fe, trayendo esperanza de restauración." 
+                    },
+                    { 
+                        name: "Abdías", meaning: "Siervo del Señor", date: "c. 586 a.C.", kingdom: "Reino del Sur (Judá)", kdomClass: "k-south",
+                        content: "Profetizó en Jerusalén cuando Edom atacaba la ciudad. Anuncia juicio y destrucción de Edom por su venganza hacia Israel, y proclama el triunfo final de Israel." 
+                    }
+                ],
+                history: [
+                    { title: "c. 605–539 a.C. - El Mundo del Exilio", content: "El Imperio Neo-Babilónico domina el Cercano Oriente. Egipto sigue siendo potencia regional pero pierde terreno." },
+                    { title: "Vida en el Exilio", content: "Jerusalén y el templo están destruidos. Los judíos son deportados a Babilonia. Su vida cambia radicalmente; lejos de su tierra, deben mantener su identidad religiosa." },
+                    { title: "El Conflicto con Edom", content: "Edom, reino vecino al sureste, aprovecha la caída de Jerusalén para atacar a los judíos, lo que provoca los oráculos de juicio de profetas como Abdías." }
+                ]
+            },
+            despues: {
+                prophets: [
+                    { 
+                        name: "Hageo", meaning: "Festivo o mi fiesta", date: "c. 520 a.C.", kingdom: "Post-exilio (Judá)", kdomClass: "k-post",
+                        content: "Escrito bajo el rey Darío. Anima a no abandonar la reconstrucción del templo, cuya obra fue parada por Artajerjes. Tema: La bendición de Dios en relación a la reconstrucción." 
+                    },
+                    { 
+                        name: "Lamentaciones", meaning: "(Libro)", date: "c. 586 a.C.", kingdom: "Reino del Sur (Judá)", kdomClass: "k-south",
+                        content: "Escrito poco antes/inicio de la cautividad (atribuido a Jeremías). Lamenta la destrucción de Jerusalén y el templo, expresando el dolor por el juicio de Dios." 
+                    },
+                    { 
+                        name: "Zacarías", meaning: "El Señor recuerda", date: "c. 520-500 a.C.", kingdom: "Post-exilio (Judá)", kdomClass: "k-post",
+                        content: "Sacerdote que regresó con Zorobabel. Junto a Hageo, animó a terminar el templo. Enfatizó la relación entre obediencia en la reconstrucción y la bendición de Dios." 
+                    },
+                    { 
+                        name: "Malaquías", meaning: "Mi mensajero", date: "c. 400 a.C.", kingdom: "Post-exilio (Judá)", kdomClass: "k-post",
+                        content: "Despierta al remanente de su estancamiento espiritual. Pueblo rebelde e hipócrita; servicio formal y vacío. Promete que el Mesías juzgará y purificará a la nación." 
+                    }
+                ],
+                history: [
+                    { title: "539 a.C. - El Cambio a Persia", content: "Ciro II el Grande, fundador del Imperio Persa Aqueménida, conquista Babilonia. Comienza una nueva etapa política." },
+                    { title: "El Retorno a Judá", content: "La política persa permite el retorno de los pueblos deportados. Los judíos regresan a Jerusalén bajo liderazgo de Zorobabel, Esdras y Nehemías para reconstruir el templo y los muros." },
+                    { title: "Judá como Provincia Persa", content: "Judá es ahora 'Yehud', una pequeña provincia dentro del enorme Imperio Persa. Enfrenta dificultades económicas, políticas y espirituales rodeados de pueblos hostiles." },
+                    { title: "Hacia la Época Griega", content: "331 a.C.: Alejandro Magno derrota a Persia. Este cambio ocurre justo después de los últimos profetas del Antiguo Testamento, marcando el inicio del período intertestimentario." }
+                ]
+            }
+        };
+
+        function showEra(era, btn) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const prophetsCol = document.getElementById('prophets-column');
+            prophetsCol.innerHTML = '';
+            data[era].prophets.forEach(p => {
+                prophetsCol.innerHTML += `
+                    <div class="card">
+                        <div class="card-header" onclick="toggleCard(this)">
+                            <div class="header-info">
+                                <h3>${p.name} <small>(${p.meaning})</small></h3>
+                                <span class="kingdom-badge ${p.kdomClass}">${p.kingdom}</span>
+                            </div>
+                            <span class="date">${p.date}</span>
+                        </div>
+                        <div class="card-body">
+                            <p>${p.content}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const historyCol = document.getElementById('history-column');
+            historyCol.innerHTML = '';
+            data[era].history.forEach(h => {
+                historyCol.innerHTML += `
+                    <div class="card active">
+                        <div class="card-header">
+                            <h3>${h.title}</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>${h.content}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleCard(element) {
+            element.parentElement.classList.toggle('active');
+        }
+
+        function toggleExtraInfo(btn) {
+            btn.classList.toggle('active');
+            const content = document.getElementById('extraInfoContent');
+            content.classList.toggle('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showEra('antes', document.querySelector('.tab-btn'));
+        });
+    </script>
+</body>
+</html>
