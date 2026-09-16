@@ -33,7 +33,7 @@
     min-height:100vh;
     overflow-x:hidden;
   }
-  /* Grano muy sutil, ahora neutro */
+  /* Grano muy sutil, neutro */
   body::before{
     content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)'/%3E%3C/svg%3E");
@@ -137,17 +137,22 @@
   .progreso-completo.visible{max-height:3rem;opacity:1;margin-top:12px}
   .progreso-completo::before,.progreso-completo::after{content:'';height:1px;background:var(--acento);flex:0 0 34px;opacity:.6}
 
+  /* Cada elemento tiene su celda asignada: así el botón nunca
+     invade la columna del texto, aunque el ancho varíe. */
   .grupo{
-    display:grid;grid-template-columns:52px 1fr auto;gap:6px 22px;align-items:center;
+    display:grid;
+    grid-template-columns:52px minmax(0,1fr) auto;
+    gap:6px 22px;align-items:center;
     padding:22px 0;border-top:1px solid var(--hairline);
   }
   .grupo:last-child{border-bottom:1px solid var(--hairline)}
-  .grupo-num{font-family:var(--serif-display);font-weight:600;font-size:1.7rem;color:var(--acento);line-height:1}
-  .grupo h3{font-family:var(--sans-texto);font-weight:600;font-variant:small-caps;letter-spacing:.04em;font-size:1.2rem;color:var(--tinta);line-height:1.3}
+  .grupo-num{grid-column:1;grid-row:1;font-family:var(--serif-display);font-weight:600;font-size:1.7rem;color:var(--acento);line-height:1}
+  .grupo h3{grid-column:2;grid-row:1;font-family:var(--sans-texto);font-weight:600;font-variant:small-caps;letter-spacing:.04em;font-size:1.2rem;color:var(--tinta);line-height:1.3}
   .grupo h3 small{font-variant:normal;font-weight:500;font-style:italic;color:var(--tinta-suave);font-size:.85rem;letter-spacing:0}
-  .grupo p{grid-column:2;font-size:.95rem;line-height:1.65;color:var(--texto)}
+  .grupo p{grid-column:2;grid-row:2;font-size:.95rem;line-height:1.65;color:var(--texto)}
   .boton-libros{
-    all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:10px;grid-row:1 / span 2;align-self:center;
+    all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:10px;
+    grid-column:3;grid-row:1 / span 2;align-self:center;
     border:1px solid var(--hairline);padding:10px 18px;
     font-family:var(--sans-texto);font-weight:600;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tinta);
     transition:background .3s,color .3s,border-color .3s;white-space:nowrap;
@@ -240,9 +245,8 @@
     .seccion,.seccion.inversa{flex-direction:column;gap:28px}
     .retrato{width:min(440px,100%);margin:0 auto;align-self:auto}
     .marca{display:none}
-    .grupo{grid-template-columns:44px 1fr}
-    .boton-libros{grid-row:auto;grid-column:2;justify-self:start;margin-top:6px}
-    .grupo p{grid-column:2}
+    .grupo{grid-template-columns:44px minmax(0,1fr)}
+    .boton-libros{grid-row:3;grid-column:2;justify-self:start;margin-top:6px}
     .columnas-cartas{grid-template-columns:1fr;gap:22px}
     .modal-cabecera{padding:26px 24px 16px}
     .modal-libros{padding:20px 24px 28px}
@@ -270,7 +274,7 @@
           <span class="ratio">4 : 3</span>
         </div>
       </div>
-      <figcaption>Códice o pergamino antiguo.</figcaption>
+      <figcaption>Sugerencia: un códice o pergamino antiguo.</figcaption>
     </figure>
 
     <div class="cuerpo">
@@ -299,7 +303,7 @@
           <span class="ratio">4 : 3</span>
         </div>
       </div>
-      <figcaption>Página de un evangelio iluminado.</figcaption>
+      <figcaption>Sugerencia: una página de un evangeliario iluminado.</figcaption>
     </figure>
 
     <div class="cuerpo">
@@ -362,7 +366,7 @@
           <span class="ratio">4 : 3</span>
         </div>
       </div>
-      <figcaption>Fragmento de papiro griego.</figcaption>
+      <figcaption>Sugerencia: un fragmento de papiro griego.</figcaption>
     </figure>
 
     <div class="cuerpo">
@@ -391,7 +395,7 @@
           <span class="ratio">4 : 3</span>
         </div>
       </div>
-      <figcaption>Mapa del Mediterráneo en el siglo I.</figcaption>
+      <figcaption>Sugerencia: un mapa del Mediterráneo en el siglo I.</figcaption>
     </figure>
 
     <div class="cuerpo">
