@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Los cuatro viajes del apóstol Pablo · Atlas bíblico</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --papel:#F6F6F3; --papel2:#FCFCFA; --tinta:#1C1D20; --tinta2:#6B6E74; --linea:#DFE0DC;
+    --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+    --serif:'Fraunces',Georgia,serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{font-family:var(--sans);background:var(--papel);color:var(--tinta);overflow:hidden;font-size:13.5px;-webkit-font-smoothing:antialiased}
+  ::selection{background:rgba(178,58,46,.22)}
+  #app{display:flex;height:100vh}
+
+  /* ---------- Panel lateral ---------- */
+  #panel{width:412px;min-width:412px;height:100%;overflow-y:auto;border-right:1px solid var(--linea);padding:30px 28px 44px;scrollbar-width:thin;scrollbar-color:var(--linea) transparent}
+  #panel::-webkit-scrollbar{width:8px}
+  #panel::-webkit-scrollbar-thumb{background:var(--linea);border-radius:4px}
+  .overline{font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--tinta2)}
+  h1{font-family:var(--serif);font-weight:600;font-size:30px;line-height:1.1;margin-top:10px;letter-spacing:-.01em}
+  h1 em{font-style:italic;font-weight:500}
+  .doble{border-top:1px solid var(--tinta);height:1px;margin:16px 0 14px;opacity:.85}
+  .sub{font-size:13px;color:var(--tinta2);line-height:1.6}
+
+  .lbl{display:flex;align-items:center;gap:10px;font-size:9.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--tinta2);margin:24px 0 11px}
+  .lbl::after{content:'';flex:1;height:1px;background:var(--linea)}
+
+  .btn-todos{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;padding:10px 14px;border:1px solid var(--tinta);background:transparent;font-family:var(--sans);font-weight:500;font-size:12.5px;color:var(--tinta);cursor:pointer;border-radius:3px;transition:background .2s,color .2s}
+  .btn-todos:hover{background:rgba(28,29,32,.06)}
+  .btn-todos.on{background:var(--tinta);color:var(--papel2)}
+
+  .vcard{width:100%;display:grid;grid-template-columns:46px 1fr;gap:2px 10px;text-align:left;padding:11px 12px 11px 14px;border:1px solid var(--linea);border-left:3px solid var(--vc);background:var(--papel2);border-radius:3px;cursor:pointer;margin-top:9px;transition:transform .18s,opacity .18s,border-color .18s,background .18s;font-family:var(--sans);color:var(--tinta)}
+  .vcard:hover{border-color:var(--vc);transform:translateX(3px)}
+  .vcard.dim{opacity:.5}
+  .vcard.on{background:#fff;border-color:var(--vc);box-shadow:0 2px 10px rgba(20,22,26,.08)}
+  .vnum{grid-row:1/4;font-family:var(--serif);font-size:25px;font-weight:600;color:var(--vc);line-height:1;padding-top:2px}
+  .vcard strong{font-size:14px;font-weight:600;letter-spacing:-.005em}
+  .vcard em{font-style:normal;font-size:11px;color:var(--tinta2);letter-spacing:.01em}
+  .vres{display:block;font-size:11.5px;line-height:1.45;color:var(--tinta2);margin-top:4px}
+
+  .intro p{font-size:13px;line-height:1.65;margin-bottom:10px;color:#33353A}
+  .intro strong{font-weight:600;color:var(--tinta)}
+
+  .ficha{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;margin:0 0 4px;padding:13px 14px;border:1px solid var(--linea);border-radius:3px;background:var(--papel2)}
+  .ficha dt{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--tinta2);margin-bottom:3px}
+  .ficha dd{font-size:12.3px;font-weight:500;line-height:1.4}
+
+  .lema{font-size:15px;font-weight:500;line-height:1.45;border-left:3px solid var(--vc);padding:2px 0 2px 13px;margin:14px 0 16px;letter-spacing:-.005em}
+  .lema cite{display:block;font-size:10.5px;font-weight:600;font-style:normal;color:var(--vc);margin-top:5px;letter-spacing:.06em}
+
+  .btn-tour{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;padding:11px;background:var(--vc);color:#FCFCFA;border:none;border-radius:3px;font-family:var(--sans);font-weight:600;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:filter .2s;margin-bottom:6px}
+  .btn-tour:hover{filter:brightness(1.12)}
+  .btn-tour.stop{background:var(--tinta)}
+
+  .paradas{list-style:none;margin-top:4px}
+  .paradas li{display:grid;grid-template-columns:24px 1fr;gap:0 10px;padding:10px 8px 10px 4px;border-bottom:1px dashed var(--linea);cursor:pointer;transition:background .15s;border-radius:3px}
+  .paradas li:hover{background:color-mix(in srgb, var(--vc) 8%, transparent)}
+  .paradas li.act{background:color-mix(in srgb, var(--vc) 13%, transparent)}
+  .pnum{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--vc);color:var(--vc);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .pnombre{font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:7px;line-height:1.25;letter-spacing:-.005em}
+  .pnombre .via{width:13px;height:13px;color:var(--tinta2);flex:none}
+  .pcita{font-size:11px;font-weight:500;color:var(--vc);margin-top:2px;letter-spacing:.02em}
+  .paradas li.act .pnombre{color:var(--vc)}
+
+  .nota{font-size:11.5px;line-height:1.65;color:var(--tinta2)}
+
+  svg.si{stroke:currentColor;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;display:block}
+  svg.si .f{fill:currentColor;stroke:none}
+  .btn-todos svg,.btn-tour svg{width:14px;height:14px}
+  .pnombre .via svg{width:13px;height:13px}
+  #btnVista svg{width:13px;height:13px}
+
+  /* ---------- Mapa ---------- */
+  #mapa{position:relative;flex:1;height:100%}
+  #map{position:absolute;inset:0;background:#E8E8E5}
+  .leaflet-tile-pane{filter:grayscale(1) brightness(1.04) contrast(.9)}
+  .leaflet-top.leaflet-right{top:54px}
+
+  #btnVista{position:absolute;top:12px;right:12px;z-index:700;display:flex;align-items:center;gap:8px;background:rgba(252,252,250,.95);border:1px solid var(--linea);border-radius:3px;padding:7px 12px;font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta);cursor:pointer;box-shadow:0 3px 10px rgba(20,22,26,.1)}
+  #btnVista:hover{background:#fff}
+
+  #leyenda{position:absolute;right:12px;bottom:14px;z-index:700;background:rgba(252,252,250,.94);border:1px solid var(--linea);border-radius:4px;padding:11px 14px;font-size:10.5px;box-shadow:0 4px 14px rgba(20,22,26,.1);pointer-events:none}
+  #leyenda .lt{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--tinta2);margin-bottom:7px}
+  #leyenda .lrow{display:flex;align-items:center;gap:9px;margin:4px 0;font-weight:500}
+  #leyenda .sw{width:26px;height:0;border-top:3px solid;border-radius:2px;flex:none}
+  #leyenda .swt{border-color:var(--tinta)}
+  #leyenda .swm{border-top-style:dashed}
+  #leyenda .lsep{height:1px;background:var(--linea);margin:7px 0}
+
+  #tourChip{position:absolute;top:14px;left:50%;transform:translate(-50%,-8px);z-index:800;background:rgba(252,252,250,.97);border:1px solid var(--linea);border-left:3px solid var(--vc,var(--tinta));border-radius:3px;padding:9px 18px 10px;min-width:250px;max-width:80%;text-align:center;box-shadow:0 6px 18px rgba(20,22,26,.14);opacity:0;pointer-events:none;transition:opacity .35s,transform .35s}
+  #tourChip.on{opacity:1;transform:translate(-50%,0)}
+  #tourChip .k{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--tinta2)}
+  #tourChip .t{font-size:16px;font-weight:600;margin-top:1px;letter-spacing:-.01em}
+  #tourChip .r{font-size:10.5px;font-weight:500;color:var(--vc,var(--tinta2));margin-top:2px;letter-spacing:.03em}
+
+  /* ---------- Pins, tooltips, popups ---------- */
+  .mk{background:none;border:none}
+  .pin{width:24px;height:24px;border-radius:50%;background:var(--c);border:2px solid #FCFCFA;box-shadow:0 1px 6px rgba(15,16,18,.4);display:flex;align-items:center;justify-content:center;color:#FCFCFA;font-weight:600;font-size:10.5px;font-family:var(--sans);transform:scale(0);transition:transform .38s cubic-bezier(.34,1.56,.64,1),box-shadow .2s;cursor:pointer}
+  .pin.show{transform:scale(1)}
+  .pin.hl{box-shadow:0 0 0 5px color-mix(in srgb,var(--c) 32%,transparent),0 1px 6px rgba(15,16,18,.4)}
+  .tpin{width:15px;height:15px;border-radius:50%;background:var(--c);border:2.5px solid #FCFCFA;box-shadow:0 1px 7px rgba(15,16,18,.5);position:relative}
+  .tpin::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:2px solid var(--c);animation:pulso 1.5s ease-out infinite}
+  @keyframes pulso{0%{transform:scale(.5);opacity:.9}100%{transform:scale(1.35);opacity:0}}
+
+  .tt{background:var(--tinta);color:var(--papel2);border:none;border-radius:3px;font-family:var(--sans);font-weight:500;font-size:11px;padding:4px 10px;box-shadow:0 3px 10px rgba(15,16,18,.3)}
+  .tt::before{display:none}
+
+  .pp .leaflet-popup-content-wrapper{background:var(--papel2);color:var(--tinta);border:1px solid var(--linea);border-radius:5px;box-shadow:0 10px 28px rgba(20,22,26,.2)}
+  .pp .leaflet-popup-content{margin:14px 17px 13px;font-family:var(--sans)}
+  .pp .leaflet-popup-tip{background:var(--papel2);border:1px solid var(--linea)}
+  .leaflet-popup-close-button{color:var(--tinta2)!important;padding:5px 7px 0 0!important}
+  .pk{font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
+  .pp h3{font-family:var(--sans);font-size:17.5px;font-weight:700;line-height:1.15;margin-bottom:7px;letter-spacing:-.015em}
+  .pe{font-size:12.5px;line-height:1.6;color:#33353A}
+  .pe.ex{margin-top:8px;padding-top:8px;border-top:1px dashed var(--linea);color:var(--tinta2)}
+  .pr{margin-top:10px;padding-top:7px;border-top:1px solid var(--linea);font-weight:600;font-size:11px;letter-spacing:.03em}
+
+  .leaflet-control-attribution{background:rgba(252,252,250,.85)!important;font-family:var(--sans);font-size:9.5px;color:var(--tinta2)}
+  .leaflet-bar a{color:var(--tinta)!important}
+
+  @media (max-width:900px){
+    #app{flex-direction:column}
+    #mapa{order:-1;height:54vh;min-height:330px}
+    #panel{width:100%;min-width:0;flex:1;height:auto;padding:22px 20px 36px}
+    h1{font-size:24px}
+    #tourChip{min-width:0;width:min(92%,380px)}
+    #leyenda{display:none}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="panel">
+    <header>
+      <div class="overline">Atlas bíblico · Libro de los Hechos</div>
+      <h1>Los cuatro viajes del <em>apóstol Pablo</em></h1>
+      <div class="doble"></div>
+      <p class="sub">Itinerarios trazados sobre el Mediterráneo real, con cada parada numerada y las referencias de lo que aconteció en cada lugar.</p>
+    </header>
+
+    <div class="lbl">Recorridos</div>
+    <button class="btn-todos on" id="btnTodos" aria-pressed="true"></button>
+    <div id="vnav"></div>
+
+    <section id="detalle"></section>
+
+    <div class="lbl">Sobre el trazado</div>
+    <p class="nota">Los itinerarios siguen el relato de Hechos y la cartografía histórica habitual: las travesías marítimas se dibujan por rutas plausibles de la navegación antigua y los tramos terrestres, por las calzadas romanas. Las citas siguen la versión Reina-Valera 1960. Se conserva la memoria del viaje proyectado a España (Romanos 15:24, 28), del que los Hechos no registran noticias. Cartografía base © OpenStreetMap, mostrada en escala de grises.</p>
+  </aside>
+
+  <main id="mapa">
+    <div id="map"></div>
+    <button id="btnVista"></button>
+    <div id="leyenda" aria-hidden="true">
+      <div class="lt">Itinerarios</div>
+      <div class="lrow"><span class="sw" style="border-color:#B23A2E"></span>I · Primer viaje</div>
+      <div class="lrow"><span class="sw" style="border-color:#24557E"></span>II · Segundo viaje</div>
+      <div class="lrow"><span class="sw" style="border-color:#46703F"></span>III · Tercer viaje</div>
+      <div class="lrow"><span class="sw" style="border-color:#71497B"></span>IV · Hacia Roma</div>
+      <div class="lsep"></div>
+      <div class="lrow"><span class="sw swt"></span>Viaje por tierra</div>
+      <div class="lrow"><span class="sw swm"></span>Travesía por mar</div>
+    </div>
+    <div id="tourChip"><div class="k" id="tcK"></div><div class="t" id="tcT"></div><div class="r" id="tcR"></div></div>
+  </main>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+/* ================= Estado global ================= */
+let map=null, activo=-1, tour=null;
+
+/* ================= Iconos SVG ================= */
+const ICONS={
+  mar:'<svg class="si" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.8v7.7"/><path d="M8 2l4.3 6.3H8z" class="f"/><path d="M2.6 11.4h10.8l-1.2 2.3a1.1 1.1 0 01-1 .6H4.8a1.1 1.1 0 01-1-.6z" class="f"/></svg>',
+  tierra:'<svg class="si" viewBox="0 0 16 16" aria-hidden="true"><circle cx="3" cy="12.6" r="1.5" class="f"/><circle cx="13" cy="3.4" r="1.5" class="f"/><path d="M3.4 9.6V9a3 3 0 013-3h3.2a3 3 0 003-3v-.3"/></svg>',
+  play:'<svg class="si" viewBox="0 0 16 16"><path d="M4.5 2.8l8.2 5.2-8.2 5.2z" class="f"/></svg>',
+  stop:'<svg class="si" viewBox="0 0 16 16"><rect x="3.4" y="3.4" width="9.2" height="9.2" rx="1" class="f"/></svg>',
+  capas:'<svg class="si" viewBox="0 0 16 16"><path d="M8 1.6l6.4 3.9L8 9.4 1.6 5.5z"/><path d="M2.2 8.4L8 12l5.8-3.6"/><path d="M2.2 11L8 14.6L14 11"/></svg>',
+  vista:'<svg class="si" viewBox="0 0 16 16"><path d="M1.8 5.6V1.8h3.8M10.4 1.8h3.8v3.8M14.2 10.4v3.8h-3.8M5.6 14.2H1.8v-3.8"/></svg>'
+};
+
+/* ================= Datos: los cuatro viajes ================= */
+const VIAJES=[
+{ num:'I', nombre:'Primer viaje misionero', fecha:'c. 47–48 d. C.', color:'#B23A2E',
+  companeros:'Bernabé y Juan Marcos', duracion:'≈ 1 año (47–48 d. C.)', extension:'c. 2.300 km', refs:'Hechos 13 – 14',
+  resumen:'Chipre y las montañas de Galacia: la puerta de la fe se abre a los gentiles.',
+  lema:'…refirieron cómo había abierto a los gentiles la puerta de la fe.', lemaRef:'Hechos 14:27',
+  paradas:[
+    {nombre:'Antioquía de Siria',coords:[36.202,36.161],via:null,cita:'Hechos 13:1-3',
+     texto:'Base de la misión hacia el mundo gentil. La iglesia ora y ayuna, impone las manos a Bernabé y Saulo, y ellos, enviados por el Espíritu Santo, bajan a Seleucia.',
+     extra:{cita:'Hechos 14:26-28',texto:'Al regresar, reunida la iglesia, refieren todo lo que Dios había hecho con ellos y cómo había abierto a los gentiles la puerta de la fe.'}},
+    {nombre:'Seleucia de Pieria',coords:[36.126,35.929],via:'mar',cita:'Hechos 13:4',
+     texto:'Puerto de Antioquía: desde aquí zarpan hacia Chipre, enviados por el Espíritu Santo.'},
+    {nombre:'Salamina (Chipre)',coords:[35.205,33.290],via:'mar',cita:'Hechos 13:5',
+     texto:'Primera escala en Chipre: proclaman la Palabra de Dios en las sinagogas de los judíos, con Juan Marcos como ayudante.'},
+    {nombre:'Pafos (Chipre)',coords:[34.776,32.423],via:'tierra',cita:'Hechos 13:6-12',
+     texto:'Atraviesan toda la isla hasta la capital. Ante el procónsul Sergio Paulo, Pablo ciega al falso profeta Barjesús; y el procónsul, maravillado de la doctrina del Señor, cree.'},
+    {nombre:'Perge (Panfilia)',coords:[36.962,30.855],via:'mar',cita:'Hechos 13:13',
+     texto:'Desembarcan en Panfilia; aquí Juan Marcos los abandona y vuelve a Jerusalén. Pablo y Bernabé prosiguen hacia el interior.',
+     extra:{cita:'Hechos 14:25',texto:'En el regreso bajan de nuevo a Perge, donde predican la Palabra, y desde este puerto zarpan hacia Antioquía.'}},
+    {nombre:'Antioquía de Pisidia',coords:[38.308,30.658],via:'tierra',cita:'Hechos 13:14-52',
+     texto:'En la sinagoga, Pablo pronuncia su gran sermón: Dios ha cumplido sus promesas en Jesús, resucitado, por quien se anuncia perdón de pecados. La ciudad entera acude el sábado siguiente; los judíos los expulsan, y los discípulos quedan llenos de gozo y del Espíritu Santo.',
+     extra:{cita:'Hechos 14:21-23',texto:'De regreso, confirman a los discípulos y, en cada iglesia, constituyen ancianos con oración y ayuno.'}},
+    {nombre:'Iconio',coords:[37.875,32.493],via:'tierra',cita:'Hechos 14:1-6',
+     texto:'Hablan de tal manera que una gran multitud de judíos y griegos cree; pero los que se oponen agitan la ciudad e intentan apedrearlos. Enterados, huyen a Listra y Derbe, y allí predican el evangelio.',
+     extra:{cita:'Hechos 14:21-22',texto:'Al volver, confirman a los discípulos: «Por muchas tribulaciones es necesario que entremos en el reino de Dios».'}},
+    {nombre:'Listra',coords:[37.600,32.290],via:'tierra',cita:'Hechos 14:8-20',
+     texto:'Pablo sana a un cojo de nacimiento, y la multitud quiere ofrecerles sacrificios como a Zeus y Hermes. Judíos llegados de Iconio apedrean a Pablo y lo arrastran fuera de la ciudad, dándolo por muerto; pero rodeado de discípulos, se levanta y entra de nuevo.',
+     extra:{cita:'Hechos 14:21-22',texto:'De vuelta, exhortan a los discípulos de Listra a permanecer en la fe.'}},
+    {nombre:'Derbe',coords:[37.355,32.655],via:'tierra',cita:'Hechos 14:20-21',
+     texto:'Extremo oriental del itinerario: predican el evangelio a esta ciudad y ganan muchos discípulos. Desde Derbe emprenden el largo camino de regreso.'}
+  ],
+  arcs:[
+    {a:0,b:1,sea:false},{a:1,b:2,sea:true,bend:-0.08},
+    {a:2,b:[34.95,33.05],sea:false},{a:[34.95,33.05],b:3,sea:false},
+    {a:3,b:4,sea:true,bend:0.10},
+    {a:4,b:5,sea:false},{a:5,b:6,sea:false},{a:6,b:7,sea:false},{a:7,b:8,sea:false},
+    {a:8,b:7,sea:false},{a:7,b:6,sea:false},{a:6,b:5,sea:false},{a:5,b:4,sea:false},
+    {a:4,b:0,sea:true,bend:-0.10}
+  ]},
+
+{ num:'II', nombre:'Segundo viaje misionero', fecha:'c. 49–52 d. C.', color:'#24557E',
+  companeros:'Silas, Timoteo y Lucas', duracion:'≈ 3 años (49–52 d. C.)', extension:'c. 4.800 km', refs:'Hechos 15:36 – 18:22',
+  resumen:'De Troas a Corinto: el evangelio cruza a Macedonia y Grecia.',
+  lema:'Pasa a Macedonia y ayúdanos.', lemaRef:'Hechos 16:9',
+  paradas:[
+    {nombre:'Antioquía de Siria',coords:[36.202,36.161],via:null,cita:'Hechos 15:36-41',
+     texto:'Pablo propone a Bernabé volver a visitar a los hermanos; por la discrepancia sobre Juan Marcos, cada uno toma su rumbo. Pablo parte por tierra con Silas, confirmando las iglesias de Siria y Cilicia.'},
+    {nombre:'Derbe',coords:[37.355,32.655],via:'tierra',cita:'Hechos 16:1',
+     texto:'El itinerario recorre Cilicia hasta Derbe, la última ciudad alcanzada en el primer viaje.'},
+    {nombre:'Listra',coords:[37.600,32.290],via:'tierra',cita:'Hechos 16:1-5',
+     texto:'Allí encuentra a Timoteo, de madre judía y padre griego, que se une al equipo. Las iglesias son fortalecidas en la fe y aumentan en número cada día.'},
+    {nombre:'Iconio',coords:[37.875,32.493],via:'tierra',cita:'Hechos 16:4',
+     texto:'Recorren las ciudades entregando a las iglesias los decretos del concilio de Jerusalén.'},
+    {nombre:'Troas',coords:[39.966,26.238],via:'tierra',cita:'Hechos 16:6-10',
+     texto:'El Espíritu les impide hablar la Palabra en Asia y en Bitinia. En Troas, Pablo tiene la visión de un macedonio que le ruega: «Pasa a Macedonia y ayúdanos». Aquí se une Lucas al relato: comienza el «nosotros».'},
+    {nombre:'Samotracia',coords:[40.475,24.706],via:'mar',cita:'Hechos 16:11',
+     texto:'Zarpan de Troas con viento directo; la isla de Samotracia es la primera escala al cruzar el Egeo.'},
+    {nombre:'Neápolis',coords:[40.941,24.406],via:'mar',cita:'Hechos 16:11',
+     texto:'Desembarcan en este puerto de Macedonia tras dos días de navegación; la vía Egnatia los introduce en Europa.'},
+    {nombre:'Filipos',coords:[41.038,24.407],via:'tierra',cita:'Hechos 16:12-40',
+     texto:'Colonia romana. Junto al río, Lidia de Tiatira escucha a Pablo y es bautizada con su casa. Al liberar a una muchacha adivina, son apaleados y encarcelados; un terremoto abre las puertas, y el carcelero cree con toda su familia. Al día siguiente salen con honores.'},
+    {nombre:'Anfípolis',coords:[40.811,23.869],via:'tierra',cita:'Hechos 17:1',
+     texto:'Etapa de la vía Egnatia rumbo al suroeste.'},
+    {nombre:'Apolonia',coords:[40.628,23.393],via:'tierra',cita:'Hechos 17:1',
+     texto:'Nueva jornada de marcha por la calzada romana hacia Tesalónica.'},
+    {nombre:'Tesalónica',coords:[40.640,22.944],via:'tierra',cita:'Hechos 17:1-9',
+     texto:'Durante tres sábados razona en la sinagoga desde las Escrituras: algunos judíos, gran número de griegos piadosos y no pocas mujeres principales creen. Los opositores asaltan la casa de Jasón buscando a Pablo.'},
+    {nombre:'Berea',coords:[40.516,22.212],via:'tierra',cita:'Hechos 17:10-14',
+     texto:'Los bereanos reciben la Palabra con toda solicitud, escudriñando cada día las Escrituras; muchos creen. Ante el alboroto venido de Tesalónica, Pablo es conducido por los hermanos hasta el mar.'},
+    {nombre:'Atenas',coords:[37.976,23.735],via:'mar',cita:'Hechos 17:15-34',
+     texto:'En la ciudad de los ídolos, Pablo discute en la sinagoga, en el mercado y en el Areópago: «Al que vosotros adoráis, pues, sin conocerle, este os anuncio yo». Algunos se burlan; otros creen, entre ellos Dionisio y Damaris.'},
+    {nombre:'Corinto',coords:[37.906,22.880],via:'tierra',cita:'Hechos 18:1-17',
+     texto:'Permanece año y medio trabajando como fabricante de tiendas con Aquila y Priscila. Ante el procónsul Galión la acusación judía fracasa; Crispo, jefe de la sinagoga, y muchos corintios creen y son bautizados.'},
+    {nombre:'Cencrea',coords:[37.899,22.994],via:'tierra',cita:'Hechos 18:18',
+     texto:'En este puerto oriental de Corinto, Pablo se corta el cabello por haber hecho un voto, y zarpa hacia Siria.'},
+    {nombre:'Éfeso',coords:[37.942,27.342],via:'mar',cita:'Hechos 18:19-21',
+     texto:'Visita breve: deja a Priscila y Aquila, razona en la sinagoga y, aunque le piden quedarse, promete volver: «Si Dios quiere, volveré a vosotros».'},
+    {nombre:'Cesarea',coords:[35.470,33.910],via:'mar',cita:'Hechos 18:22',
+     texto:'Desembarca en Palestina, «subió y saludó a la iglesia».'},
+    {nombre:'Jerusalén',coords:[31.777,35.234],via:'tierra',cita:'Hechos 18:22',
+     texto:'Sube a Jerusalén y después baja a Antioquía, cerrando el segundo viaje misionero.'}
+  ],
+  arcs:[
+    {a:0,b:1,sea:false},{a:1,b:2,sea:false},{a:2,b:3,sea:false},
+    {a:3,b:[38.55,29.40],sea:false},{a:[38.55,29.40],b:4,sea:false},
+    {a:4,b:5,sea:true,bend:0.06},{a:5,b:6,sea:true,bend:0},{a:6,b:7,sea:false},
+    {a:7,b:8,sea:false},{a:8,b:9,sea:false},{a:9,b:10,sea:false},{a:10,b:11,sea:false},
+    {a:11,b:[40.30,23.10],sea:true,bend:0},{a:[40.30,23.10],b:[38.95,23.35],sea:true,bend:-0.06},
+    {a:[38.95,23.35],b:[38.05,24.05],sea:true,bend:-0.05},{a:[38.05,24.05],b:12,sea:true,bend:-0.03},
+    {a:12,b:13,sea:false},{a:13,b:14,sea:false},
+    {a:14,b:15,sea:true,bend:-0.08},
+    {a:15,b:[36.95,28.60],sea:true,bend:-0.04},{a:[36.95,28.60],b:[36.15,32.10],sea:true,bend:-0.03},{a:[36.15,32.10],b:16,sea:true,bend:-0.03},
+    {a:16,b:17,sea:false}
+  ]},
+
+{ num:'III', nombre:'Tercer viaje misionero', fecha:'c. 53–57 d. C.', color:'#46703F',
+  companeros:'Timoteo, Tito, Lucas, Sópatro, Aristarco y otros', duracion:'≈ 4 años (53–57 d. C.)', extension:'c. 4.600 km', refs:'Hechos 18:23 – 21:16',
+  resumen:'Tres años en Éfeso y el litoral del Egeo rumbo a Jerusalén.',
+  lema:'No estimo mi vida preciosa, con tal que acabe mi carrera.', lemaRef:'Hechos 20:24',
+  paradas:[
+    {nombre:'Antioquía de Siria',coords:[36.202,36.161],via:null,cita:'Hechos 18:23',
+     texto:'Tras pasar algún tiempo en Antioquía, Pablo parte de nuevo y recorre por orden Galacia y Frigia, fortaleciendo a todos los discípulos.'},
+    {nombre:'Éfeso',coords:[37.942,27.342],via:'tierra',cita:'Hechos 19:1-41',
+     texto:'Centro del viaje: durante más de dos años predica en la escuela de Tirano, «de modo que todos los que habitaban en Asia oyeron la Palabra». Los exorcistas judíos son humillados, libros mágicos por cinco veces cien mil piezas de plata se queman, y el tumulto del platero Demetrio llena el teatro, del que los saca el escribano.'},
+    {nombre:'Filipos (Macedonia)',coords:[41.038,24.407],via:'mar',cita:'Hechos 20:1-6',
+     texto:'Tras el tumulto, parte para exhortar a las iglesias de Macedonia; meses después, de vuelta de Grecia, celebra en Filipos los días de los panes sin levadura y embarca en Neápolis.'},
+    {nombre:'Corinto (Grecia)',coords:[37.906,22.880],via:'tierra',cita:'Hechos 20:2-3',
+     texto:'Pasa tres meses en Grecia: aquí redacta la carta a los Romanos. Descubierto un complot judío contra él, decide regresar por Macedonia.'},
+    {nombre:'Troas',coords:[39.966,26.238],via:'mar',cita:'Hechos 20:6-12',
+     texto:'El primer día de la semana, congregados los discípulos, predica hasta la medianoche; Eutico, vencido del sueño, cae del tercer piso y es resucitado. La reunión continúa hasta el alba.'},
+    {nombre:'Asos',coords:[39.484,26.695],via:'tierra',cita:'Hechos 20:13-14',
+     texto:'Mientras sus compañeros navegan, Pablo recorre a pie la costa y es recogido en Asos.'},
+    {nombre:'Mitilene (Lesbos)',coords:[39.106,26.557],via:'mar',cita:'Hechos 20:14',
+     texto:'Al día siguiente anclan frente a Mitilene, capital de la isla de Lesbos.'},
+    {nombre:'Quío',coords:[38.371,26.137],via:'mar',cita:'Hechos 20:15',
+     texto:'Al día siguiente pasan frente a Quío; el relato de Hechos sigue aquí escala por escala.'},
+    {nombre:'Samos',coords:[37.736,26.862],via:'mar',cita:'Hechos 20:15',
+     texto:'Llegan a Samos y pernoctan en Trogilio.'},
+    {nombre:'Mileto',coords:[37.526,27.279],via:'mar',cita:'Hechos 20:15-38',
+     texto:'Decidido a no detenerse en Éfeso, hace llamar a los ancianos a Mileto: «No estimo mi vida preciosa, con tal que acabe mi carrera». Los conmina a custodiar el rebaño, oran juntos, y les acompaña llorando hasta la nave.'},
+    {nombre:'Cos',coords:[36.787,27.287],via:'mar',cita:'Hechos 21:1',
+     texto:'Partidos de Mileto, al día siguiente llegan frente a Cos.'},
+    {nombre:'Rodas',coords:[36.445,28.223],via:'mar',cita:'Hechos 21:1',
+     texto:'Escala en la célebre isla de Rodas.'},
+    {nombre:'Pátara (Licia)',coords:[36.263,29.215],via:'mar',cita:'Hechos 21:1-2',
+     texto:'Hallan una nave que cruza a Fenicia y se embarcan en ella.'},
+    {nombre:'Tiro (Fenicia)',coords:[33.271,35.204],via:'mar',cita:'Hechos 21:3-6',
+     texto:'Siete días con los discípulos, que, por el Espíritu, le ruegan no subir a Jerusalén. Al partir, toda la comunidad, con mujeres y niños, se arrodilla con él en la playa y ora.'},
+    {nombre:'Ptolemaida',coords:[33.207,35.074],via:'mar',cita:'Hechos 21:7',
+     texto:'Un día con los hermanos en este puerto fenicio.'},
+    {nombre:'Cesarea',coords:[35.470,33.910],via:'mar',cita:'Hechos 21:8-14',
+     texto:'En casa de Felipe el evangelista, Agabo ata con el cinturón de Pablo sus propios pies y manos: así lo atarán los judíos en Jerusalén. «La voluntad del Señor sea hecha», responde Pablo.'},
+    {nombre:'Jerusalén',coords:[31.777,35.234],via:'tierra',cita:'Hechos 21:15-17',
+     texto:'Sube a Jerusalén con algunos de Cesarea; los hermanos lo reciben con gozo, y les refiere una por una las cosas que Dios había hecho entre los gentiles.'}
+  ],
+  arcs:[
+    {a:0,b:[37.95,31.45],sea:false},{a:[37.95,31.45],b:[38.10,29.70],sea:false},{a:[38.10,29.70],b:1,sea:false},
+    {a:1,b:[40.05,26.40],sea:true,bend:0.06},{a:[40.05,26.40],b:[40.90,25.30],sea:true,bend:0.05},{a:[40.90,25.30],b:2,sea:true,bend:0.03},
+    {a:2,b:[41.10,23.55],sea:false},{a:[41.10,23.55],b:[40.64,22.94],sea:false},{a:[40.64,22.94],b:[39.65,22.40],sea:false},
+    {a:[39.65,22.40],b:[38.90,22.55],sea:false},{a:[38.90,22.55],b:[38.35,23.30],sea:false},{a:[38.35,23.30],b:[37.98,23.73],sea:false},
+    {a:[37.98,23.73],b:[38.10,23.45],sea:false},{a:[38.10,23.45],b:3,sea:false},
+    {a:3,b:[38.10,23.45],sea:false},{a:[38.10,23.45],b:[37.98,23.73],sea:false},{a:[37.98,23.73],b:[38.35,23.30],sea:false},
+    {a:[38.35,23.30],b:[38.90,22.55],sea:false},{a:[38.90,22.55],b:[39.65,22.40],sea:false},{a:[39.65,22.40],b:[40.64,22.94],sea:false},
+    {a:[40.64,22.94],b:[41.10,23.55],sea:false},{a:[41.10,23.55],b:2,sea:false},
+    {a:2,b:4,sea:true,bend:-0.05},
+    {a:4,b:5,sea:false},
+    {a:5,b:6,sea:true,bend:0.05},{a:6,b:7,sea:true,bend:0.05},{a:7,b:8,sea:true,bend:0.06},{a:8,b:9,sea:true,bend:-0.05},
+    {a:9,b:10,sea:true,bend:0.04},{a:10,b:11,sea:true,bend:-0.05},{a:11,b:12,sea:true,bend:0.04},
+    {a:12,b:13,sea:true,bend:-0.14},
+    {a:13,b:14,sea:true,bend:-0.02},{a:14,b:15,sea:true,bend:-0.06},{a:15,b:16,sea:false}
+  ]},
+
+{ num:'IV', nombre:'Cautivo, hacia Roma', fecha:'c. 59–62 d. C.', color:'#71497B',
+  companeros:'Lucas y Aristarco, bajo custodia del centurión Julio', duracion:'≈ 3 años, entre viaje y prisión', extension:'c. 3.500 km', refs:'Hechos 21:17 – 28:31',
+  resumen:'Prisionero, de Jerusalén a Roma: naufragio en Malta y llegada a la capital.',
+  lema:'Predicando el reino de Dios… con toda franqueza, sin impedimento.', lemaRef:'Hechos 28:31',
+  paradas:[
+    {nombre:'Jerusalén',coords:[31.777,35.234],via:null,cita:'Hechos 21:27 – 23:11',
+     texto:'Judíos de Asia lo asaltan en el templo; rescatado por los soldados romanos, declara su fe ante la multitud y ante el sanedrín. De noche el Señor le dice: «Como has testificado de mí en Jerusalén, así es necesario que testifiques también en Roma».'},
+    {nombre:'Cesarea',coords:[35.470,33.910],via:'tierra',cita:'Hechos 23:23 – 26:32',
+     texto:'Dos años de prisión y defensas ante el gobernador Félix, el procurador Festo y el rey Agripa. Ante la celada de regresar a Jerusalén, Pablo invoca su derecho: «A César apelo».'},
+    {nombre:'Sidón',coords:[33.561,35.376],via:'mar',cita:'Hechos 27:3',
+     texto:'Zarpa bajo custodia del centurión Julio; en Sidón, Julio le permite ir a sus amigos y ser cuidado por ellos.'},
+    {nombre:'Mira de Licia',coords:[36.244,29.984],via:'mar',cita:'Hechos 27:5-6',
+     texto:'El centurión halla allí una nave alejandrina cargada de trigo, que iba a Italia, y lo transborda a ella.'},
+    {nombre:'Buenos Puertos (Creta)',coords:[34.955,24.779],via:'mar',cita:'Hechos 27:8-13',
+     texto:'En la costa sur de Creta la navegación se hace lenta. Pablo advierte: «La navegación será con perjuicio y mucha pérdida»; pero el piloto y el propietario persuaden a Julio de zarpar hacia Fenice.'},
+    {nombre:'Clauda',coords:[34.883,23.607],via:'mar',cita:'Hechos 27:14-20',
+     texto:'Apenas la doblan, la tempestad Euroaquilón los arrebata: durante días, sin ver sol ni estrellas, «toda esperanza de que seamos salvos se aparta de nosotros».'},
+    {nombre:'Melita (Malta)',coords:[35.940,14.406],via:'mar',cita:'Hechos 27:39 – 28:10',
+     texto:'En la decimocuarta noche la nave encalla, y todos escapan a tierra. En la fogata, una víbora no daña a Pablo; tres meses de estancia en los que sana a Publio, el primer magistrado de la isla, y a muchos enfermos. Al partir, son honrados con muchos presentes.'},
+    {nombre:'Siracusa (Sicilia)',coords:[37.083,15.283],via:'mar',cita:'Hechos 28:12',
+     texto:'En una nave alejandrina que había invernado en la isla, tocan Siracusa y permanecen tres días.'},
+    {nombre:'Regio',coords:[38.114,15.651],via:'mar',cita:'Hechos 28:13',
+     texto:'Al día siguiente costean hasta Regio, junto al estrecho de Mesina.'},
+    {nombre:'Puteoli',coords:[40.822,14.120],via:'mar',cita:'Hechos 28:13-14',
+     texto:'Con viento favorable alcanzan Puteoli, gran puerto del trigo hacia Roma. Hallan hermanos y son rogados de quedarse siete días.'},
+    {nombre:'Foro de Apio',coords:[41.567,12.572],via:'tierra',cita:'Hechos 28:15',
+     texto:'Los hermanos de Roma, al oír las noticias, salen a su encuentro hasta el Foro de Apio, en la vía Apia. Al verlos, Pablo da gracias a Dios y cobra aliento.'},
+    {nombre:'Tres Tabernas',coords:[41.563,12.780],via:'tierra',cita:'Hechos 28:15',
+     texto:'Otro grupo de hermanos lo espera en la antigua mansión de las Tres Tabernas, más adelante en la misma calzada.'},
+    {nombre:'Roma',coords:[41.893,12.485],via:'tierra',cita:'Hechos 28:16-31',
+     texto:'Dos años bajo custodia militar, en casa alquilada, recibiendo a todos los que venían a él y predicando el reino de Dios «con toda franqueza, sin impedimento».'}
+  ],
+  arcs:[
+    {a:0,b:1,sea:false},
+    {a:1,b:2,sea:true,bend:-0.02},
+    {a:2,b:3,sea:true,bend:-0.12},
+    {a:3,b:4,sea:true,bend:0.03},
+    {a:4,b:5,sea:true,bend:0.04},
+    {a:5,b:6,sea:true,bend:0.06},
+    {a:6,b:7,sea:true,bend:-0.05},
+    {a:7,b:8,sea:true,bend:-0.03},
+    {a:8,b:9,sea:true,bend:0.09},
+    {a:9,b:10,sea:false},{a:10,b:11,sea:false},{a:11,b:12,sea:false}
+  ]}
+];
+
+const GLOBAL_BOUNDS=[[29.8,10.5],[42.3,37.8]];
+
+/* ================= Geometría (independiente del mapa) ================= */
+/* Distancia geodésica autónoma: no depende del objeto mapa */
+function havDist(a,b){
+  const R=6371000,rad=Math.PI/180;
+  const dLa=(b[0]-a[0])*rad,dLo=(b[1]-a[1])*rad;
+  const s=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(a[0]*rad)*Math.cos(b[0]*rad)*Math.sin(dLo/2)*Math.sin(dLo/2);
+  return 2*R*Math.asin(Math.min(1,Math.sqrt(s)));
+}
+function curvePts(A,B,bend,n=20){
+  const dLat=B[0]-A[0],dLng=B[1]-A[1];
+  const len=Math.hypot(dLat,dLng)||1e-9;
+  const px=dLng/len,py=-dLat/len;
+  const cx=(A[0]+B[0])/2+px*bend*len, cy=(A[1]+B[1])/2+py*bend*len;
+  const out=[];
+  for(let i=0;i<=n;i++){const t=i/n,u=1-t;
+    out.push([u*u*A[0]+2*u*t*cx+t*t*B[0], u*u*A[1]+2*u*t*cy+t*t*B[1]]);}
+  return out;
+}
+function build(vi){
+  const v=VIAJES[vi];
+  const pts=[],cum=[0],arcsMeta=[],stopsOrder=[];
+  const seen=new Set();
+  const rp=x=>Array.isArray(x)?x.slice():v.paradas[x].coords;
+  v.arcs.forEach(arc=>{
+    const A=rp(arc.a),B=rp(arc.b);
+    const seg=(arc.sea&&arc.bend)?curvePts(A,B,arc.bend):[A,B];
+    if(typeof arc.a==='number'&&!seen.has(arc.a)){seen.add(arc.a);stopsOrder.push({stopIdx:arc.a,ptIdx:pts.length?pts.length-1:0});}
+    const i0=pts.length?pts.length-1:0;
+    (pts.length?seg.slice(1):seg).forEach(p=>{
+      const prev=pts[pts.length-1];
+      /* FIX: en el primer punto no hay "punto anterior" (antes aquí el script fallaba) */
+      cum.push(cum[cum.length-1]+(prev?havDist(prev,p):0));
+      pts.push(p);
+    });
+    const i1=pts.length-1;
+    if(typeof arc.b==='number'&&!seen.has(arc.b)){seen.add(arc.b);stopsOrder.push({stopIdx:arc.b,ptIdx:i1});}
+    arcsMeta.push({sea:!!arc.sea,latlngs:pts.slice(i0,i1+1).map(p=>p.slice()),i0,i1});
+  });
+  v.pts=pts;v.cum=cum;v.arcsMeta=arcsMeta;v.stopsOrder=stopsOrder;v.total=cum[cum.length-1];
+  let s=[90,180],n=[-90,-180];
+  v.paradas.forEach(p=>{s=[Math.min(s[0],p.coords[0]),Math.min(s[1],p.coords[1])];n=[Math.max(n[0],p.coords[0]),Math.max(n[1],p.coords[1])];});
+  v.bounds=[[s[0]-0.5,s[1]-0.5],[n[0]+0.5,n[1]+0.5]];
+}
+VIAJES.forEach((v,i)=>build(i));
+
+/* ================= Panel (se construye PRIMERO, sin depender del mapa) ================= */
+const det=document.getElementById('detalle');
+function renderNav(){
+  document.getElementById('vnav').innerHTML=VIAJES.map((v,i)=>
+    '<button class="vcard '+(activo===i?'on':activo!==-1?'dim':'')+'" data-v="'+i+'" style="--vc:'+v.color+'" aria-pressed="'+(activo===i)+'">'
+    +'<span class="vnum">'+v.num+'</span>'
+    +'<span><strong>'+v.nombre+'</strong></span>'
+    +'<em>'+v.fecha+' · '+v.refs+'</em>'
+    +'<span class="vres">'+v.resumen+'</span>'
+    +'</button>').join('');
+  const bt=document.getElementById('btnTodos');
+  bt.classList.toggle('on',activo===-1);
+  bt.setAttribute('aria-pressed',activo===-1);
+}
+function renderDetalle(){
+  if(activo===-1){
+    det.innerHTML='<div class="intro">'
+      +'<p>Desde Antioquía de Siria hasta Roma, el apóstol Pablo recorrió unas <strong>15.000&nbsp;km</strong> en cuatro grandes jornadas que el libro de los Hechos consigna casi etapa por etapa.</p>'
+      +'<p>Elige un recorrido para verlo aislado sobre el mapa, con cada parada numerada y las referencias de lo que aconteció en cada lugar. Las líneas continuas señalan el viaje <strong>por tierra</strong>; las punteadas, la <strong>travesía por mar</strong>.</p>'
+      +'</div>';
+  }else{
+    const v=VIAJES[activo];
+    det.innerHTML='<div class="lbl">Itinerario '+v.num+' · '+v.paradas.length+' paradas</div>'
+      +'<dl class="ficha" style="--vc:'+v.color+'">'
+      +'<div><dt>Compañeros</dt><dd>'+v.companeros+'</dd></div>'
+      +'<div><dt>Duración</dt><dd>'+v.duracion+'</dd></div>'
+      +'<div><dt>Extensión</dt><dd>'+v.extension+'</dd></div>'
+      +'<div><dt>Texto base</dt><dd>'+v.refs+'</dd></div>'
+      +'</dl>'
+      +'<blockquote class="lema" style="--vc:'+v.color+'">&laquo;'+v.lema+'&raquo;<cite>'+v.lemaRef+'</cite></blockquote>'
+      +'<button class="btn-tour" id="btnTour" style="--vc:'+v.color+'">'+ICONS.play+'<span>Recorrer el viaje</span></button>'
+      +'<ol class="paradas" style="--vc:'+v.color+'">'
+      +v.paradas.map((p,i)=>
+        '<li data-i="'+i+'"><span class="pnum">'+(i+1)+'</span><div>'
+        +'<div class="pnombre">'+p.nombre+(p.via?'<span class="via" title="Llegada por '+p.via+'">'+ICONS[p.via]+'</span>':'')+'</div>'
+        +'<div class="pcita">'+p.cita+'</div>'
+        +'</div></li>').join('')
+      +'</ol>';
+  }
+}
+det.addEventListener('click',e=>{
+  const li=e.target.closest('.paradas li');
+  if(li){goToStop(+li.dataset.i);return;}
+  const bt=e.target.closest('#btnTour');
+  if(bt){if(tour)stopTour();else startTour(activo);}
+});
+document.getElementById('vnav').addEventListener('click',e=>{
+  const c=e.target.closest('.vcard');if(!c)return;
+  setActive(+c.dataset.v,{animate:true});
+});
+document.getElementById('btnTodos').innerHTML=ICONS.capas+'<span>Ver los cuatro viajes</span>';
+document.getElementById('btnTodos').addEventListener('click',()=>setActive(-1,{animate:true}));
+document.getElementById('btnVista').innerHTML=ICONS.vista+'<span>Vista general</span>';
+document.getElementById('btnVista').addEventListener('click',()=>{if(map)map.flyToBounds(GLOBAL_BOUNDS,{padding:padFor(),duration:1.1,maxZoom:6.5});});
+
+/* Poblar el panel de inmediato */
+renderNav();
+renderDetalle();
+
+/* ================= Mapa base (protegido; sin API key) ================= */
+try{
+  map=L.map('map',{zoomControl:false,minZoom:4,maxZoom:13});
+
+  /* Teselas oficiales de OpenStreetMap: gratuitas, sin clave ni registro */
+  let base=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:19,
+    attribution:'&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  /* Respaldo automático: si OSM fallara, se cambia a Esri Light Gray (también sin clave) */
+  let baseErrors=0,baseSwitched=false;
+  base.on('tileerror',()=>{
+    if(baseSwitched)return;
+    if(++baseErrors<8)return;
+    baseSwitched=true;
+    map.removeLayer(base);
+    base=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',{
+      maxZoom:19,maxNativeZoom:16,
+      attribution:'Tiles &copy; Esri'
+    }).addTo(map);
+  });
+
+  L.control.attribution({position:'bottomleft',prefix:'Leaflet'}).addTo(map);
+  L.control.zoom({position:'topright'}).addTo(map);
+  map.setView([35.9,23.5],5);
+  window.addEventListener('resize',()=>map.invalidateSize());
+}catch(err){
+  const el=document.getElementById('map');
+  if(el)el.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:Inter,sans-serif;color:#6B6E74;padding:24px;text-align:center">No se pudo cargar el mapa (¿sin conexión o red bloqueada?). El panel de recorridos sigue funcionando.</div>';
+}
+
+/* ================= Marcadores, líneas, animación ================= */
+function popupHTML(v,i){
+  const p=v.paradas[i];
+  return '<div class="pk" style="color:'+v.color+'">Viaje '+v.num+' · parada '+(i+1)+' de '+v.paradas.length+'</div>'
+    +'<h3>'+p.nombre+'</h3>'
+    +'<p class="pe">'+p.texto+'</p>'
+    +(p.extra?'<p class="pe ex">'+p.extra.texto+'</p><div class="pr" style="color:'+v.color+'">'+p.extra.cita+'</div>':'')
+    +'<div class="pr" style="color:'+v.color+'">'+p.cita+'</div>';
+}
+function showMarker(m){
+  const root=m.getElement();if(!root)return;
+  root.style.pointerEvents='';
+  const pin=root.querySelector('.pin');if(pin)pin.classList.add('show');
+}
+function animDraw(vi,T){
+  const v=VIAJES[vi];if(!v.render)return;
+  v.arcsMeta.forEach(a=>{const el=a.poly.getElement();if(!el)return;a.len=el.getTotalLength();el.style.strokeDasharray=a.len;el.style.strokeDashoffset=a.len;});
+  v.markers.forEach(m=>{const r=m.getElement();if(r)r.style.pointerEvents='none';});
+  const N=v.pts.length-1,t0=performance.now();
+  const frame=now=>{
+    if(!v.render)return;
+    const k=Math.min(1,(now-t0)/T),gp=k*N;
+    v.arcsMeta.forEach(a=>{
+      const el=a.poly.getElement();if(!el||!a.len)return;
+      const p=Math.max(0,Math.min(1,(gp-a.i0)/Math.max(1,a.i1-a.i0)));
+      el.style.strokeDashoffset=a.len*(1-p);
+    });
+    v.stopsOrder.forEach(s=>{if(s.ptIdx<=gp+0.001)showMarker(v.markers[s.stopIdx]);});
+    if(k<1){v.render.anim=requestAnimationFrame(frame);}
+    else{v.arcsMeta.forEach(a=>{const el=a.poly.getElement();if(el&&a.sea){el.style.strokeDasharray='9 7';el.style.strokeDashoffset='0';}});}
+  };
+  v.render.anim=requestAnimationFrame(frame);
+}
+function showTravel(vi,o={}){
+  if(!map)return;
+  const v=VIAJES[vi];if(v.render)return;
+  const group=L.layerGroup();
+  v.arcsMeta.forEach(a=>{
+    a.poly=L.polyline(a.latlngs,{color:v.color,weight:3,opacity:.9,lineCap:'round',lineJoin:'round'});
+    group.addLayer(a.poly);
+  });
+  v.markers=v.paradas.map((p,i)=>{
+    const m=L.marker(p.coords,{
+      icon:L.divIcon({className:'mk',html:'<div class="pin" style="--c:'+v.color+'"><span>'+(i+1)+'</span></div>',iconSize:[26,26],iconAnchor:[13,13]}),
+      zIndexOffset:100+i
+    });
+    m.bindPopup(popupHTML(v,i),{maxWidth:300,minWidth:225,className:'pp',autoPanPadding:[24,24]});
+    m.bindTooltip(p.nombre,{direction:'top',offset:[0,-12],className:'tt',opacity:1});
+    group.addLayer(m);
+    return m;
+  });
+  group.addTo(map);
+  v.render={group,anim:0,timers:[]};
+  if(o.animate===false){
+    requestAnimationFrame(()=>{
+      v.arcsMeta.forEach(a=>{const el=a.poly.getElement();if(!el)return;
+        if(a.sea){el.style.strokeDasharray='9 7';el.style.strokeDashoffset='0';}
+        else{el.style.strokeDasharray='';el.style.strokeDashoffset='';}});
+      v.markers.forEach(showMarker);
+    });
+  }else{
+    const T=o.T||Math.min(3000,1250+v.pts.length*14);
+    v.render.timers.push(setTimeout(()=>animDraw(vi,T),o.delay||0));
+  }
+}
+function hideTravel(vi){
+  const v=VIAJES[vi];if(!v||!v.render)return;
+  cancelAnimationFrame(v.render.anim);
+  v.render.timers.forEach(clearTimeout);
+  map.removeLayer(v.render.group);
+  v.render=null;v.markers=null;
+}
+
+/* ================= Estado y vistas ================= */
+const padFor=()=>window.innerWidth>900?[42,42]:[14,14];
+function setActive(vi,o={}){
+  stopTour();
+  activo=vi;
+  renderNav();renderDetalle();
+  if(!map)return;
+  const req=vi===-1?[0,1,2,3]:[vi];
+  VIAJES.forEach((v,i)=>{if(v.render&&!req.includes(i))hideTravel(i);});
+  req.forEach((i,k)=>{
+    if(VIAJES[i].render){hideTravel(i);showTravel(i,{animate:true,delay:k*280,T:2000});}
+    else showTravel(i,{animate:o.animate!==false,delay:o.animate!==false?k*300:0});
+  });
+  const b=vi===-1?GLOBAL_BOUNDS:VIAJES[vi].bounds;
+  map.flyToBounds(b,{padding:padFor(),duration:1.0,maxZoom:6.8});
+}
+
+function goToStop(i){
+  if(!map)return;
+  const v=VIAJES[activo];if(!v||!v.markers)return;
+  const p=v.paradas[i];
+  map.flyTo(p.coords,Math.max(map.getZoom(),6.5),{duration:.9});
+  setTimeout(()=>{if(v.markers&&v.markers[i])v.markers[i].openPopup();},950);
+  highlightStop(i);
+}
+function highlightStop(i){
+  document.querySelectorAll('.paradas li').forEach(li=>li.classList.toggle('act',+li.dataset.i===i));
+  const li=document.querySelector('.paradas li[data-i="'+i+'"]');
+  if(li)li.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+
+/* ================= Recorrido animado ================= */
+const chip=document.getElementById('tourChip');
+function chipSet(k,t,r){
+  document.getElementById('tcK').textContent=k;
+  document.getElementById('tcT').textContent=t;
+  document.getElementById('tcR').textContent=r;
+  chip.style.setProperty('--vc',VIAJES[tour.vi].color);
+}
+const chipShow=()=>chip.classList.add('on');
+const chipHide=()=>chip.classList.remove('on');
+function restoreBtn(v){
+  const btn=document.getElementById('btnTour');
+  if(btn){btn.classList.remove('stop');btn.innerHTML=ICONS.play+'<span>Recorrer el viaje</span>';}
+}
+function startTour(vi){
+  if(!map)return;
+  stopTour();
+  const v=VIAJES[vi];
+  if(!v.render)showTravel(vi,{animate:false});
+  const stops=v.stopsOrder.map(s=>({stopIdx:s.stopIdx,dist:v.cum[s.ptIdx]}));
+  const dur=Math.min(30,Math.max(15,v.total/95000));
+  const pin=L.marker(v.pts[0],{
+    icon:L.divIcon({className:'mk',html:'<div class="tpin" style="--c:'+v.color+'"></div>',iconSize:[18,18],iconAnchor:[9,9]}),
+    zIndexOffset:2000,interactive:false
+  }).addTo(map);
+  tour={vi,v,pin,speed:v.total/dur,total:v.total,stops,i:1,d:0,visited:new Set([0]),pausedUntil:0,last:performance.now(),raf:0,lastPan:0};
+  const btn=document.getElementById('btnTour');
+  if(btn){btn.classList.add('stop');btn.innerHTML=ICONS.stop+'<span>Detener el recorrido</span>';}
+  chipSet('Viaje '+v.num,'Comenzando en '+v.paradas[0].nombre,v.paradas[0].cita);
+  chipShow();
+  highlightStop(0);
+  v.markers[0].openPopup();
+  tour.pausedUntil=performance.now()+1800;
+  tour.raf=requestAnimationFrame(stepTour);
+}
+function locateDist(d){
+  const c=tour.v.cum;
+  let lo=0,hi=c.length-1;
+  while(lo<hi-1){const mid=(lo+hi)>>1;if(c[mid]<=d)lo=mid;else hi=mid;}
+  const f=(d-c[lo])/((c[hi]-c[lo])||1);
+  const a=tour.v.pts[lo],b=tour.v.pts[hi];
+  return [a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f];
+}
+function stepTour(now){
+  if(!tour)return;
+  const dt=(now-tour.last)/1000;tour.last=now;
+  if(now>=tour.pausedUntil){
+    tour.d=Math.min(tour.total,tour.d+tour.speed*dt);
+    const s=tour.stops[tour.i];
+    if(s&&tour.d>=s.dist-0.001){
+      arrive(s);
+      tour.i++;
+      tour.pausedUntil=now+(tour.i>=tour.stops.length?900:1900);
+    }
+  }
+  const pos=locateDist(tour.d);
+  tour.pin.setLatLng(pos);
+  if(now-tour.lastPan>900&&!map.getBounds().pad(-0.18).contains(pos)){map.panTo(pos,{animate:true,duration:.8});tour.lastPan=now;}
+  if(tour.d>=tour.total&&now>=tour.pausedUntil){finishTour();return;}
+  tour.raf=requestAnimationFrame(stepTour);
+}
+function arrive(s){
+  const v=tour.v,idx=s.stopIdx;
+  if(tour.visited.has(idx)){
+    chipSet('Viaje '+v.num,'De regreso por '+v.paradas[idx].nombre,v.paradas[idx].cita);
+    return;
+  }
+  tour.visited.add(idx);
+  const p=v.paradas[idx];
+  chipSet('Parada '+tour.visited.size+' de '+v.paradas.length,p.nombre,p.cita);
+  v.markers[idx].openPopup();
+  highlightStop(idx);
+}
+function finishTour(){
+  const v=tour.v;
+  cancelAnimationFrame(tour.raf);
+  map.removeLayer(tour.pin);
+  restoreBtn(v);
+  highlightStop(-1);
+  chipSet('Viaje '+v.num+' · fin del recorrido',v.paradas[v.paradas.length-1].nombre,v.refs);
+  setTimeout(()=>{chipHide();tour=null;},2800);
+}
+function stopTour(){
+  if(!tour)return;
+  cancelAnimationFrame(tour.raf);
+  map.removeLayer(tour.pin);
+  restoreBtn(VIAJES[tour.vi]);
+  highlightStop(-1);
+  chipHide();
+  tour=null;
+}
+
+/* ================= Arranque ================= */
+if(map){
+  VIAJES.forEach((v,i)=>showTravel(i,{animate:true,delay:420+i*380}));
+}
+</script>
+</body>
+</html>
