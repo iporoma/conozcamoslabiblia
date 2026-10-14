@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Las Cartas Paulinas · Explicadas de manera sencilla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f0e2;
+    --card:#fffdf6;
+    --ink:#3a2b1c;
+    --ink-soft:#6b5a45;
+    --gold:#a97e2c;
+    --gold-soft:#e3c98a;
+    --line:#e2d5b8;
+    --shadow:0 10px 30px rgba(60,40,15,.12);
+    --radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Source Sans 3',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+  }
+  /* ---------- Barra de navegación ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(246,240,226,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.7rem 1.4rem;
+  }
+  nav .brand{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.25rem;color:var(--ink);display:flex;align-items:center;gap:.5rem}
+  nav .brand svg{width:22px;height:22px;fill:var(--gold)}
+  nav a{color:var(--ink-soft);text-decoration:none;font-weight:600;font-size:.92rem;margin-left:1.1rem;padding:.3rem .1rem;border-bottom:2px solid transparent;transition:.2s}
+  nav a:hover{color:var(--gold);border-color:var(--gold)}
+
+  /* ---------- Hero ---------- */
+  header.hero{
+    text-align:center;
+    padding:4.5rem 1.5rem 3.5rem;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(227,201,138,.25), transparent 40%),
+      radial-gradient(circle at 85% 70%, rgba(169,126,44,.15), transparent 45%),
+      var(--bg);
+  }
+  .hero h1{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2.4rem,6vw,4rem);
+    font-weight:700;letter-spacing:.5px;
+  }
+  .hero .tagline{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--ink-soft);
+    margin-top:.6rem;max-width:640px;margin-inline:auto;
+  }
+  .ornament{display:flex;align-items:center;justify-content:center;gap:.8rem;margin:1.4rem 0 0;color:var(--gold)}
+  .ornament::before,.ornament::after{content:"";width:70px;height:1px;background:var(--gold-soft)}
+  .ornament span{font-size:1.1rem}
+
+  /* ---------- Secciones ---------- */
+  section{max-width:1050px;margin:0 auto;padding:2.8rem 1.4rem}
+  .sec-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;
+    display:flex;align-items:center;gap:.7rem;margin-bottom:1.6rem;
+  }
+  .sec-title .badge{
+    font-family:'Source Sans 3',sans-serif;font-size:.75rem;font-weight:700;
+    background:var(--gold);color:#fff;border-radius:999px;
+    padding:.25rem .8rem;letter-spacing:.6px;text-transform:uppercase;
+  }
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:1.6rem 1.8rem;
+  }
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem}
+  ul.simple{list-style:none;margin-top:.5rem}
+  ul.simple li{padding:.45rem 0 .45rem 1.6rem;position:relative;color:var(--ink-soft)}
+  ul.simple li::before{content:"✦";position:absolute;left:0;color:var(--gold);font-size:.85rem}
+  ul.simple li strong{color:var(--ink)}
+  .note{
+    margin-top:1.2rem;padding:.9rem 1.2rem;border-left:4px solid var(--gold-soft);
+    background:rgba(227,201,138,.15);border-radius:0 10px 10px 0;
+    font-size:.95rem;color:var(--ink-soft);
+  }
+
+  /* ---------- Grid de cartas ---------- */
+  .letters-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:1.1rem;
+  }
+  .letter-btn{
+    position:relative;cursor:pointer;text-align:left;
+    background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:1.3rem 1.2rem 1.1rem;
+    box-shadow:0 4px 14px rgba(60,40,15,.08);
+    transition:transform .22s ease, box-shadow .22s ease;
+    overflow:hidden;font-family:inherit;
+  }
+  .letter-btn::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:5px;
+    background:var(--accent,var(--gold));
+  }
+  .letter-btn:hover,.letter-btn:focus-visible{
+    transform:translateY(-5px);
+    box-shadow:0 14px 28px rgba(60,40,15,.18);
+    outline:none;border-color:var(--accent,var(--gold));
+  }
+  .letter-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:34px;height:34px;border-radius:50%;
+    background:var(--accent,var(--gold));color:#fff;
+    font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1rem;
+    margin-bottom:.7rem;
+  }
+  .letter-name{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.35rem;font-weight:700;color:var(--ink);line-height:1.2;
+  }
+  .letter-sub{font-size:.86rem;color:var(--ink-soft);margin-top:.35rem;min-height:2.4em}
+  .letter-open{
+    margin-top:.7rem;font-size:.78rem;font-weight:700;color:var(--accent,var(--gold));
+    display:flex;align-items:center;gap:.35rem;letter-spacing:.4px;text-transform:uppercase;
+  }
+
+  /* ---------- Viajes ---------- */
+  .timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.2rem}
+  .trip{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:1.4rem 1.5rem;box-shadow:var(--shadow);position:relative;
+  }
+  .trip .years{
+    display:inline-block;background:var(--gold);color:#fff;font-weight:700;
+    font-size:.8rem;border-radius:999px;padding:.2rem .75rem;margin-bottom:.6rem;
+  }
+  .trip h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem}
+  .trip p{color:var(--ink-soft);font-size:.95rem;margin-top:.3rem}
+
+  /* ---------- Cierre ---------- */
+  .closing{
+    text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(1.15rem,3vw,1.5rem);color:var(--ink-soft);
+    max-width:720px;margin:0 auto;padding-bottom:3.5rem;
+  }
+  footer{
+    background:#2e2115;color:#cbb891;text-align:center;
+    padding:1.4rem 1rem;font-size:.85rem;
+  }
+
+  /* ---------- Modal ---------- */
+  .overlay{
+    position:fixed;inset:0;z-index:100;
+    background:rgba(46,33,21,.55);
+    display:flex;align-items:center;justify-content:center;
+    padding:1.2rem;
+    opacity:0;pointer-events:none;transition:opacity .25s ease;
+  }
+  .overlay.show{opacity:1;pointer-events:auto}
+  .modal{
+    background:var(--card);border-radius:20px;max-width:620px;width:100%;
+    max-height:88vh;overflow-y:auto;position:relative;
+    box-shadow:0 24px 60px rgba(0,0,0,.35);
+    transform:translateY(18px) scale(.97);transition:transform .25s ease;
+    border-top:6px solid var(--accent,var(--gold));
+  }
+  .overlay.show .modal{transform:translateY(0) scale(1)}
+  .modal-close{
+    position:sticky;top:.8rem;margin-left:calc(100% - 3rem);
+    width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--ink);color:#fff;font-size:1rem;z-index:2;
+    display:flex;align-items:center;justify-content:center;transition:.2s;
+  }
+  .modal-close:hover{background:var(--gold)}
+  .modal-inner{padding:0 2rem 2rem;margin-top:-1.5rem}
+  .modal-num{
+    font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--accent,var(--gold));
+  }
+  .modal h2{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.9rem,5vw,2.5rem);font-weight:700;line-height:1.15;margin-top:.2rem;
+  }
+  .modal .sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--ink-soft);font-size:1.15rem;margin-top:.2rem}
+  .meta{
+    display:grid;grid-template-columns:1fr 1fr;gap:.8rem;
+    margin:1.4rem 0;
+  }
+  .meta div{
+    background:rgba(227,201,138,.16);border-radius:10px;padding:.7rem .9rem;font-size:.9rem;
+  }
+  .meta strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.8px;color:var(--gold)}
+  .modal h3{
+    font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--accent,var(--gold));
+    margin:1.2rem 0 .3rem;
+  }
+  .modal p.det{color:var(--ink-soft)}
+  blockquote.verse{
+    margin:1.4rem 0;padding:1.2rem 1.4rem;
+    background:#f3ead2;border-radius:12px;border-left:4px solid var(--accent,var(--gold));
+  }
+  blockquote.verse p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;line-height:1.5}
+  blockquote.verse cite{display:block;margin-top:.6rem;font-style:normal;font-weight:700;font-size:.85rem;color:var(--accent,var(--gold))}
+  .modal-nav{display:flex;justify-content:space-between;gap:.8rem;margin-top:1.4rem}
+  .modal-nav button{
+    font-family:inherit;font-weight:700;font-size:.88rem;cursor:pointer;
+    border:1.5px solid var(--accent,var(--gold));color:var(--accent,var(--gold));
+    background:transparent;border-radius:999px;padding:.5rem 1.2rem;transition:.2s;
+  }
+  .modal-nav button:hover:not(:disabled){background:var(--accent,var(--gold));color:#fff}
+  .modal-nav button:disabled{opacity:.35;cursor:default}
+
+  @media (max-width:560px){
+    .meta{grid-template-columns:1fr}
+    .modal-inner{padding:0 1.3rem 1.5rem}
+    nav a{margin-left:.7rem;font-size:.82rem}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+    Cartas Paulinas
+  </div>
+  <div>
+    <a href="#que-son">¿Qué son?</a>
+    <a href="#cartas">Las 13 cartas</a>
+    <a href="#viajes">Los viajes</a>
+  </div>
+</nav>
+
+<!-- ================= ¿QUÉ SON? ================= -->
+<section id="que-son">
+  <h2 class="sec-title"><span class="badge">Resumen fácil</span> ¿Qué son las cartas paulinas?</h2>
+  <div class="cols">
+    <div class="card">
+      <ul class="simple">
+        <li><strong>Son 13 cartas</strong> que el apóstol Pablo escribió y que forman parte del Nuevo Testamento (desde Romanos hasta Filemón).</li>
+        <li>Con ellas Pablo <strong>enseñó sobre Jesús</strong>, la salvación, la vida en comunidad y la esperanza de su regreso.</li>
+        <li>Las escribió a <strong>iglesias y amigos</strong> que vivían con dudas, divisiones, persecución y problemas cotidianos.</li>
+        <li>No eran cartas casuales: <strong>cada una enseña, corrige y anima</strong> con un propósito claro.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:.4rem">✍️ ¿Cómo escribía Pablo?</h3>
+      <ul class="simple">
+        <li>Usaba el <strong>formato normal de su época</strong>: saludo → mensaje → despedida.</li>
+        <li>Pero lo llenó de fe: en vez de "saludos" escribía <em>"gracia y paz a vosotros"</em>, daba gracias a Dios, enseñaba y terminaba con una bendición.</li>
+        <li>Su estilo: <strong>claro, apasionado, personal</strong> y lleno de imágenes (el cuerpo de Cristo, la armadura de Dios).</li>
+        <li>Sobre todo: <strong>todo giraba en torno a Jesucristo</strong>.</li>
+      </ul>
+      <div class="note">💡 Diferencia con hoy: un correo moderno va directo al asunto. Las cartas de Pablo seguían las costumbres antiguas, pero las pusieron al servicio del evangelio.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LAS 13 CARTAS ================= -->
+<section id="cartas">
+  <h2 class="sec-title"><span class="badge">Toca una carta</span> Las 13 cartas de Pablo</h2>
+  <p style="color:var(--ink-soft);margin:-.8rem 0 1.6rem">Pulsa cualquiera de las tarjetas para ver a quién fue dirigida, cuándo se escribió, su idea principal y su versículo clave.</p>
+  <div class="letters-grid" id="lettersGrid"></div>
+</section>
+
+<!-- ================= CIERRE ================= -->
+<section>
+  <h2 class="sec-title"><span class="badge">Hoy</span> ¿Por qué siguen siendo importantes?</h2>
+  <div class="card">
+    <ul class="simple">
+      <li>Siguen enseñando sobre la <strong>salvación por gracia mediante la fe</strong> y la centralidad de Jesús.</li>
+      <li>Nos hablan del <strong>amor, la unidad, la santidad y el liderazgo</strong> en la comunidad cristiana.</li>
+      <li>Nos ayudan a <strong>entender a las primeras iglesias</strong> y a vivir el evangelio en la actualidad.</li>
+    </ul>
+  </div>
+</section>
+
+<p class="closing">"La forma epistolar era propia de su época; lo distintivo de Pablo fue ponerla al servicio del evangelio de Jesucristo."</p>
+
+<footer>Las Cartas Paulinas · Un recurso sencillo para conocer las epístolas del apóstol Pablo</footer>
+
+<!-- ================= MODAL ================= -->
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="btnClose" aria-label="Cerrar">✕</button>
+    <div class="modal-inner" id="modalInner"></div>
+  </div>
+</div>
+
+<script>
+/* ---------- Datos de las 13 cartas (resumidos en lenguaje sencillo) ---------- */
+const LETTERS = [
+  {
+    name:"Romanos", num:"I", color:"#8c3b2e", sub:"El poder de Dios para salvación",
+    para:"La iglesia de Roma (creyentes judíos y no judíos).",
+    when:"Aprox. 56–58 d. C.", where:"Desde Corinto.",
+    idea:"Todos necesitamos salvación, y se recibe por la fe, no por cumplir reglas ni obras de la ley.",
+    detail:"Es la explicación más completa del evangelio en las cartas de Pablo. También enseña que judíos y no judíos deben vivir en unidad como un solo pueblo.",
+    verse:"«No me avergüenzo del evangelio, porque es poder de Dios para salvación a todo aquel que cree… El justo por la fe vivirá».",
+    ref:"Romanos 1:16-17"
+  },
+  {
+    name:"1 Corintios", num:"II", color:"#a4652c", sub:"Corrigiendo una iglesia desordenada",
+    para:"La iglesia de Corinto.",
+    when:"Aprox. 53–55 d. C.", where:"Desde Éfeso.",
+    idea:"Una iglesia con muchos dones pero desordenada necesita madurar, y el amor debe guiar todo lo que hace.",
+    detail:"Pablo corrige divisiones internas, casos de inmoralidad, pleitos entre creyentes, el desorden en la Cena del Señor y el mal uso de los dones espirituales.",
+    verse:"«El amor es paciente, bondadoso; no tiene envidia, no se jacta, no se envanece; no busca lo suyo, no se irrita, no guarda rencor».",
+    ref:"1 Corintios 13:4-5"
+  },
+  {
+    name:"2 Corintios", num:"III", color:"#7a5c43", sub:"El consuelo y la defensa del ministerio",
+    para:"La iglesia de Corinto.",
+    when:"Aprox. 55–56 d. C.", where:"Desde Macedonia.",
+    idea:"Pablo defiende su trabajo como apóstol mostrando sus sufrimientos, no su prestigio. Dios consuela en medio de las dificultades.",
+    detail:"La carta enseña que Dios consuela en la aflicción, que el ministerio es reconciliación y que los creyentes deben practicar la generosidad.",
+    verse:"«Si alguno está en Cristo, nueva criatura es; las cosas viejas pasaron; he aquí todas son hechas nuevas».",
+    ref:"2 Corintios 5:17-18"
+  },
+  {
+    name:"Gálatas", num:"IV", color:"#5c6b3c", sub:"Defendiendo la libertad en Cristo",
+    para:"Las iglesias de la región de Galacia.",
+    when:"Aprox. 48–55 d. C.", where:"—",
+    idea:"Nadie se salva cumpliendo la ley: la salvación es por gracia mediante la fe, y Cristo nos hizo libres.",
+    detail:"Pablo combate a quienes exigían que los creyentes no judíos se circuncidaran y cumplieran la ley judía para salvarse. Invita a vivir una fe que transforma la identidad y la conducta.",
+    verse:"«Ya no vivo yo, mas vive Cristo en mí; y lo que ahora vivo en la carne, lo vivo en la fe del Hijo de Dios, el cual me amó y se entregó a sí mismo por mí».",
+    ref:"Gálatas 2:20"
+  },
+  {
+    name:"Efesios", num:"V", color:"#3c5a6b", sub:"La Iglesia como cuerpo de Cristo",
+    para:"Éfeso y las iglesias de Asia Menor.",
+    when:"Tradicionalmente 60–62 d. C. (desde la cárcel)", where:"Durante el encarcelamiento de Pablo.",
+    idea:"La Iglesia es el cuerpo de Cristo: judíos y no judíos unidos en una sola comunidad que crece en unidad, madurez y amor.",
+    detail:"Describe las bendiciones recibidas en Cristo, el llamado a vivir en unidad y santidad, y la necesidad de permanecer firmes con la armadura de Dios.",
+    verse:"«Por gracia sois salvos por medio de la fe; y esto no de vosotros, pues es don de Dios; no por obras, para que nadie se gloríe».",
+    ref:"Efesios 2:8-10"
+  },
+  {
+    name:"Filipenses", num:"VI", color:"#6b3c5a", sub:"La carta del gozo",
+    para:"La iglesia de Filipos.",
+    when:"Tradicionalmente 60–62 d. C. (desde la cárcel)", where:"Durante el encarcelamiento de Pablo en Roma.",
+    idea:"Aun en la cárcel se puede tener gozo. La humildad de Cristo —que se humilló hasta la muerte de cruz— es el modelo para servir y convivir.",
+    detail:"Pablo agradece la ofrenda que le enviaron y los anima a perseverar en la fe con alegría, unidad y servicio.",
+    verse:"«Regocijaos en el Señor siempre. Otra vez digo: ¡Regocijaos!».",
+    ref:"Filipenses 4:4"
+  },
+  {
+    name:"Colosenses", num:"VII", color:"#4a3c6b", sub:"La supremacía y suficiencia de Cristo",
+    para:"La iglesia de Colosas.",
+    when:"Tradicionalmente 60–62 d. C. (desde la cárcel)", where:"Durante el encarcelamiento de Pablo.",
+    idea:"Cristo es suficiente: ninguna filosofía ni enseñanza alternativa debe ocupar su lugar en el centro de la fe.",
+    detail:"La carta destaca la supremacía de Cristo sobre toda la creación y sobre la Iglesia, y la plenitud que los creyentes encuentran en él.",
+    verse:"«Él es antes de todas las cosas, y todas las cosas en él subsisten».",
+    ref:"Colosenses 1:17"
+  },
+  {
+    name:"1 Tesalonicenses", num:"VIII", color:"#2e6b5c", sub:"La esperanza del regreso de Cristo",
+    para:"La iglesia de Tesalónica.",
+    when:"Aprox. 50–51 d. C.", where:"—",
+    idea:"Cristo volverá: vive en santidad y esperanza mientras lo esperas, aun en medio de la persecución.",
+    detail:"Anima a una comunidad perseguida y responde sus inquietudes sobre el regreso del Señor y el destino de los creyentes que ya murieron.",
+    verse:"«El Señor mismo descenderá del cielo… y así estaremos siempre con el Señor».",
+    ref:"1 Tesalonicenses 4:16-17"
+  },
+  {
+    name:"2 Tesalonicenses", num:"IX", color:"#2e5c6b", sub:"Esperar trabajando, con fidelidad",
+    para:"La iglesia de Tesalónica.",
+    when:"Aprox. 50–52 d. C.", where:"—",
+    idea:"La esperanza del regreso de Cristo no lleva a quedarse quietos, sino a una vida de fidelidad, perseverancia y trabajo responsable.",
+    detail:"Pablo reafirma la esperanza de la segunda venida del Señor y exhorta a los creyentes a vivir en santidad mientras esperan su regreso.",
+    verse:"«El Señor mismo descenderá del cielo… y así estaremos siempre con el Señor».",
+    ref:"1 Tesalonicenses 4:16-17 (versículo asociado)"
+  },
+  {
+    name:"1 Timoteo", num:"X", color:"#6b5a2e", sub:"Orden y liderazgo en la Iglesia",
+    para:"Timoteo, colaborador de Pablo y pastor en Éfeso.",
+    when:"Tradicionalmente 62–65 d. C.", where:"—",
+    idea:"Es como un manual práctico para dirigir la iglesia: buenos líderes, sana doctrina y buen testimonio.",
+    detail:"Describe las cualidades de ancianos y diáconos, advierte contra las falsas enseñanzas y anima a Timoteo a ser ejemplo de los creyentes aun siendo joven.",
+    verse:"«Ninguno tenga en poco tu juventud, sino sé ejemplo de los creyentes en palabra, conducta, amor, fe y pureza».",
+    ref:"1 Timoteo 4:12 (también 3:15)"
+  },
+  {
+    name:"2 Timoteo", num:"XI", color:"#6b4a2e", sub:"Fidelidad y perseverancia hasta el final",
+    para:"Timoteo.",
+    when:"Tradicionalmente 64–67 d. C.", where:"Durante el encarcelamiento final de Pablo.",
+    idea:"Es el último consejo de Pablo: mantente fiel al evangelio hasta el final, aunque venga la persecución.",
+    detail:"Ante el final de su vida, Pablo anima a Timoteo a predicar la Palabra, perseverar en el ministerio, conservar la fe y cumplir la tarea recibida.",
+    verse:"«He peleado la buena batalla, he acabado la carrera, he guardado la fe».",
+    ref:"2 Timoteo 4:7"
+  },
+  {
+    name:"Tito", num:"XII", color:"#4a6b2e", sub:"Organizar la Iglesia y enseñar sana doctrina",
+    para:"Tito, colaborador de Pablo en la isla de Creta.",
+    when:"Tradicionalmente 62–65 d. C.", where:"—",
+    idea:"Pablo encarga a Tito organizar las iglesias de Creta y elegir líderes que enseñen con la vida lo mismo que predican.",
+    detail:"La carta une la enseñanza cristiana con una conducta coherente con el evangelio: organización, formación de líderes y buen testimonio.",
+    verse:null,
+    keyline:"Idea clave: la sana doctrina siempre va de la mano de una vida coherente con el evangelio."
+  },
+  {
+    name:"Filemón", num:"XIII", color:"#6b2e2e", sub:"Perdón, reconciliación y fraternidad",
+    para:"Filemón, un creyente conocido de Pablo.",
+    when:"Tradicionalmente 60–62 d. C. (desde la cárcel)", where:"Durante el encarcelamiento de Pablo en Roma.",
+    idea:"Pablo pide a Filemón que reciba a Onésimo, su antiguo esclavo, ya no como esclavo sino como hermano en Cristo.",
+    detail:"Es una de las cartas más breves y personales de Pablo. Muestra el poder del evangelio para transformar las relaciones humanas: perdón, reconciliación y fraternidad.",
+    verse:null,
+    keyline:"Idea clave: el evangelio transforma las relaciones humanas con perdón y fraternidad."
+  }
+];
+
+/* ---------- Generar las tarjetas/botones ---------- */
+const grid = document.getElementById("lettersGrid");
+LETTERS.forEach((L, i) => {
+  const btn = document.createElement("button");
+  btn.className = "letter-btn";
+  btn.style.setProperty("--accent", L.color);
+  btn.setAttribute("aria-haspopup", "dialog");
+  btn.innerHTML = `
+    <span class="letter-num">${L.num}</span>
+    <div class="letter-name">${L.name}</div>
+    <div class="letter-sub">${L.sub}</div>
+    <div class="letter-open">Ver detalles →</div>`;
+  btn.addEventListener("click", () => openLetter(i));
+  grid.appendChild(btn);
+});
+
+/* ---------- Modal ---------- */
+const overlay   = document.getElementById("overlay");
+const inner     = document.getElementById("modalInner");
+const btnClose  = document.getElementById("btnClose");
+let current = 0;
+
+function openLetter(i){
+  current = i;
+  const L = LETTERS[i];
+  document.getElementById("modal").style.setProperty("--accent", L.color);
+  inner.innerHTML = `
+    <span class="modal-num">Carta ${L.num} de XIII</span>
+    <h2 id="modalTitle">${L.name}</h2>
+    <p class="sub">${L.sub}</p>
+    <div class="meta">
+      <div><strong>Para quién</strong>${L.para}</div>
+      <div><strong>Cuándo</strong>${L.when}</div>
+    </div>
+    <h3>En pocas palabras</h3>
+    <p>${L.idea}</p>
+    <h3>Un poco más</h3>
+    <p class="det">${L.detail}</p>
+    ${L.verse
+      ? `<blockquote class="verse"><p>${L.verse}</p><cite>— ${L.ref}</cite></blockquote>`
+      : `<div class="note" style="margin-top:1.3rem">📖 ${L.keyline}</div>`}
+    <div class="modal-nav">
+      <button id="btnPrev" ${i===0?"disabled":""}>← Anterior</button>
+      <button id="btnNext" ${i===LETTERS.length-1?"disabled":""}>Siguiente →</button>
+    </div>`;
+  document.getElementById("btnPrev").onclick = () => openLetter(i-1);
+  document.getElementById("btnNext").onclick = () => openLetter(i+1);
+  overlay.classList.add("show");
+  overlay.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+  inner.scrollTop = 0;
+}
+
+function closeLetter(){
+  overlay.classList.remove("show");
+  overlay.setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+
+btnClose.addEventListener("click", closeLetter);
+overlay.addEventListener("click", e => { if(e.target === overlay) closeLetter(); });
+document.addEventListener("keydown", e => {
+  if(!overlay.classList.contains("show")) return;
+  if(e.key === "Escape") closeLetter();
+  if(e.key === "ArrowLeft"  && current > 0) openLetter(current-1);
+  if(e.key === "ArrowRight" && current < LETTERS.length-1) openLetter(current+1);
+});
+</script>
+</body>
+</html>
