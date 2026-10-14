@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Las Epístolas Generales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#FAF9F6;
+  --surface:#FFFFFF;
+  --ink:#211E19;
+  --body:#4C463C;
+  --muted:#7E7668;
+  --line:#E7E3D9;
+  --accent:#A23E2A;
+  --head:'Montserrat',system-ui,sans-serif;
+  --text:'Ubuntu',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--accent);color:#fff}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+
+/* ---------- Cabecera ---------- */
+.hero{padding-top:88px;text-align:center}
+.eyebrow{font-family:var(--head);font-weight:600;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-family:var(--head);font-weight:700;font-size:clamp(38px,6vw,64px);line-height:1.08;letter-spacing:-.015em;margin-top:20px}
+.hero h1 em{font-style:normal;font-weight:600;color:var(--accent)}
+.lede{max-width:660px;margin:22px auto 0;font-weight:300;font-size:17.5px;line-height:1.85;color:var(--body)}
+.stats{margin-top:26px;font-family:var(--head);font-weight:500;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap}
+.stats .d{width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:.7}
+
+/* ---------- Secciones ---------- */
+.study{margin-top:96px}
+.section-head h2{font-family:var(--head);font-weight:700;font-size:clamp(26px,3.4vw,36px);letter-spacing:-.01em}
+.hint{margin-top:8px;font-style:italic;font-weight:300;font-size:14px;color:var(--muted)}
+
+/* ---------- Botones-carta ---------- */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.card{aspect-ratio:1/1;min-height:150px;background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:18px 20px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left;
+  transition:transform .3s,border-color .3s,box-shadow .3s,background .3s}
+.card:hover{transform:translateY(-4px);border-color:var(--ink);box-shadow:0 14px 28px -18px rgba(33,30,25,.35)}
+.card.active{background:var(--ink);border-color:var(--ink);box-shadow:0 18px 34px -20px rgba(33,30,25,.5)}
+.c-num{font-family:var(--head);font-weight:600;font-size:12px;letter-spacing:.14em;color:var(--accent);transition:color .3s}
+.c-title{font-family:var(--head);font-weight:600;font-size:clamp(18px,2vw,23px);letter-spacing:-.01em;line-height:1.15;transition:color .3s}
+.c-author{font-family:var(--head);font-weight:500;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:color .3s}
+.card.active .c-title{color:#FAF9F6}
+.card.active .c-num{color:#E29A82}
+.card.active .c-author{color:rgba(250,249,246,.55)}
+
+/* ---------- Panel de detalle ---------- */
+.panel{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:16px;
+  padding:42px 44px 32px;scroll-margin-top:24px;box-shadow:0 24px 50px -44px rgba(33,30,25,.4)}
+.p-over{font-family:var(--head);font-weight:600;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+.panel h3{font-family:var(--head);font-weight:700;font-size:clamp(26px,3vw,32px);letter-spacing:-.01em;margin-top:10px}
+.p-author{font-weight:500;font-size:14.5px;margin-top:8px}
+.p-date{font-weight:300;font-style:italic;font-size:13.5px;color:var(--muted);margin-top:3px}
+blockquote{margin-top:26px;border-left:2px solid var(--accent);padding:4px 0 4px 20px}
+blockquote p{font-style:italic;font-weight:300;font-size:19px;line-height:1.6}
+blockquote cite{display:block;margin-top:8px;font-style:normal;font-family:var(--head);font-weight:600;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.label{display:block;font-family:var(--head);font-weight:600;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.idea{margin-top:28px}
+.idea p{font-weight:400;font-size:17px;line-height:1.65}
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:28px;border-top:1px solid var(--line);margin-top:28px;padding-top:26px}
+.note p{font-weight:300;font-size:15px;line-height:1.75;color:var(--body)}
+.p-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;border-top:1px solid var(--line);margin-top:30px;padding-top:18px}
+.nav-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--head);font-weight:600;font-size:12px;letter-spacing:.06em;color:var(--muted);padding:6px 2px;transition:color .2s}
+.nav-btn:hover{color:var(--ink)}
+.nav-count{font-family:var(--head);font-weight:600;font-size:11px;letter-spacing:.18em;color:var(--muted)}
+
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+[data-reveal]{opacity:0;animation:rise .5s cubic-bezier(.22,.61,.36,1) forwards;animation-delay:var(--d,0s)}
+
+/* ---------- Mensaje común ---------- */
+.thread{margin-top:96px}
+.thread-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:30px}
+.t-item{border-top:1px solid var(--line);padding-top:20px}
+.t-num{font-family:var(--head);font-weight:700;font-size:12px;letter-spacing:.16em;color:var(--accent)}
+.t-title{font-weight:500;font-size:17px;margin-top:10px}
+.t-desc{font-weight:300;font-size:14.5px;line-height:1.7;color:var(--body);margin-top:6px}
+
+/* ---------- Pie ---------- */
+.foot{margin-top:96px;padding:34px 0 64px;border-top:1px solid var(--line);text-align:center}
+.foot-name{font-family:var(--head);font-weight:600;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+.foot-tag{margin-top:8px;font-style:italic;font-weight:300;font-size:14px;color:var(--muted)}
+
+/* ---------- Responsive ---------- */
+@media (max-width:960px){
+  .panel{padding:32px 28px 26px}
+}
+@media (max-width:620px){
+  .wrap{padding:0 20px}
+  .hero{padding-top:64px}
+  .cards{grid-template-columns:repeat(2,1fr);gap:12px}
+  .card{padding:16px;min-height:132px}
+  .panel{padding:28px 22px 22px}
+  .notes{grid-template-columns:1fr;gap:22px}
+  .thread-grid{grid-template-columns:1fr;gap:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  [data-reveal]{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <span class="eyebrow">Nuevo Testamento · Cartas Apostólicas</span>
+  <h1>Las Epístolas <em>Generales</em></h1>
+  <p class="lede">Siete cartas «católicas» —universales— y Hebreos junto a ellas: no escritas para una sola iglesia, sino para todos los creyentes, por apóstoles y líderes cercanos a Jesús.</p>
+  <div class="stats">
+    <span>Siete cartas</span><span class="d" aria-hidden="true"></span>
+    <span>Cinco plumas</span><span class="d" aria-hidden="true"></span>
+    <span>Un solo mensaje</span>
+  </div>
+</header>
+
+<main class="study wrap">
+  <div class="section-head">
+    <h2>Las cartas</h2>
+    <p class="hint">Toca una carta para leer más detalles.</p>
+  </div>
+
+  <div class="cards" id="cards" role="tablist" aria-label="Cartas del Nuevo Testamento"></div>
+
+  <section class="panel" id="panel" aria-label="Detalle de la carta">
+    <div id="panelBody" role="tabpanel" aria-live="polite"></div>
+    <div class="p-nav">
+      <button class="nav-btn" id="prevBtn">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10.5 3 5.5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span id="prevName"></span>
+      </button>
+      <span class="nav-count" id="navCount"></span>
+      <button class="nav-btn" id="nextBtn">
+        <span id="nextName"></span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5.5 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </section>
+</main>
+
+<section class="thread wrap">
+  <div class="section-head">
+    <h2>Un mismo hilo</h2>
+    <p class="hint">Aunque cada carta tiene su enfoque, todas comparten tres preocupaciones.</p>
+  </div>
+  <div class="thread-grid">
+    <div class="t-item">
+      <span class="t-num">01</span>
+      <p class="t-title">Perseverar en las pruebas</p>
+      <p class="t-desc">Ninguna carta ignora el sufrimiento: todas llaman a sostenerse firmes en medio de él.</p>
+    </div>
+    <div class="t-item">
+      <span class="t-num">02</span>
+      <p class="t-title">Vivir la fe</p>
+      <p class="t-desc">Obras y amor como evidencia de una fe verdadera, no solo de palabra.</p>
+    </div>
+    <div class="t-item">
+      <span class="t-num">03</span>
+      <p class="t-title">Guardar la verdad</p>
+      <p class="t-desc">Vigilancia ante las falsas enseñanzas; firmeza en lo que se ha recibido.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="foot wrap">
+  <p class="foot-name">Hebreos — Santiago — Pedro — Juan — Judas</p>
+  <p class="foot-tag">Escritas para entonces. Leídas para siempre.</p>
+</footer>
+
+<script>
+/* ---------- Datos ---------- */
+const LETTERS = [
+  {id:'hebreos', title:'Hebreos', roman:'I', who:'Anónimo',
+   author:'Autor anónimo — se ha propuesto a Pablo, Bernabé o Apolos',
+   date:'c. años 60 d.C.',
+   verse:'Puestos los ojos en Jesús, el autor y consumador de la fe', ref:'Hebreos 12:2',
+   idea:'Jesús es superior a todo: a los ángeles, a Moisés, a los sacerdotes y a los sacrificios antiguos.',
+   why:'Escrita a creyentes judíos que sufrían presión y pensaban en volver al judaísmo.',
+   today:'Nos anima a no rendirnos y a mantener la mirada en Cristo cuando la fe se pone difícil.'},
+  {id:'santiago', title:'Santiago', roman:'II', who:'Santiago',
+   author:'Santiago, hermano de Jesús y líder de la iglesia en Jerusalén',
+   date:'c. 45–49 d.C. — quizá la carta más antigua del Nuevo Testamento',
+   verse:'La fe, si no tiene obras, está muerta en sí misma', ref:'Santiago 2:17',
+   idea:'La fe verdadera se demuestra con acciones.',
+   why:'Dirigida a cristianos judíos dispersos por la persecución y las pruebas.',
+   today:'Creer implica vivir distinto: cuidar la lengua, ayudar al necesitado y no favorecer a los ricos.'},
+  {id:'1pedro', title:'1 Pedro', roman:'III', who:'Pedro',
+   author:'El apóstol Pedro',
+   date:'c. 62–64 d.C., escrita desde Roma («Babilonia»)',
+   verse:'Echando toda vuestra ansiedad sobre él, porque él tiene cuidado de vosotros', ref:'1 Pedro 5:7',
+   idea:'Esperanza y firmeza al sufrir por Cristo.',
+   why:'En tiempos de creciente hostilidad contra los cristianos.',
+   today:'Un consuelo para quienes pasan por pruebas o se sienten extraños en el mundo.'},
+  {id:'2pedro', title:'2 Pedro', roman:'IV', who:'Pedro',
+   author:'El apóstol Pedro',
+   date:'c. 64–68 d.C., poco antes de su muerte',
+   verse:'Creced en la gracia y el conocimiento de nuestro Señor y Salvador Jesucristo', ref:'2 Pedro 3:18',
+   idea:'Crecer en el conocimiento de Cristo y no dejarse engañar.',
+   why:'Su despedida: una advertencia contra los falsos maestros.',
+   today:'Nos llama a discernir la verdad en una época llena de opiniones y enseñanzas confusas.'},
+  {id:'1juan', title:'1 Juan', roman:'V', who:'Juan',
+   author:'El apóstol Juan, ya anciano',
+   date:'c. 85–95 d.C., desde Éfeso',
+   verse:'El que no ama, no ha conocido a Dios; porque Dios es amor', ref:'1 Juan 4:8',
+   idea:'Seguridad de la vida eterna; una fe que se demuestra en el amor.',
+   why:'Para contrarrestar enseñanzas que negaban que Jesús fuera Dios hecho hombre.',
+   today:'Amar a los demás es la prueba más clara de conocer a Dios.'},
+  {id:'2juan', title:'2 Juan', roman:'VI', who:'Juan',
+   author:'El apóstol Juan, ya anciano',
+   date:'c. 85–95 d.C., desde Éfeso',
+   verse:'Y este es el amor, que andemos según sus mandamientos', ref:'2 Juan 1:6',
+   idea:'Unir verdad y amor, y no dar apoyo a quienes enseñan error.',
+   why:'Carta breve a una iglesia local —la «señora elegida»— para advertir sobre maestros engañosos.',
+   today:'El amor cristiano no es indiferente a la verdad.'},
+  {id:'3juan', title:'3 Juan', roman:'VII', who:'Juan',
+   author:'El apóstol Juan, ya anciano',
+   date:'c. 85–95 d.C., desde Éfeso',
+   verse:'No tengo yo mayor gozo que este, el oír que mis hijos andan en la verdad', ref:'3 Juan 1:4',
+   idea:'Recibir con hospitalidad a quienes sirven al Señor.',
+   why:'Carta personal a Gayo, un creyente generoso, ante el mal ejemplo del orgulloso Diótrefes.',
+   today:'Nos invita a servir con humildad y a ser generosos con los demás.'},
+  {id:'judas', title:'Judas', roman:'VIII', who:'Judas',
+   author:'Judas, hermano de Jesús y de Santiago',
+   date:'c. 65–80 d.C.',
+   verse:'Contendáis ardientemente por la fe que ha sido una vez dada a los santos', ref:'Judas 1:3',
+   idea:'Defender la fe verdadera y mantenerse firmes en el amor de Dios.',
+   why:'Judas quería escribir sobre la salvación, pero debió advertir de falsos maestros infiltrados.',
+   today:'Conocer bien lo que creemos y defenderlo con firmeza y amor.'}
+];
+
+const cards    = document.getElementById('cards');
+const panel    = document.getElementById('panel');
+const panelBody= document.getElementById('panelBody');
+const navCount = document.getElementById('navCount');
+const prevName = document.getElementById('prevName');
+const nextName = document.getElementById('nextName');
+let current = 0;
+
+/* ---------- Botones cuadrados ---------- */
+function buildCards(){
+  cards.innerHTML = LETTERS.map((l,i)=>`
+    <button class="card${i===0?' active':''}" role="tab" aria-selected="${i===0}"
+            tabindex="${i===0?0:-1}" data-i="${i}" aria-controls="panelBody"
+            aria-label="Leer la carta de ${l.title}">
+      <span class="c-num">${l.roman}</span>
+      <span class="c-title">${l.title}</span>
+      <span class="c-author">${l.who}</span>
+    </button>`).join('');
+}
+
+/* ---------- Panel de detalle ---------- */
+function renderPanel(){
+  const l = LETTERS[current];
+  panelBody.innerHTML = `
+    <div data-reveal style="--d:0s">
+      <span class="p-over">Carta ${l.roman} de VIII</span>
+      <h3>${l.title}</h3>
+      <p class="p-author">${l.author}</p>
+      <p class="p-date">${l.date}</p>
+    </div>
+    <blockquote data-reveal style="--d:.07s">
+      <p>«${l.verse}»</p>
+      <cite>— ${l.ref}</cite>
+    </blockquote>
+    <div class="idea" data-reveal style="--d:.14s">
+      <span class="label">Idea central</span>
+      <p>${l.idea}</p>
+    </div>
+    <div class="notes" data-reveal style="--d:.21s">
+      <div class="note"><span class="label">Cuándo y por qué</span><p>${l.why}</p></div>
+      <div class="note"><span class="label">Para hoy</span><p>${l.today}</p></div>
+    </div>`;
+  navCount.textContent = `${l.roman} / VIII`;
+  prevName.textContent = LETTERS[(current+LETTERS.length-1)%LETTERS.length].title;
+  nextName.textContent = LETTERS[(current+1)%LETTERS.length].title;
+}
+
+/* ---------- Selección ---------- */
+function select(i){
+  current = (i + LETTERS.length) % LETTERS.length;
+  document.querySelectorAll('.card').forEach((el,idx)=>{
+    const on = idx === current;
+    el.classList.toggle('active', on);
+    el.setAttribute('aria-selected', on);
+    el.tabIndex = on ? 0 : -1;
+  });
+  renderPanel();
+  /* Llevar el panel a la vista solo si no es visible */
+  requestAnimationFrame(()=>{
+    const r = panel.getBoundingClientRect();
+    const visible = r.top >= 0 && r.top < window.innerHeight*0.5 && r.bottom > window.innerHeight*0.5;
+    if(!visible) panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+}
+
+cards.addEventListener('click', e=>{
+  const btn = e.target.closest('.card');
+  if(btn) select(+btn.dataset.i);
+});
+document.getElementById('prevBtn').addEventListener('click', ()=>select(current-1));
+document.getElementById('nextBtn').addEventListener('click', ()=>select(current+1));
+
+/* Teclado dentro de la cuadrícula */
+cards.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'){ e.preventDefault(); select(current+1); document.querySelector('.card.active').focus(); }
+  if(e.key==='ArrowLeft' ||e.key==='ArrowUp'){  e.preventDefault(); select(current-1); document.querySelector('.card.active').focus(); }
+});
+
+buildCards();
+renderPanel();
+</script>
+</body>
+</html>
